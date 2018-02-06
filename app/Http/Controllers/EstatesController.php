@@ -48,6 +48,8 @@ class EstatesController extends Controller {
         $id = $data['code'];
         $update = Estate::find($id);
         $update->name = $data['name'];
+        $update->location = $data['location'];
+
         $update->modified_by = Session::get('id');
         $update->modified_at = date('Y-m-d H:i:s');
 
@@ -65,6 +67,8 @@ class EstatesController extends Controller {
         $new = new Estate();
 
         $new->name = $data['name'];
+        $new->location = $data['location'];
+
         $new->created_by = Session::get('id');
         $new->created_at = date('Y-m-d H:i:s');
 

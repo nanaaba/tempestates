@@ -94,8 +94,9 @@ class TenantController extends Controller {
             $tenant_id = $new->id;
             $rent_id = $this->saveTenantRent($data['estate'], $data['estate'], $data['estate'], $data['estate'], $data['estate'], $data['estate']);
             $this->uploadDocuments($request->file('documents'), $tenant_id, $rent_id);
+            return '0';
         } else {
-            
+            return '1';
         }
     }
 

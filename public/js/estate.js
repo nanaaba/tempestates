@@ -82,7 +82,9 @@ function getEstates()
                     var r = new Array();
                     // represent columns as array
                     r[++j] = '<td class="subject">' + value.name + '</td>';
-                    r[++j] = '<td><button onclick="editDistrict(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-info btn-sm editBtn" type="button">Edit</button>\n\
+                    r[++j] = '<td class="subject">' + value.location + '</td>';
+
+                    r[++j] = '<td><button onclick="editDistrict(\'' + value.id + '\',\'' + value.name + '\',\'' + value.location + '\')"  class="btn btn-outline-info btn-sm editBtn" type="button">Edit</button>\n\
                               <button onclick="deleteDistrict(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-danger btn-sm deleteBtn" type="button">Delete</button></td>';
 
                     rowNode = datatable.row.add(r);
@@ -143,10 +145,11 @@ $('#deleteEstateForm').on('submit', function (e) {
 });
 
 
-function editDistrict(code, name) {
+function editDistrict(code, name,location) {
     console.log('goood');
     $('#code').val(code);
     $('#estatename').val(name);
+     $('#location').val(location);
     $('#editModal').modal('show');
 }
 

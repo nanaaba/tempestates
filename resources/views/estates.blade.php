@@ -11,7 +11,7 @@
             Estates
         </h1>
         <ol class="breadcrumb">
-            
+
 
             <li class="active">
                 Estates
@@ -20,15 +20,15 @@
     </section>
     <!-- Main content -->
     <section class="content">
-     
-            <div class="">
-                <div class="right_aligned" style="margin-bottom: 15px;">
-                    <button type="button" class="btn btn-info " data-toggle="modal" data-target="#districtModal">
-                        Add Estate
-                    </button>
-                </div>
+
+        <div class="">
+            <div class="right_aligned" style="margin-bottom: 15px;">
+                <button type="button" class="btn btn-info " data-toggle="modal" data-target="#districtModal">
+                    Add Estate
+                </button>
             </div>
-         
+        </div>
+
         <div class="row">
             <div class="col-lg-12">
 
@@ -46,6 +46,10 @@
                                     <tr>
                                         <th>
                                             Name
+                                        </th>
+
+                                          <th>
+                                            Location
                                         </th>
 
                                         <th>Action</th>
@@ -72,20 +76,26 @@
 
 
                         <div class="modal-body">
-                            <div class="row m-t-10">
 
-
-
-                                <div class="col-md-8">
-                                    <div class="input-group">
-                                        <label for="first-name">Estate Name</label>
-                                        <input type="text" name="name"
-                                               required class="form-control m-t-10">
-                                    </div>
+                            <div class="row form-group ">
+                                <div class="col-sm-3 float-sm-right">
+                                    <label  class="form-control-label">Estate Name</label>
                                 </div>
+                                <div class="col-sm-9">
+                                    <input  name="name" type="text" class="form-control" required/>
 
+                                </div>
                             </div>
 
+                            <div class="row form-group ">
+                                <div class="col-sm-3 float-sm-right">
+                                    <label  class="form-control-label">Location</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input  name="location" type="text" class="form-control" required/>
+
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-danger">Submit</button>
@@ -110,6 +120,11 @@
                             <div class="form-group">
                                 <label for="region" class="control-label">Name:</label>
                                 <input type="text" class="form-control" name="name" id="estatename" required>
+                            </div>
+                            
+                             <div class="form-group">
+                                <label for="region" class="control-label">Location:</label>
+                                <input type="text" class="form-control" name="location" id="location" required>
                             </div>
 
                             <input type="hidden" class="form-control" name="code" id="code">

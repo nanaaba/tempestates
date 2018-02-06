@@ -76,6 +76,9 @@ Route::post('account/saveuser', 'AccountController@saveUserInfo');
 Route::post('login/authenticateuser', 'LoginController@authenticateUser');
 Route::post('login/updatepassword', 'LoginController@updatePassword');
 
+//tenant information savetenant
+Route::post('tenants/savetenant', 'TenantController@saveTenantInformation');
+
 
 //reports/studentreport
 //newgroupmembers

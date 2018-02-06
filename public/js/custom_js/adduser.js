@@ -1,6 +1,6 @@
 "use strict";
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     // bootstrap wizard//
     $(".select21").select2({
@@ -21,7 +21,8 @@ $(document).ready(function() {
         useCurrent: false,
         maxDate: 'now'
     });
-    $("#adduser_form").bootstrapValidator({
+
+    $("#tenantForm").bootstrapValidator({
         fields: {
             first_name: {
                 validators: {
@@ -66,17 +67,17 @@ $(document).ready(function() {
                     }
                 }
             },
-            email: {
-                validators: {
-                    notEmpty: {
-                        message: 'The email address is required'
-                    },
-                    regexp: {
-                        regexp: /^\S+@\S{1,}\.\S{1,}$/,
-                        message: 'The input is not a valid email address'
-                    }
-                }
-            },
+//            email: {
+//                validators: {
+//                    notEmpty: {
+//                        message: 'The email address is required'
+//                    },
+//                    regexp: {
+//                        regexp: /^\S+@\S{1,}\.\S{1,}$/,
+//                        message: 'The input is not a valid email address'
+//                    }
+//                }
+//            },
             bio: {
                 validators: {
                     notEmpty: {
@@ -109,15 +110,50 @@ $(document).ready(function() {
             }
         }
     });
+//            .on('success.form.bv', function (e) {
+//        // Prevent form submission
+//        e.preventDefault();
+//        // Get the form instance
+//        var $form = $(e.target);
+//        // Get the BootstrapValidator instance
+//        var bv = $form.data('bootstrapValidator');
+//        // Use Ajax to submit form data
+//        var formData = new FormData($('tenantForm')[0]);
+//        console.log('data :' + formData);
+//
+//
+//        $.ajax({
+//            url: "savetenant",
+//            type: "POST",
+//            data: formData,
+//            cache: false,
+//            contentType: false,
+//            processData: false,
+//            success: function (data) {
+//                console.log('server data :' + data);
+//                if (data == 0) {
+//                    $('#tenantForm select').val('').trigger('change');
+//
+//                    document.getElementById("tenantForm").reset();
+//
+//                    swal("Success", "Information saved successfully", 'success');
+//                   $('#pager_wizard').find("a[href='#tab1']").tab('show');
+//                }
+//                
+//            }
+//
+//        });
+//
+//    });
 
     $('#activate').on('ifChanged', function (event) {
-        $('#adduser_form').bootstrapValidator('revalidateField', $('#activate'));
+        $('#tenantForm').bootstrapValidator('revalidateField', $('#activate'));
     });
 
     $('#pager_wizard').bootstrapWizard({
         'tabClass': 'nav nav-pills',
         'onNext': function (tab, navigation, index) {
-            var $validator = $('#adduser_form').data('bootstrapValidator').validate();
+            var $validator = $('#tenantForm').data('bootstrapValidator').validate();
             return $validator.isValid();
         },
         onTabClick: function (tab, navigation, index) {
@@ -139,8 +175,34 @@ $(document).ready(function() {
                 wizard.find('.pager .finish').hide();
             }
             wizard.find('.finish').on('click', function () {
-                var $validator = $('#adduser_form').data('bootstrapValidator').validate();
+                var $validator = $('#tenantForm').data('bootstrapValidator').validate();
                 if ($validator.isValid()) {
+                    var formData = new FormData($('tenantForm')[0]);
+                    console.log('data :' + formData);
+
+
+                    $.ajax({
+                        url: "savetenant",
+                        type: "POST",
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            console.log('server data :' + data);
+//                            if (data == 0) {
+//                                $('#tenantForm select').val('').trigger('change');
+//
+//                                document.getElementById("tenantForm").reset();
+//
+//                                swal("Success", "Information saved successfully", 'success');
+//                              //  $('#pager_wizard').find("a[href='#tab1']").tab('show');
+//                            }
+
+                        }
+
+                    });
+
                     $('#myModal').modal('show');
                     return $validator.isValid();
                     wizard.find("a[href='#tab1']").tab('show');

@@ -34,8 +34,8 @@
                                 <span class="mm-text ">Rent Periods</span>
                             </a>
                         </li>
-                         <li   class="{{ Request::is('tenants/identification') ? 'active' : '' }}">
-                            <a href="{{ url('tenants/identification') }}">
+                         <li   class="{{ Request::is('configuration/identification') ? 'active' : '' }}">
+                            <a href="{{ url('configuration/identification') }}">
                                 <i class="menu-icon ti-layout-list-large-image"></i>
                                 <span class="mm-text ">Identification Types </span>
                             </a>

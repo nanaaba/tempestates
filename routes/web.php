@@ -83,14 +83,19 @@ Route::post('login/updatepassword', 'LoginController@updatePassword');
 Route::post('tenants/savetenant', 'TenantController@saveTenantInformation');
 
 
-//reports/studentreport
-//newgroupmembers
-//professionalbody
-//Route::post('staff/updatestaffinformation',function () {
-//
-//    return App\Department::where('active', 0)
-//                    ->get();
-//});
+//configuration
+Route::post('configuration/saveapartmentypes', 'ConfigurationController@saveApartmentType');
+Route::post('configuration/saveperiod', 'ConfigurationController@saveRentPeriods');
+Route::post('configuration/saveidentificationtype', 'ConfigurationController@saveIdentification');
+Route::get('configuration/getapartmentypes', 'ConfigurationController@getApartmentTypes');
+Route::get('configuration/getrentperiods', 'ConfigurationController@getRentPeriods');
+Route::get('configuration/getidentificationcards', 'ConfigurationController@getIdentificationCards');
+Route::delete('configuration/deleteapartmentype', 'ConfigurationController@deleteApartmentType');
+Route::delete('configuration/deleteperiod', 'ConfigurationController@deleteRentPeriod');
+Route::delete('configuration/deleteidentificationcard', 'ConfigurationController@deleteIdentification');
+
+
+
 Route::get('posts/{something}', function () {
     //
 })->middleware(['down.for.maintenance']);

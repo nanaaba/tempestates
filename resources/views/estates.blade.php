@@ -140,43 +140,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form method="post" id="deleteEstateForm">
-                        <div class="modal-body">
-                            <div>
-                                <p>
-                                    Are you sure you want to delete this estate?.<span class="holder" id="districtholder"></span> 
-                                </p>
-                            </div>
-                            <input type="hidden" class="form-control form-control-lg input-lg" id="token" name="_token" value="<?php echo csrf_token() ?>" />
-
-                            <input type="hidden" id="estatecode" name="estatecode"/>
-
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-                            <button type="submit"  class="btn btn-primary">YES</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="loaderModal" data-keyboard="false" data-backdrop="static" role="dialog" >
-            <div class="modal-dialog" role="document">
-
-
-                <div  id="loader" style="margin-top:30% ">
-                    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-                    <span class="loader-text">Wait...</span>
-                </div>
-
-
-            </div>
-        </div>
-
+     
         <div class="background-overlay"></div>
     </section>
     <!-- /.content -->

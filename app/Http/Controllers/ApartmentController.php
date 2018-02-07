@@ -33,8 +33,9 @@ class ApartmentController extends Controller {
         $update->active = 1;
         $update->modified_by = Session::get('id');
         $update->modified_at = date('Y-m-d H:i:s');
+        $saved = $update->save();
 
-        if (!$update) {
+        if (!$saved) {
             return '1';
         } else {
             return '0';

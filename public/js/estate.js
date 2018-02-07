@@ -85,7 +85,7 @@ function getEstates()
                     r[++j] = '<td class="subject">' + value.location + '</td>';
 
                     r[++j] = '<td><button onclick="editDistrict(\'' + value.id + '\',\'' + value.name + '\',\'' + value.location + '\')"  class="btn btn-outline-info btn-sm editBtn" type="button">Edit</button>\n\
-                              <button onclick="deleteDistrict(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-danger btn-sm deleteBtn" type="button">Delete</button></td>';
+                              <button onclick="deleteType(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-danger btn-sm deleteBtn" type="button">Delete</button></td>';
 
                     rowNode = datatable.row.add(r);
                 });
@@ -101,48 +101,6 @@ function getEstates()
 }
 
 
-
-function deleteDistrict(code, title) {
-    console.log(code + title);
-    $('#districtcode').val(code);
-    $('#districtholder').html(title);
-    $('#confirmModal').modal('show');
-}
-
-$('#deleteEstateForm').on('submit', function (e) {
-    e.preventDefault();
-    $('input:submit').attr("disabled", true);
-    var estate_code = $('#estatecode').val();
-    var token = $('#token').val();
-    $('#confirmModal').modal('hide');
-    $('#loaderModal').modal('show');
-
-    $.ajax({
-        url: '../estate/'+estate_code,
-        type: "DELETE",
-        data: {_token: token},
-        success: function (data) {
-            console.log(data);
-            // $("#loader").hide();
-            $('input:submit').attr("disabled", false);
-            $('#loaderModal').modal('hide');
-
-            document.getElementById("deleteEstateForm").reset();
-            if (data == 0) {
-                swal("Success!", "Deleted Successfully", "success");
-                getEstates();
-            } else {
-                swal("Error!", "Couldnt Update", "error");
-            }
-        },
-        error: function (jXHR, textStatus, errorThrown) {
-            $('#loaderModal').modal('hide');
-
-            alert(errorThrown);
-        }
-    });
-
-});
 
 
 function editDistrict(code, name,location) {
@@ -185,3 +143,48 @@ $('#updateEstateForm').on('submit', function (e) {
     });
 
 });
+
+
+function deleteType(code, title) {
+    console.log(code + title);
+    $('#code').val(code);
+    $('#holdername').html(title);
+    $('#confirmModal').modal('show');
+}
+
+$('#deleteForm').on('submit', function (e) {
+    e.preventDefault();
+    $('input:submit').attr("disabled", true);
+    var code = $('#code').val();
+    var token = $('#token').val();
+    console.log('code :'+code);
+    $('#confirmModal').modal('hide');
+    $('#loaderModal').modal('show');
+
+    $.ajax({
+        url: 'estate/'+code,
+        type: "DELETE",
+        data: {_token: token},
+        success: function (data) {
+            console.log(data);
+            // $("#loader").hide();
+            $('input:submit').attr("disabled", false);
+            $('#loaderModal').modal('hide');
+
+            document.getElementById("deleteForm").reset();
+            if (data == 0) {
+                swal("Success!", "Deleted Successfully", "success");
+                getEstates();
+            } else {
+                swal("Error!", "Couldnt delete", "error");
+            }
+        },
+        error: function (jXHR, textStatus, errorThrown) {
+            $('#loaderModal').modal('hide');
+
+            alert(errorThrown);
+        }
+    });
+
+});
+

@@ -75,36 +75,34 @@
                         <button type="button" class="close" data-dismiss="modal">×</button>
                         <h4 class="modal-title">New Apartment</h4>
                     </div>
-                    <form id="saveApartmentForm" class="form-horizontal" role="form">
+                    <form id="saveApartmentForm" role="form">
                         <input type="hidden" class="form-control form-control-lg input-lg" id="token" name="_token" value="<?php echo csrf_token() ?>" />
 
                         <div class="modal-body">
 
 
+
+
                             <div class="form-group row col-md-12 ">
                                 <label  class=" control-label">Apartment Name</label>
 
                                 <input type="text" class="form-control" name="name" id="institution_name" >
 
                             </div>
+                            <div class="form-group row col-md-12 ">
+                                <label  class=" control-label">Estate</label>
+
+                                <select  name="estate" class="form-control select2 estates" style="width:100%">
+                                    <option value="">Choose..</option>
+                                </select>
+                            </div>
 
                             <div class="form-group row col-md-12 ">
                                 <label  class=" control-label">Apartment Type</label>
 
-                                <select id="type" name="type" class="form-control select2" style="width:100%">
+                                <select  name="type" class="form-control select2 apartmenttypes" style="width:100%">
                                     <option value="">Choose..</option>
-                                    <option value="Single Bedroom">Single Bedroom </option>
-                                    <option value="Two Bedroom ">Two Bedroom </option>
-                                    <option value="Three Bedroom">Three Bedroom </option>
-                                    <option value="Four Bedroom">Four Bedroom </option>
 
-                                </select>
-                            </div>
-                            <div class="form-group row col-md-12 ">
-                                <label  class=" control-label">Estate</label>
-
-                                <select id="estates" name="estate" class="form-control select2" style="width:100%">
-                                    <option value="">Choose..</option>
                                 </select>
                             </div>
 
@@ -141,56 +139,57 @@
 
 
 
-
                         </div>
                         <div class="modal-footer">
-                            <div class="pull-right">
-                                <input type="submit" name="submit" class="btn btn-info"  value="Save"/>
+
+                            <input type="submit" name="submit" class="btn btn-info"  value="Save"/>
 
 
-                            </div>
+
 
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+
 
         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
             <div class="modal-dialog" role="document">
+
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Update </h4>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title"> <span id="aprtname"></span> Apartment Information</h4>
                     </div>
-                    <form id="updateApartmentForm" >
-                         <div class="modal-body">
+                    <form id="saveApartmentForm" role="form">
+                        <input type="hidden" class="form-control form-control-lg input-lg" id="token" name="_token" value="<?php echo csrf_token() ?>" />
+
+                        <div class="modal-body">
+
+
 
 
                             <div class="form-group row col-md-12 ">
                                 <label  class=" control-label">Apartment Name</label>
 
-                                <input type="text" class="form-control" name="name" id="institution_name" >
+                                <input type="text" class="form-control" name="name" id="apartment_name" >
 
+                            </div>
+                            <div class="form-group row col-md-12 ">
+                                <label  class=" control-label">Estate</label>
+
+                                <select id="up_estate" name="estate" class="form-control select2 estates" style="width:100%">
+                                    <option value="">Choose..</option>
+                                </select>
                             </div>
 
                             <div class="form-group row col-md-12 ">
                                 <label  class=" control-label">Apartment Type</label>
 
-                                <select id="type" name="type" class="form-control select2" style="width:100%">
+                                <select  name="type" id="up_apartmenttype" class="form-control select2 apartmenttypes" style="width:100%">
                                     <option value="">Choose..</option>
-                                    <option value="Single Bedroom">Single Bedroom </option>
-                                    <option value="Two Bedroom ">Two Bedroom </option>
-                                    <option value="Three Bedroom">Three Bedroom </option>
-                                    <option value="Four Bedroom">Four Bedroom </option>
 
-                                </select>
-                            </div>
-                            <div class="form-group row col-md-12 ">
-                                <label  class=" control-label">Estate</label>
-
-                                <select id="estates" name="estate" class="form-control select2" style="width:100%">
-                                    <option value="">Choose..</option>
                                 </select>
                             </div>
 
@@ -199,7 +198,7 @@
                                 <div class="form-group row col-md-3 ">
                                     <label  class=" control-label">Currency</label>
 
-                                    <select  name="currency" class="form-control select2" style="width:100%">
+                                    <select  name="currency" id="up_currency" class="form-control select2" style="width:100%">
                                         <option value="">Choose..</option>
                                         <option value="USD">USD</option>
                                         <option value="GHS">GHS</option>
@@ -210,7 +209,7 @@
                                 <div class="form-group row col-md-8 ">
                                     <label  class=" control-label">Monthly Charge</label>
 
-                                    <input type="text" class="form-control" name="monthly_charge"  >
+                                    <input type="text" class="form-control" id="up_monthlycharge" name="monthly_charge"  >
                                 </div>
                             </div>
 
@@ -218,7 +217,7 @@
                             <div class="form-group row col-md-12 ">
                                 <label  class=" control-label">Apartment Facilities</label>
 
-                                <select id="facilities" name="facilities[]" class="form-control multiselect select2" multiple style="width:100%">
+                                <select id="up_facilities" name="facilities[]" class="facilities form-control multiselect select2" multiple style="width:100%">
                                     <option value="">Choose..</option>
                                 </select>
                             </div>
@@ -227,53 +226,20 @@
 
 
 
-
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Update</button>
+
+                            <input type="submit" name="submit" class="btn btn-info"  value="Save"/>
+
+
+
+
                         </div>
                     </form>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form method="post" id="deleteApartmentForm">
-                        <div class="modal-body">
-                            <div>
-                                <p>
-                                    Are you sure you want to delete this apartment?.<span class="holder" id="districtholder"></span> 
-                                </p>
-                            </div>
-                            <input type="hidden" class="form-control form-control-lg input-lg" id="token" name="_token" value="<?php echo csrf_token() ?>" />
-
-                            <input type="hidden" id="apartmentcode" name="apartmentcode"/>
-
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-                            <button type="submit"  class="btn btn-primary">YES</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="loaderModal" data-keyboard="false" data-backdrop="static" role="dialog" >
-            <div class="modal-dialog" role="document">
-
-
-                <div  id="loader" style="margin-top:30% ">
-                    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-                    <span class="loader-text">Wait...</span>
-                </div>
-
-
-            </div>
-        </div>
 
         <div class="background-overlay"></div>
     </section>
@@ -377,11 +343,11 @@ function getApartments()
                     var r = new Array();
                     // represent columns as array
                     r[++j] = '<td class="subject">' + value.name + '</td>';
-                    r[++j] = '<td class="subject">' + value.type  + '</td>';
-                    r[++j] = '<td class="subject">' + value.currency +' ' +value.monthly_charge + '</td>';
+                    r[++j] = '<td class="subject">' + value.type + '</td>';
+                    r[++j] = '<td class="subject">' + value.currency + ' ' + value.monthly_charge + '</td>';
 
-                    r[++j] = '<td><button onclick="editDistrict(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-info btn-sm editBtn" type="button">Edit</button>\n\
-                              <button onclick="deleteDistrict(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-danger btn-sm deleteBtn" type="button">Delete</button></td>';
+                    r[++j] = '<td><button onclick="editType(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-info btn-sm editBtn" type="button">Edit</button>\n\
+                              <button onclick="deleteType(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-danger btn-sm deleteBtn" type="button">Delete</button></td>';
 
                     rowNode = datatable.row.add(r);
                 });
@@ -398,55 +364,41 @@ function getApartments()
 
 
 
-function deleteDistrict(code, title) {
-    console.log(code + title);
-    $('#districtcode').val(code);
-    $('#districtholder').html(title);
-    $('#confirmModal').modal('show');
-}
 
-$('#deleteApartmentForm').on('submit', function (e) {
-    e.preventDefault();
-    $('input:submit').attr("disabled", true);
-    var apartment_code = $('#apartmentcode').val();
-    var token = $('#token').val();
-    $('#confirmModal').modal('hide');
-    $('#loaderModal').modal('show');
-
-    $.ajax({
-        url: '../apartment/' + apartment_code,
-        type: "DELETE",
-        data: {_token: token},
-        success: function (data) {
-            console.log(data);
-            // $("#loader").hide();
-            $('input:submit').attr("disabled", false);
-            $('#loaderModal').modal('hide');
-
-            document.getElementById("deleteApartmentForm").reset();
-            if (data == 0) {
-                swal("Success!", "Deleted Successfully", "success");
-                getApartments();
-            } else {
-                swal("Error!", "Couldnt Update", "error");
-            }
-        },
-        error: function (jXHR, textStatus, errorThrown) {
-            $('#loaderModal').modal('hide');
-
-            alert(errorThrown);
-        }
-    });
-
-});
-
-
-function editDistrict(code, name) {
+function editType(code, name) {
     console.log('goood');
     $('#code').val(code);
     $('#apartmentname').val(name);
-    $('#editModal').modal('show');
+    getApartmentInfo(code);
+        $('#editModal').modal('show');
+
 }
+
+function getApartmentInfo(id) {
+
+
+    $.ajax({
+        url: 'apartment/' + id,
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            console.log(data[0].name);
+            $('#aprtname').hmtl(data[0].name);
+            $('#apartment_name').val(data[0].name);
+            $('#up_apartmenttype').val(data[0].type).change();
+            $('#up_currency').val(data[0].currency);
+            $('#up_monthlycharge').val(data[0].monthly_charge);
+            $('#up_estate').val(data[0].estate_id);
+
+        },
+        error: function (jXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        }
+    });
+
+}
+
+
 
 $('#updateApartmentForm').on('submit', function (e) {
     e.preventDefault();
@@ -514,8 +466,8 @@ function getEstates() {
 
             $.each(data, function (i, item) {
 
-                $('#estates').append($('<option>', {
-                    value: item.id,
+                $('.estates').append($('<option>', {
+                    value: item.name,
                     text: item.name
                 }));
             });
@@ -523,6 +475,53 @@ function getEstates() {
 
     });
 }
+
+
+
+
+function deleteType(code, title) {
+    console.log(code + title);
+    $('#code').val(code);
+    $('#holdername').html(title);
+    $('#confirmModal').modal('show');
+}
+
+$('#deleteForm').on('submit', function (e) {
+    e.preventDefault();
+    $('input:submit').attr("disabled", true);
+    var code = $('#code').val();
+    var token = $('#token').val();
+    $('#confirmModal').modal('hide');
+    $('#loaderModal').modal('show');
+
+    $.ajax({
+        url: 'apartment/' + code,
+        type: "DELETE",
+        data: {_token: token},
+        success: function (data) {
+            console.log(data);
+            // $("#loader").hide();
+            $('input:submit').attr("disabled", false);
+            $('#loaderModal').modal('hide');
+
+            document.getElementById("deleteForm").reset();
+            if (data == 0) {
+                swal("Success!", "Deleted Successfully", "success");
+                getApartments();
+            } else {
+                swal("Error!", "Couldnt delete", "error");
+            }
+        },
+        error: function (jXHR, textStatus, errorThrown) {
+            $('#loaderModal').modal('hide');
+
+            alert(errorThrown);
+        }
+    });
+
+});
+
+
 
 </script>
 

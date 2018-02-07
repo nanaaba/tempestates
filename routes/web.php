@@ -90,9 +90,9 @@ Route::post('configuration/saveidentificationtype', 'ConfigurationController@sav
 Route::get('configuration/getapartmentypes', 'ConfigurationController@getApartmentTypes');
 Route::get('configuration/getrentperiods', 'ConfigurationController@getRentPeriods');
 Route::get('configuration/getidentificationcards', 'ConfigurationController@getIdentificationCards');
-Route::delete('configuration/deleteapartmentype', 'ConfigurationController@deleteApartmentType');
-Route::delete('configuration/deleteperiod', 'ConfigurationController@deleteRentPeriod');
-Route::delete('configuration/deleteidentificationcard', 'ConfigurationController@deleteIdentification');
+Route::delete('configuration/deleteapartmentype/{id}', 'ConfigurationController@deleteApartmentType');
+Route::delete('configuration/deleteperiod/{id}', 'ConfigurationController@deleteRentPeriod');
+Route::delete('configuration/deleteidentificationcard/{id}', 'ConfigurationController@deleteIdentification');
 
 
 

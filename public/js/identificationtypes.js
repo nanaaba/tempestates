@@ -84,7 +84,7 @@ function getIdentificationCards()
                     r[++j] = '<td class="subject">' + value.name + '</td>';
 
 
-                    r[++j] = '<td> <button onclick="deleteDistrict(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-danger btn-sm deleteBtn" type="button">Delete</button></td>';
+                    r[++j] = '<td> <button onclick="deleteType(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-danger btn-sm deleteBtn" type="button">Delete</button></td>';
 
                     rowNode = datatable.row.add(r);
                 });
@@ -101,23 +101,23 @@ function getIdentificationCards()
 
 
 
-function deleteApartmentType(code, title) {
+function deleteType(code, title) {
     console.log(code + title);
-    $('#districtcode').val(code);
-    $('#districtholder').html(title);
+    $('#code').val(code);
+    $('#holdername').html(title);
     $('#confirmModal').modal('show');
 }
 
-$('#deleteApartmentTypeForm').on('submit', function (e) {
+$('#deleteForm').on('submit', function (e) {
     e.preventDefault();
     $('input:submit').attr("disabled", true);
-    var estate_code = $('#estatecode').val();
+    var code = $('#code').val();
     var token = $('#token').val();
     $('#confirmModal').modal('hide');
     $('#loaderModal').modal('show');
 
     $.ajax({
-        url: '../estate/' + estate_code,
+        url: 'deleteidentificationcard/'+code,
         type: "DELETE",
         data: {_token: token},
         success: function (data) {
@@ -126,12 +126,12 @@ $('#deleteApartmentTypeForm').on('submit', function (e) {
             $('input:submit').attr("disabled", false);
             $('#loaderModal').modal('hide');
 
-            document.getElementById("deleteEstateForm").reset();
+            document.getElementById("deleteForm").reset();
             if (data == 0) {
                 swal("Success!", "Deleted Successfully", "success");
-                getEstates();
+                getIdentificationCards();
             } else {
-                swal("Error!", "Couldnt Update", "error");
+                swal("Error!", "Couldnt delete", "error");
             }
         },
         error: function (jXHR, textStatus, errorThrown) {
@@ -142,5 +142,4 @@ $('#deleteApartmentTypeForm').on('submit', function (e) {
     });
 
 });
-
 

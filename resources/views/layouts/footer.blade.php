@@ -98,5 +98,26 @@
 
 <script type="text/javascript">
   $('.select2').select2();
+  getApartmentTypes();
+  
+function getApartmentTypes() {
 
+
+    $.ajax({
+        url: "{{url('configuration/getapartmentypes')}}",
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
+
+            $.each(data, function (i, item) {
+
+                $('.apartmenttypes').append($('<option>', {
+                    value: item.id,
+                    text: item.name
+                }));
+            });
+        }
+
+    });
+}
 </script>

@@ -23,6 +23,9 @@ Route::get('tenants/new', 'TenantController@showtenants');
 Route::get('tenants/all', 'TenantController@showalltenants');
 Route::get('tenants/services', 'TenantController@showtenantsservices');
 Route::get('tenants/bill', 'TenantController@showtenantsbill');
+Route::get('configuration/apartmenttypes', 'ConfigurationController@showapartmenttypes');
+Route::get('configuration/rentperiods', 'ConfigurationController@showrentperiods');
+Route::get('configuration/identification', 'ConfigurationController@showidentification');
 
 
 Route::get('account', 'AccountController@showbanks');

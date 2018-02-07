@@ -14,6 +14,36 @@
                         <span class="mm-text ">Dashboard </span>
                     </a>
                 </li>
+                
+                   <li class="menu-dropdown {{ Request::is('configuration*') ? 'active' : '' }}">
+                    <a href="javascript:void(0)">
+                        <i class="menu-icon ti-check-box"></i>
+                            <span>Configuration</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li   class="{{ Request::is('configuration/apartmenttypes') ? 'active' : '' }}">
+                            <a href="{{ url('configuration/apartmenttypes') }}">
+                                <i class="menu-icon ti-layout-list-large-image"></i>
+                                <span class="mm-text ">Apartment Types</span>
+                            </a>
+                        </li>
+                        <li   class="{{ Request::is('configuration/rentperiods') ? 'active' : '' }}">
+                            <a href="{{ url('configuration/rentperiods') }}">
+                                <i class="menu-icon ti-layout-list-large-image"></i>
+                                <span class="mm-text ">Rent Periods</span>
+                            </a>
+                        </li>
+                         <li   class="{{ Request::is('tenants/identification') ? 'active' : '' }}">
+                            <a href="{{ url('tenants/identification') }}">
+                                <i class="menu-icon ti-layout-list-large-image"></i>
+                                <span class="mm-text ">Identification Types </span>
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </li>
+
 
                 <li  id="active" class="{{ Request::is('estates') ? 'active' : '' }}">
                     <a href="{{ url('estates') }}">

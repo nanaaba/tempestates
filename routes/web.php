@@ -54,6 +54,7 @@ Route::put('estate', 'EstatesController@updateEstate');
 Route::get('apartment/all', 'ApartmentController@getApartments');
 Route::get('apartment/{id}', 'ApartmentController@getApartmentDetail');
 Route::delete('apartment/{id}', 'ApartmentController@deleteApartment');
+
 Route::post('apartment', 'ApartmentController@saveApartment');
 Route::put('apartment', 'ApartmentController@updateApartment');
 //facilities apis
@@ -63,9 +64,9 @@ Route::delete('facility/{id}', 'FacilityController@deleteFacility');
 Route::post('facility', 'FacilityController@saveFacilty');
 Route::post('facility/apartment', 'FacilityController@saveApartmentFacilities');
 Route::put('facility', 'FacilityController@updateFacility');
-
 //services apis
 Route::get('services/all', 'ServiceController@getservices');
+Route::get('services/{id}', 'ServiceController@getServiceDetail');
 Route::delete('services/{id}', 'ServiceController@deleteService');
 Route::post('services', 'ServiceController@saveService');
 Route::put('services', 'ServiceController@updateService');
@@ -80,6 +81,10 @@ Route::post('login/authenticateuser', 'LoginController@authenticateUser');
 Route::post('login/updatepassword', 'LoginController@updatePassword');
 
 //tenant information savetenant
+Route::post('tenants/savetenant', 'TenantController@saveTenantInformation');
+Route::post('tenants/service', 'TenantController@saveTenantService');
+Route::get('tenants/all', 'TenantController@getTenants');
+Route::post('tenants/savetenant', 'TenantController@saveTenantInformation');
 Route::post('tenants/savetenant', 'TenantController@saveTenantInformation');
 
 

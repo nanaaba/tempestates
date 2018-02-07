@@ -34,7 +34,7 @@
 
                     </div>
                     <div class="panel-body">
-                        <form id="saveBankForm">
+                        <form id="saveServiceForm">
                             <div class="row">
                                 <input type="hidden" class="form-control form-control-lg input-lg"  name="_token" value="<?php echo csrf_token() ?>" />
 
@@ -42,22 +42,22 @@
                                 <div class="col-md-6">
                                     <div class="form-group ">
                                         <label for="region" class="control-label">Tenant Name:</label>
-                                        <select class="form-control select2" name="account_type" id="account_type"  required style="width: 100%">
+                                        <select class="form-control select2" name="tenant" id="tenants"  required style="width: 100%">
                                             <option value="">Select --</option>
 
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="region" class="control-label">Apartment Name:</label>
-                                        <input type="text" class="form-control" name="branch"  readonly>
+                                        <input type="text" class="form-control" name="apartment_name" id="apartment_name"  readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="region" class="control-label">Apartment Type:</label>
-                                        <input type="text" class="form-control" name="branch"  readonly>
+                                        <input type="text" class="form-control" name="apartment_type" id="apartment_type"  readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="region" class="control-label">Service Date:</label>
-                                        <input type="date" class="form-control" name="branch"  
+                                        <input type="date" class="form-control" name="date_serviced"  
                                                />
                                     </div>
                                 </div>
@@ -65,20 +65,19 @@
                                 <div class="col-md-6">
                                     <div class="form-group ">
                                         <label for="region" class="control-label">Service Type:</label>
-                                        <select class="form-control select2" name="account_type" id="account_type"  required style="width: 100%">
+                                        <select class="form-control select2" name="service_type" id="services"  required style="width: 100%">
                                             <option value="">Select --</option>
 
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="region" class="control-label">Service Description:</label>
-                                        <textarea type="text" class="form-control" name="branch"  >
+                                        <textarea type="text" class="form-control" name="service_description" id="service_description"  >
                                         </textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="region" class="control-label">Service Amount:</label>
-                                        <input type="text" class="form-control" name="branch"  
-                                               />
+                                        <input type="text" class="form-control" name="service_amount" id="service_amount"/>
                                     </div>
                                 </div>
 
@@ -120,6 +119,136 @@
 <script type="text/javascript" src="{{ asset('js/custom_js/datatables_custom.js')}}"></script>
 <script src="{{ asset('vendors/toastr/js/toastr.min.js')}}"></script>
 
-<script src="{{ asset('js/banks.js')}}" type="text/javascript"></script>
+<script  type="text/javascript">
+
+getServices();
+getTenants();
+
+
+
+
+$('#saveServiceForm').on('submit', function (e) {
+    e.preventDefault();
+    // var validator = $("#saveRegionForm").validate();
+    var formData = $(this).serialize();
+
+    $('input:submit').attr("disabled", true);
+    $.ajax({
+        url: "{{url('tenants/service')}}",
+        type: "POST",
+        data: formData,
+        success: function (data) {
+            console.log(data);
+            $('#newModal').modal('hide');
+            $('input:submit').removeAttr("disabled");
+
+            document.getElementById("saveServiceForm").reset();
+            if (data == 0) {
+                swal("Success!", "Service Added", "success");
+                getApartments();
+            } else if (data == 1) {
+                swal("Error!", "Couldnt add service", "error");
+            } else {
+                swal("Error!", data, "error");
+
+            }
+        },
+        error: function (jXHR, textStatus, errorThrown) {
+            $('input:submit').removeAttr("disabled");
+            swal("Error!", "Contact System Administrator ", "error");
+        }
+    });
+
+
+
+
+});
+
+
+$('#services').change(function () {
+    var service = $(this).val();
+    getServiceInfo(service);
+});
+
+$('#tenants').change(function () {
+    var tenant_id = $(this).val();
+});
+
+function getServiceInfo(id) {
+
+
+    $.ajax({
+        url: "../services/" + id,
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
+            $('#service_description').val(data[0].description);
+            $('#service_amount').val(data[0].amount);
+
+        }
+//up_facilities
+    });
+}
+
+function getRentInfo(id) {
+
+
+    $.ajax({
+        url: "../services/" + id,
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
+            $('#service_description').val(data[0].description);
+            $('#service_amount').val(data[0].amount);
+
+        }
+//up_facilities
+    });
+}
+
+
+
+function getServices() {
+
+
+    $.ajax({
+        url: "{{url('services/all')}}",
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
+
+            $.each(data, function (i, item) {
+
+                $('#services').append($('<option>', {
+                    value: item.id,
+                    text: item.name
+                }));
+            });
+        }
+
+    });
+}
+
+function getTenants() {
+
+
+    $.ajax({
+        url: "{{url('tenants/all')}}",
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
+
+            $.each(data, function (i, item) {
+
+                $('#tenants').append($('<option>', {
+                    value: item.id,
+                    text: item.name
+                }));
+            });
+        }
+
+    });
+}
+</script>
 
 @endsection

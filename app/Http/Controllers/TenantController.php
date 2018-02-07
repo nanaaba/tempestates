@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Tenant;
 use App\TenantDocuments;
+use App\TenantBills;
 use Illuminate\Support\Facades\Session;
 
 class TenantController extends Controller {
@@ -132,5 +133,33 @@ class TenantController extends Controller {
 
         return 0;
     }
+
+    public function saveTenantService(Request $request) {
+
+        $data = $request->all();
+
+        $new = new TenantBills();
+
+        $new->tenant_id = $data['tenant'];
+        $new->amount = $data['service_amount'];
+        $new->serviced_date = $data['date_serviced'];
+        $new->description = $data['service_description'];
+        $new->service_id = $data['service_type'];
+
+        $saved = $new->save();
+
+        if ($saved) {
+
+           return '0';
+        } else {
+            return '1';
+        }
+    }
+    
+    
+      public function getTenants() {
+        return Tenant::all()->toJson();
+    }
+
 
 }

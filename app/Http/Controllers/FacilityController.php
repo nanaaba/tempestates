@@ -26,8 +26,8 @@ class FacilityController extends Controller {
         return Facility::where('active', 0)
                         ->get();
     }
-    
-     public function getApartmentFacilities($apartmentid) {
+
+    public function getApartmentFacilities($apartmentid) {
 
         return ApartmentFacilities::where('apartment_id', $apartmentid)
                         ->get();
@@ -40,8 +40,9 @@ class FacilityController extends Controller {
         $update->active = 1;
         $update->modified_by = Session::get('id');
         $update->modified_at = date('Y-m-d H:i:s');
+        $saved = $update->save();
 
-        if (!$update) {
+        if (!$saved) {
             return '1';
         } else {
             return '0';

@@ -20,18 +20,14 @@
         <link rel="stylesheet" href="{{asset('css/custom_css/skins/skin-default.css')}}" type="text/css" id="skin"/>
         <link href="{{asset('css/custom_css/dashboard1.css')}}" rel="stylesheet" type="text/css"/>
         <link href="{{asset('css/custom_css/dashboard1_timeline.css')}}" rel="stylesheet"/>
-        <link rel="stylesheet" href="{{asset('vendors/datetime/css/jquery.datetimepicker.css')}}">
-        <link href="{{asset('vendors/airdatepicker/css/datepicker.min.css')}}" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="{{asset('css/custom.css')}}">
         <link rel="stylesheet" href="{{asset('css/custom_css/skins/skin-default.css')}}" type="text/css" id="skin" />
-        <link rel="stylesheet" type="text/css" href="{{asset('css/datepicker.css')}}">
         <!--end of page level css-->
         <link href="{{asset('vendors/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('vendors/select2/css/select2-bootstrap.css')}}" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="{{asset('css/custom_css/toastr_notificatons.css')}}">
 
         <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/dataTables.bootstrap.css')}}"/>
-        <link rel="stylesheet" type="text/css" href="{{asset('css/custom.css')}}">
 
         <link rel="stylesheet" type="text/css" href="{{asset('css/custom_css/datatables_custom.css')}}">
         <!--end of page level css-->
@@ -59,50 +55,51 @@
         <link href="{{asset('css/buttons_sass.css')}}" rel="stylesheet">
         <link href="{{asset('css/advbuttons.css')}}" rel="stylesheet">
 
-          <link href="{{asset('vendors/daterangepicker/css/daterangepicker.css')}}" rel="stylesheet" type="text/css"/>
-          <link href="{{asset('vendors/datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet"/>
-          <link rel="stylesheet" type="text/css" href="{{asset('vendors/datedropper/datedropper.css')}}">
-          <link rel="stylesheet" type="text/css" href="{{asset('vendors/timedropper/css/timedropper.css')}}">
-          <link rel="stylesheet" type="text/css" href="{{asset('vendors/jquerydaterangepicker/css/daterangepicker.min.css')}}">
-          <!--clock face css-->
-          <link rel="stylesheet" type="text/css" href="{{asset('vendors/clockpicker/css/bootstrap-clockpicker.min.css')}}">
-          <link rel="stylesheet" type="text/        css" href="{{asset('css/custom.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('css/custom.css')}}">
 
-          <link rel="stylesheet" type="text/css" href="{{asset('css/datepicker.css')}}">
-          <!-- END Custom CSS-->
-              <link rel="stylesheet" type="text/css" href="{{asset('css/custom_css/invoice.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('css/custom_css/invoice.css')}}">
 
+        <link href="{{ asset('vendors/daterangepicker/css/daterangepicker.css')}}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('vendors/datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('vendors/datedropper/datedropper.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('vendors/timedropper/css/timedropper.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('vendors/jquerydaterangepicker/css/daterangepicker.min.css')}}">
+        <!--clock face css-->
+        <link rel="stylesheet" type="text/css" href="{{ asset('vendors/clockpicker/css/bootstrap-clockpicker.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css')}}">
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/datepicker.css')}}">
     </head>
-<body class="skin-default">
+    <body class="skin-default">
         <div class="preloader">
             <div class="loader_img"><img src="{{asset('img/loader.gif')}}" alt="loading..." height="64" width="64"></div>
-</div>
-@include('layouts.header')
-<div class="wrapper row-offcanvas row-offcanvas-left">
-    @include('layouts.nav')
+        </div>
+        @include('layouts.header')
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+            @include('layouts.nav')
 
 
 
-    @yield('content')
+            @yield('content')
 
-</div>
+        </div>
 
-<div class="modal fade" id="loaderModal" data-keyboard="false" data-backdrop="static" role="dialog" >
-    <div class="modal-dialog" role="document">
+        <div class="modal fade" id="loaderModal" data-keyboard="false" data-backdrop="static" role="dialog" >
+            <div class="modal-dialog" role="document">
 
 
-        <div  id="loader" style="margin-top:30% ">
-            <img src="{{ asset('img/load.gif')}}">
+                <div  id="loader" style="margin-top:30% ">
+                    <img src="{{ asset('img/load.gif')}}">
 
-            <span class="loader-text">Filtering Results...</span>
+                    <span class="loader-text">Filtering Results...</span>
+                </div>
+
+
+            </div>
         </div>
 
 
-    </div>
-</div>
-
-
-    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <form method="post" id="deleteForm">
@@ -126,94 +123,94 @@
                 </div>
             </div>
         </div>
-    
-
-<div class="modal fade" id="messageDetail" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
 
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <!--5th tab bank application starting-->
-                    <div class="col-lg-12">
-                        <form class="grid-form">
-                            <div class="text-center">
-<!--                                        <img src="img/pages/complexform1.png" alt="bank name" width="200">-->
-                                <h3>Message Detail</h3>
-                            </div>
-                            <fieldset>
-                                <legend>Details</legend>
-                                <div data-row-span="1">
-                                    <div data-field-span="1" class="" style="height: auto;">
-                                        <label>Sender Name</label>
-                                        <label id="sender"> </label>
-<!--                                                <input type="text" readonly id="sender">-->
-                                    </div>
-                                </div>
-                                <div data-row-span="1">
-                                    <div data-field-span="1" class="" style="height: auto;">
-                                        <label>Recipients </label>
-                                        <label id="receipients"> </label>
-<!--                                                <input type="text" readonly id="receipients">-->
-                                    </div>
-                                </div>
+        <div class="modal fade" id="messageDetail" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
-                                <div data-row-span="1">
-                                    <div data-field-span="1" class="" style="height: auto;">
-                                        <label>Subject </label>
-                                        <label id="subject"> </label>
-<!--                                                <input type="text" readonly id="subject">-->
-                                    </div>
-                                </div>
-                                <div data-row-span="1">
-                                    <div data-field-span="1" class="" style="height: auto;">
-                                        <label>Date Sent: </label>
-                                        <label id="date_sent"></label>
-<!--                                                <input type="text" readonly id="date_sent">-->
-                                    </div>
-                                </div>
 
-                                <div data-row-span="1">
-                                    <div data-field-span="1" style="height: auto;">
-                                        <label>Message</label>
-                                        <label id="messageContent">
-                                            I/We confirm having read and understood the account
-                                            rules of The Banking Corporation Limited ('the Bank'), and hereby agree to be
-                                            bound by the terms and conditions and amendments governing the account(s) issued
-                                            by the Bank from time-to-time.</label>
-                                    </div>
-                                </div>
-
-                                <div data-row-span="1">
-                                    <div data-field-span="1" class="" style="height: auto;">
-                                        <label>Attachments: </label>
-                                        <div id="fileattacments">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-
-                        </form>
                     </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <!--5th tab bank application starting-->
+                            <div class="col-lg-12">
+                                <form class="grid-form">
+                                    <div class="text-center">
+        <!--                                        <img src="img/pages/complexform1.png" alt="bank name" width="200">-->
+                                        <h3>Message Detail</h3>
+                                    </div>
+                                    <fieldset>
+                                        <legend>Details</legend>
+                                        <div data-row-span="1">
+                                            <div data-field-span="1" class="" style="height: auto;">
+                                                <label>Sender Name</label>
+                                                <label id="sender"> </label>
+        <!--                                                <input type="text" readonly id="sender">-->
+                                            </div>
+                                        </div>
+                                        <div data-row-span="1">
+                                            <div data-field-span="1" class="" style="height: auto;">
+                                                <label>Recipients </label>
+                                                <label id="receipients"> </label>
+        <!--                                                <input type="text" readonly id="receipients">-->
+                                            </div>
+                                        </div>
+
+                                        <div data-row-span="1">
+                                            <div data-field-span="1" class="" style="height: auto;">
+                                                <label>Subject </label>
+                                                <label id="subject"> </label>
+        <!--                                                <input type="text" readonly id="subject">-->
+                                            </div>
+                                        </div>
+                                        <div data-row-span="1">
+                                            <div data-field-span="1" class="" style="height: auto;">
+                                                <label>Date Sent: </label>
+                                                <label id="date_sent"></label>
+        <!--                                                <input type="text" readonly id="date_sent">-->
+                                            </div>
+                                        </div>
+
+                                        <div data-row-span="1">
+                                            <div data-field-span="1" style="height: auto;">
+                                                <label>Message</label>
+                                                <label id="messageContent">
+                                                    I/We confirm having read and understood the account
+                                                    rules of The Banking Corporation Limited ('the Bank'), and hereby agree to be
+                                                    bound by the terms and conditions and amendments governing the account(s) issued
+                                                    by the Bank from time-to-time.</label>
+                                            </div>
+                                        </div>
+
+                                        <div data-row-span="1">
+                                            <div data-field-span="1" class="" style="height: auto;">
+                                                <label>Attachments: </label>
+                                                <div id="fileattacments">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                </form>
+                            </div>
+                        </div>
+
+
+                    </div>
+
                 </div>
-
-
+                <!-- /.modal-content -->
             </div>
-
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
 
-@include('layouts.footer')
-@yield('dashboard')
-@yield('userjs')
+        @include('layouts.footer')
+        @yield('dashboard')
+        @yield('userjs')
 
-</body>
+    </body>
 </html>

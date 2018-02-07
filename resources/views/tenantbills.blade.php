@@ -1,5 +1,5 @@
 
-@extends('layouts.master')
+@extends('layouts.datepickerform')
 
 @section('content')
 
@@ -44,7 +44,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group ">
                                             <label for="region" class="control-label">Tenant Name:</label>
-                                            <select class="form-control select2" name="account_type" id="account_type"  required style="width: 100%">
+                                            <select class="form-control select2" name="tenant" id="tenants"  required style="width: 100%">
                                                 <option value="">Select --</option>
 
                                             </select>
@@ -605,11 +605,30 @@
 @endsection 
 
 @section('userjs')
-<script type="text/javascript" src="{{ asset('vendors/datatables/js/jquery.dataTables.js')}}"></script>
-<script type="text/javascript" src="{{ asset('vendors/datatables/js/dataTables.bootstrap.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/custom_js/datatables_custom.js')}}"></script>
-<script src="{{ asset('vendors/toastr/js/toastr.min.js')}}"></script>
 
-<script src="{{ asset('js/banks.js')}}" type="text/javascript"></script>
+<script type="text/javascript">
+
+getTenants();
+function getTenants() {
+
+
+    $.ajax({
+        url: "{{url('tenants/all')}}",
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
+
+            $.each(data, function (i, item) {
+
+                $('#tenants').append($('<option>', {
+                    value: item.id,
+                    text: item.name
+                }));
+            });
+        }
+
+    });
+}
+</script>
 
 @endsection

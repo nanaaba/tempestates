@@ -86,7 +86,7 @@ function getServices()
                     r[++j] = '<td class="subject">' + value.amount + '</td>';
 
                     r[++j] = '<td><button onclick="editDistrict(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-info btn-sm editBtn" type="button">Edit</button>\n\
-                              <button onclick="deleteDistrict(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-danger btn-sm deleteBtn" type="button">Delete</button></td>';
+                              <button onclick="deleteType(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-danger btn-sm deleteBtn" type="button">Delete</button></td>';
 
                     rowNode = datatable.row.add(r);
                 });
@@ -103,57 +103,42 @@ function getServices()
 
 
 
-function deleteDistrict(code, title) {
-    console.log(code + title);
-    $('#districtcode').val(code);
-    $('#districtholder').html(title);
-    $('#confirmModal').modal('show');
-}
-
-$('#deleteFacilityForm').on('submit', function (e) {
-    e.preventDefault();
-    $('input:submit').attr("disabled", true);
-    var facility_code = $('#facilitycode').val();
-    var token = $('#token').val();
-    $('#confirmModal').modal('hide');
-    $('#loaderModal').modal('show');
-
-    $.ajax({
-        url: '../facility/' + facility_code,
-        type: "DELETE",
-        data: {_token: token},
-        success: function (data) {
-            console.log(data);
-            // $("#loader").hide();
-            $('input:submit').attr("disabled", false);
-            $('#loaderModal').modal('hide');
-
-            document.getElementById("deleteFacilityForm").reset();
-            if (data == 0) {
-                swal("Success!", "Deleted Successfully", "success");
-                getFacilitys();
-            } else {
-                swal("Error!", "Couldnt Update", "error");
-            }
-        },
-        error: function (jXHR, textStatus, errorThrown) {
-            $('#loaderModal').modal('hide');
-
-            alert(errorThrown);
-        }
-    });
-
-});
 
 
-function editDistrict(code, name) {
+function editDistrict(code) {
     console.log('goood');
     $('#code').val(code);
-    $('#facilityname').val(name);
+    getServiceInfo(code);
     $('#editModal').modal('show');
 }
 
-$('#updateFacilityForm').on('submit', function (e) {
+
+
+function getServiceInfo(id) {
+
+
+    $.ajax({
+        url: 'services/' + id,
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            console.log(data[0].name);
+            $('#up_servicename').val(data[0].name);
+            $('#up_servdesc').val(data[0].description);
+            $('#up_amt').val(data[0].amount);
+           
+            $('#code').val(id);
+
+        },
+        error: function (jXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        }
+    });
+
+}
+
+
+$('#updateServiceForm').on('submit', function (e) {
     e.preventDefault();
     $('input:submit').attr("disabled", true);
     var formData = $(this).serialize();
@@ -162,7 +147,7 @@ $('#updateFacilityForm').on('submit', function (e) {
     $('#loaderModal').modal('show');
 
     $.ajax({
-        url: 'facility',
+        url: 'services',
         type: "PUT",
         data: formData,
         success: function (data) {
@@ -174,13 +159,54 @@ $('#updateFacilityForm').on('submit', function (e) {
 
             if (data == 0) {
                 swal("Success!", "Information Updated Successfully", "success");
-                getFacilitys();
+                getServices();
             } else {
                 swal("Error!", "Couldnt Update", "error");
             }
         },
         error: function (jXHR, textStatus, errorThrown) {
             console.log(errorThrown);
+        }
+    });
+
+});
+function deleteType(code, title) {
+    console.log(code + title);
+    $('#code').val(code);
+    $('#holdername').html(title);
+    $('#confirmModal').modal('show');
+}
+
+$('#deleteForm').on('submit', function (e) {
+    e.preventDefault();
+    $('input:submit').attr("disabled", true);
+    var code = $('#code').val();
+    var token = $('#token').val();
+    $('#confirmModal').modal('hide');
+    $('#loaderModal').modal('show');
+
+    $.ajax({
+        url: 'services/' + code,
+        type: "DELETE",
+        data: {_token: token},
+        success: function (data) {
+            console.log(data);
+            // $("#loader").hide();
+            $('input:submit').attr("disabled", false);
+            $('#loaderModal').modal('hide');
+
+            document.getElementById("deleteForm").reset();
+            if (data == 0) {
+                swal("Success!", "Deleted Successfully", "success");
+                getServices();
+            } else {
+                swal("Error!", "Couldnt delete", "error");
+            }
+        },
+        error: function (jXHR, textStatus, errorThrown) {
+            $('#loaderModal').modal('hide');
+
+            alert(errorThrown);
         }
     });
 

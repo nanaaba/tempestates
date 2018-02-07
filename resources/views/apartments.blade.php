@@ -130,7 +130,7 @@
                             <div class="form-group row col-md-12 ">
                                 <label  class=" control-label">Apartment Facilities</label>
 
-                                <select id="facilities" name="facilities[]" class="form-control multiselect select2" multiple style="width:100%">
+                                <select  name="facilities[]" class="facilities form-control multiselect select2" multiple style="width:100%">
                                     <option value="">Choose..</option>
                                 </select>
                             </div>
@@ -162,13 +162,13 @@
                         <button type="button" class="close" data-dismiss="modal">×</button>
                         <h4 class="modal-title"> <span id="aprtname"></span> Apartment Information</h4>
                     </div>
-                    <form id="saveApartmentForm" role="form">
+                    <form id="updateApartmentForm" role="form">
                         <input type="hidden" class="form-control form-control-lg input-lg" id="token" name="_token" value="<?php echo csrf_token() ?>" />
 
                         <div class="modal-body">
 
 
-
+                            <input type="hidden" id="code" name="code"/>
 
                             <div class="form-group row col-md-12 ">
                                 <label  class=" control-label">Apartment Name</label>
@@ -370,7 +370,8 @@ function editType(code, name) {
     $('#code').val(code);
     $('#apartmentname').val(name);
     getApartmentInfo(code);
-        $('#editModal').modal('show');
+    getApartmentFacilities(code);
+    $('#editModal').modal('show');
 
 }
 
@@ -383,12 +384,13 @@ function getApartmentInfo(id) {
         dataType: "json",
         success: function (data) {
             console.log(data[0].name);
-            $('#aprtname').hmtl(data[0].name);
+            $('#aprtname').html(data[0].name);
             $('#apartment_name').val(data[0].name);
             $('#up_apartmenttype').val(data[0].type).change();
-            $('#up_currency').val(data[0].currency);
+            $('#up_currency').val(data[0].currency).change();
             $('#up_monthlycharge').val(data[0].monthly_charge);
-            $('#up_estate').val(data[0].estate_id);
+            $('#up_estate').val(data[0].estate_id).change();
+            $('#code').val(id);
 
         },
         error: function (jXHR, textStatus, errorThrown) {
@@ -433,6 +435,28 @@ $('#updateApartmentForm').on('submit', function (e) {
 
 });
 
+
+function getApartmentFacilities(id) {
+
+
+    $.ajax({
+        url: "getapartmentfacilities/" + id,
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
+            var facilities = [];
+
+            $.each(data, function (i, item) {
+                facilities.push(item.facility);
+            });
+            console.log('facilities ::' + data+'||'+facilities);
+            $('#up_facilities').val(facilities).change();
+
+        }
+//up_facilities
+    });
+}
+
 function getFacilities() {
 
 
@@ -444,8 +468,8 @@ function getFacilities() {
 
             $.each(data, function (i, item) {
 
-                $('#facilities').append($('<option>', {
-                    value: item.id,
+                $('.facilities').append($('<option>', {
+                    value: item.name,
                     text: item.name
                 }));
             });
@@ -467,7 +491,7 @@ function getEstates() {
             $.each(data, function (i, item) {
 
                 $('.estates').append($('<option>', {
-                    value: item.name,
+                    value: item.id,
                     text: item.name
                 }));
             });

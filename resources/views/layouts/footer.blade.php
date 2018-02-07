@@ -7,10 +7,7 @@
 
 
 <script src="{{asset('vendors/moment/js/moment.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('vendors/datetime/js/jquery.datetimepicker.full.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('vendors/airdatepicker/js/datepicker.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('vendors/airdatepicker/js/datepicker.en.js')}}" type="text/javascript"></script>
-<script src="{{asset('js/custom_js/advanceddate_pickers.js')}}"></script>
+
 <script src="{{asset('vendors/bootstrap-multiselect/js/bootstrap-multiselect.js')}}" type="text/javascript"></script>
 <script src="{{asset('vendors/select2/js/select2.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/custom_js/custom_elements.js')}}" type="text/javascript"></script>
@@ -84,18 +81,26 @@
 <script type="text/javascript" src="{{asset('js/custom_js/button_main.js')}}"></script>
 <script type="text/javascript" src="{{asset('vendors/gridforms/js/gridforms.js')}}"></script>
 <script src="{{asset('js/custom_js/complex_forms.js')}}" type="text/javascript"></script>
-<script src="{{asset('vendors/daterangepicker/js/daterangepicker.js')}}" type="text/javascript"></script>
 
 <!-- end o<!-- bootstrap time picker -->
-<script src="{{asset('vendors/datetimepicker/js/bootstrap-datetimepicker.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('vendors/clockpicker/js/bootstrap-clockpicker.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('vendors/jquerydaterangepicker/js/jquery.daterangepicker.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('vendors/datedropper/datedropper.js')}}" type="text/javascript"></script>
-<script src="{{asset('vendors/timedropper/js/timedropper.js')}}" type="text/javascript"></script>
-<script src="{{asset('vendors/datetime/js/jquery.datetimepicker.full.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('js/custom_js/datepickers.js')}}" type="text/javascript"></script>f page level js -->
 <script type="text/javascript" src="{{asset('js/custom_js/invoice.js')}}"></script>
 
+
+
+<script src="{{ asset('vendors/inputmask/inputmask/inputmask.js')}}" type="text/javascript"></script>
+<script src="{{ asset('vendors/inputmask/inputmask/jquery.inputmask.js')}}" type="text/javascript"></script>
+<script src="{{ asset('vendors/inputmask/inputmask/inputmask.date.extensions.js')}}" type="text/javascript"></script>
+<script src="{{ asset('vendors/inputmask/inputmask/inputmask.extensions.js')}}" type="text/javascript"></script>
+<!-- date-range-picker -->
+<script src="{{ asset('vendors/daterangepicker/js/daterangepicker.js')}}" type="text/javascript"></script>
+<!-- bootstrap time picker -->
+<script src="{{ asset('vendors/datetimepicker/js/bootstrap-datetimepicker.min.js')}}" type="text/javascript"></script>
+<script src="{{ asset('vendors/clockpicker/js/bootstrap-clockpicker.min.js')}}" type="text/javascript"></script>
+<script src="{{ asset('vendors/jquerydaterangepicker/js/jquery.daterangepicker.min.js')}}" type="text/javascript"></script>
+<script src="{{ asset('vendors/datedropper/datedropper.js')}}" type="text/javascript"></script>
+<script src="{{ asset('vendors/timedropper/js/timedropper.js')}}" type="text/javascript"></script>
+<script src="{{ asset('vendors/datetime/js/jquery.datetimepicker.full.min.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/custom_js/datepickers.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
   $('.select2').select2();
   getApartmentTypes();
@@ -112,7 +117,7 @@ function getApartmentTypes() {
             $.each(data, function (i, item) {
 
                 $('.apartmenttypes').append($('<option>', {
-                    value: item.id,
+                    value: item.name,
                     text: item.name
                 }));
             });

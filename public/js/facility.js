@@ -82,9 +82,9 @@ function getFacilitys()
                     var r = new Array();
                     // represent columns as array
                     r[++j] = '<td class="subject">' + value.name + '</td>';
-                    r[++j] = '<td><button onclick="editDistrict(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-info btn-sm editBtn" type="button">Edit</button>\n\
-                              <button onclick="deleteDistrict(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-danger btn-sm deleteBtn" type="button">Delete</button></td>';
-
+                    r[++j] = '<td><button onclick="deleteType(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-danger btn-sm deleteBtn" type="button">Delete</button></td>';
+//<button onclick="editDistrict(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-info btn-sm editBtn" type="button">Edit</button>\n\
+                              
                     rowNode = datatable.row.add(r);
                 });
 
@@ -99,48 +99,6 @@ function getFacilitys()
 }
 
 
-
-function deleteDistrict(code, title) {
-    console.log(code + title);
-    $('#districtcode').val(code);
-    $('#districtholder').html(title);
-    $('#confirmModal').modal('show');
-}
-
-$('#deleteFacilityForm').on('submit', function (e) {
-    e.preventDefault();
-    $('input:submit').attr("disabled", true);
-    var facility_code = $('#facilitycode').val();
-    var token = $('#token').val();
-    $('#confirmModal').modal('hide');
-    $('#loaderModal').modal('show');
-
-    $.ajax({
-        url: '../facility/'+facility_code,
-        type: "DELETE",
-        data: {_token: token},
-        success: function (data) {
-            console.log(data);
-            // $("#loader").hide();
-            $('input:submit').attr("disabled", false);
-            $('#loaderModal').modal('hide');
-
-            document.getElementById("deleteFacilityForm").reset();
-            if (data == 0) {
-                swal("Success!", "Deleted Successfully", "success");
-                getFacilitys();
-            } else {
-                swal("Error!", "Couldnt Update", "error");
-            }
-        },
-        error: function (jXHR, textStatus, errorThrown) {
-            $('#loaderModal').modal('hide');
-
-            alert(errorThrown);
-        }
-    });
-
-});
 
 
 function editDistrict(code, name) {
@@ -178,6 +136,48 @@ $('#updateFacilityForm').on('submit', function (e) {
         },
         error: function (jXHR, textStatus, errorThrown) {
             console.log(errorThrown);
+        }
+    });
+
+});
+
+function deleteType(code, title) {
+    console.log(code + title);
+    $('#code').val(code);
+    $('#holdername').html(title);
+    $('#confirmModal').modal('show');
+}
+
+$('#deleteForm').on('submit', function (e) {
+    e.preventDefault();
+    $('input:submit').attr("disabled", true);
+    var code = $('#code').val();
+    var token = $('#token').val();
+    $('#confirmModal').modal('hide');
+    $('#loaderModal').modal('show');
+
+    $.ajax({
+        url: 'facility/' + code,
+        type: "DELETE",
+        data: {_token: token},
+        success: function (data) {
+            console.log(data);
+            // $("#loader").hide();
+            $('input:submit').attr("disabled", false);
+            $('#loaderModal').modal('hide');
+
+            document.getElementById("deleteForm").reset();
+            if (data == 0) {
+                swal("Success!", "Deleted Successfully", "success");
+                getFacilitys();
+            } else {
+                swal("Error!", "Couldnt delete", "error");
+            }
+        },
+        error: function (jXHR, textStatus, errorThrown) {
+            $('#loaderModal').modal('hide');
+
+            alert(errorThrown);
         }
     });
 

@@ -33,8 +33,9 @@ class ServiceController extends Controller {
         $update->active = 1;
         $update->modified_by = Session::get('id');
         $update->modified_at = date('Y-m-d H:i:s');
+        $saved = $update->save();
 
-        if (!$update) {
+        if (!$saved) {
             return '1';
         } else {
             return '0';
@@ -82,6 +83,12 @@ class ServiceController extends Controller {
         }
     }
 
+    
+     public function getServiceDetail($id) {
+
+        return Service::where('id', $id)
+                        ->get();
+    }
     private function generateuniqueCode($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);

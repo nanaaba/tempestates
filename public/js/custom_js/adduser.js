@@ -154,6 +154,7 @@ $(document).ready(function () {
         'tabClass': 'nav nav-pills',
         'onNext': function (tab, navigation, index) {
             var $validator = $('#tenantForm').data('bootstrapValidator').validate();
+
             return $validator.isValid();
         },
         onTabClick: function (tab, navigation, index) {
@@ -179,35 +180,37 @@ $(document).ready(function () {
                 if ($validator.isValid()) {
                     var formData = new FormData($('tenantForm')[0]);
                     console.log('data :' + formData);
+console.log($("#tenantForm").serialize());
 
-
-                    $.ajax({
-                        url: "savetenant",
-                        type: "POST",
-                        data: formData,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        success: function (data) {
-                            console.log('server data :' + data);
-//                            if (data == 0) {
-//                                $('#tenantForm select').val('').trigger('change');
+//                    $.ajax({
+//                        url: "savetenant",
+//                        type: "POST",
+//                        data: formData,
+//                        cache: false,
+//                        contentType: false,
+//                        processData: false,
+//                        success: function (data) {
+//                            console.log('server data :' + data);
+////                            if (data == 0) {
+////                                $('#tenantForm select').val('').trigger('change');
+////
+////                                document.getElementById("tenantForm").reset();
+////
+////                                swal("Success", "Information saved successfully", 'success');
+////                              //  $('#pager_wizard').find("a[href='#tab1']").tab('show');
+////                            }
 //
-//                                document.getElementById("tenantForm").reset();
+//                        }
 //
-//                                swal("Success", "Information saved successfully", 'success');
-//                              //  $('#pager_wizard').find("a[href='#tab1']").tab('show');
-//                            }
-
-                        }
-
-                    });
+//                    });
 
                     $('#myModal').modal('show');
                     return $validator.isValid();
                     wizard.find("a[href='#tab1']").tab('show');
                 }
             });
+//            
+//            
             $('#myModal').on('hide.bs.modal', function (e) {
                 location.reload();
             });

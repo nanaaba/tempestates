@@ -14,6 +14,8 @@ use App\Tenant;
 use App\TenantDocuments;
 use App\TenantBills;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+
 
 class TenantController extends Controller {
 
@@ -150,16 +152,32 @@ class TenantController extends Controller {
 
         if ($saved) {
 
-           return '0';
+            return '0';
         } else {
             return '1';
         }
     }
-    
-    
-      public function getTenants() {
-        return Tenant::all()->toJson();
+
+    public function retreiveTenantBill(Request $request) {
+
+        $data = $request->all();
+
+        $daterange = explode("to", $data['daterange']);
+        $start_date = $daterange[0];
+        $end_date = $daterange[1];
+        $tenant = $data['tenant'];
+
+
+        $bills = DB::table('tenant_bills')
+                ->where('tenant_id', '=', $tenant)
+                ->whereBetween('serviced_date', [$start_date, $end_date])
+                ->get();
+        
+        return $bills;
     }
 
+    public function getTenants() {
+        return Tenant::all()->toJson();
+    }
 
 }

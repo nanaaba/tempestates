@@ -84,7 +84,7 @@ Route::post('login/updatepassword', 'LoginController@updatePassword');
 Route::post('tenants/savetenant', 'TenantController@saveTenantInformation');
 Route::post('tenants/service', 'TenantController@saveTenantService');
 Route::get('tenants/all', 'TenantController@getTenants');
-Route::post('tenants/savetenant', 'TenantController@saveTenantInformation');
+Route::post('retreivetenantbills', 'TenantController@retreiveTenantBill');
 Route::post('tenants/savetenant', 'TenantController@saveTenantInformation');
 
 

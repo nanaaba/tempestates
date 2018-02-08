@@ -8,7 +8,7 @@
 
         <meta name="_token" content="{{ csrf_token() }}">
 
-        <title>GroundTouch</title>
+        <title>Rotamach</title>
         <link type="text/css" href="{{ asset('css/app.css')}}" rel="stylesheet"/>
         <!-- end of global css -->
         <!--page level css-->
@@ -18,9 +18,19 @@
         <link href="{{ asset('vendors/bootstrapvalidator/css/bootstrapValidator.min.css')}}" type="text/css" rel="s        tylesheet">
         <link href="{{ asset('vendors/datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet">
         <link href="{{ asset('vendors/iCheck/css/all.css')}}" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" type="text/css" href="{{asset('css/custom_css/sweet_alert2.css')}}">
 
         <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css')}}">
         <link href="{{ asset('css/custom_css/wizard.css')}}" type="text/css" rel="stylesheet">
+  
+    
+    <link rel="stylesheet" href="{{ asset('vendors/animate/animate.min.css')}}"/>
+    <link rel="stylesheet" href="{{ asset('vendors/pnotify/css/pnotify.css')}}">
+    <link href="{{ asset('vendors/pnotify/css/pnotify.brighttheme.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('vendors/pnotify/css/pnotify.buttons.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('vendors/pnotify/css/pnotify.mobile.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('vendors/pnotify/css/pnotify.history.css')}}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/custom_css/toastr_notificatons.css')}}">
     </head>
     <body class="skin-default">
         <div class="preloader">
@@ -117,11 +127,19 @@
         <script src="{{ asset('vendors/bootstrapvalidator/js/bootstrapValidator.min.js')}}" type="text/javascript"></script>
         <script src="{{ asset('vendors/datetimepicker/js/bootstrap-datetimepicker.min.js')}}" type="text/javascript"></script>
         <script src="{{ asset('vendors/iCheck/js/icheck.js')}}"></script>
-        <script src="{{ asset('js/custom_js/adduser.js')}}" type="text/javascript"></script>
+        <script src="{{asset('js/custom_js/custom_elements.js')}}" type="text/javascript"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.animate.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.buttons.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.confirm.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.nonblock.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.mobile.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.desktop.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.history.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.callbacks.js')}}"></script>
+<script src="{{asset('js/custom_js/notifications.js')}}"></script>
+        @yield('userjs')
 
-        <script type="text/javascript">
-      $('.select2').select2();
 
-        </script>
     </body>
 </html>

@@ -57,7 +57,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="region" class="control-label">Service Date:</label>
-                                        <input type="date" class="form-control" name="date_serviced"  
+                                        <input type="date" class="form-control" name="date_serviced"   required
                                                />
                                     </div>
                                 </div>
@@ -172,6 +172,7 @@ $('#services').change(function () {
 
 $('#tenants').change(function () {
     var tenant_id = $(this).val();
+    getTenantInfo(tenant_id);
 });
 
 function getServiceInfo(id) {
@@ -190,16 +191,16 @@ function getServiceInfo(id) {
     });
 }
 
-function getRentInfo(id) {
+function getTenantInfo(id) {
 
 
     $.ajax({
-        url: "../services/" + id,
+        url: "../tenant/" + id,
         type: "GET",
         dataType: 'json',
         success: function (data) {
-            $('#service_description').val(data[0].description);
-            $('#service_amount').val(data[0].amount);
+            $('#apartment_name').val(data[0].apartment_name);
+            $('#apartment_type').val(data[0].apartment_type);
 
         }
 //up_facilities
@@ -241,7 +242,7 @@ function getTenants() {
             $.each(data, function (i, item) {
 
                 $('#tenants').append($('<option>', {
-                    value: item.id,
+                    value: item.tenant_code,
                     text: item.name
                 }));
             });

@@ -154,7 +154,9 @@ $(document).ready(function () {
         'tabClass': 'nav nav-pills',
         'onNext': function (tab, navigation, index) {
             var $validator = $('#tenantForm').data('bootstrapValidator').validate();
+           
 
+            
             return $validator.isValid();
         },
         onTabClick: function (tab, navigation, index) {
@@ -177,10 +179,10 @@ $(document).ready(function () {
             }
             wizard.find('.finish').on('click', function () {
                 var $validator = $('#tenantForm').data('bootstrapValidator').validate();
-                if ($validator.isValid()) {
+              
                     var formData = new FormData($('tenantForm')[0]);
                     console.log('data :' + formData);
-console.log($("#tenantForm").serialize());
+                    console.log($("#tenantForm").serialize());
 
 //                    $.ajax({
 //                        url: "savetenant",
@@ -207,9 +209,9 @@ console.log($("#tenantForm").serialize());
                     $('#myModal').modal('show');
                     return $validator.isValid();
                     wizard.find("a[href='#tab1']").tab('show');
-                }
+                
             });
-//            
+////            
 //            
             $('#myModal').on('hide.bs.modal', function (e) {
                 location.reload();

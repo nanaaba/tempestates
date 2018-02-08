@@ -28,6 +28,7 @@
                 </button>
             </div>
         </div>
+                    <p style="color: red">NB:<small>Kindly convert periods to months,pls enter figures only for eg. 12 months should be 12</small></p>
 
         <div class="row">
             <div class="col-lg-12">
@@ -79,7 +80,7 @@
                                     <label  class="form-control-label">Rent Period Name</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input  name="name" type="text" class="form-control" required/>
+                                    <input  name="name" type="number" class="form-control" required/>
 
                                 </div>
                             </div>

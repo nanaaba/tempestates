@@ -134,6 +134,12 @@ if (! function_exists('asset')) {
        // return app('url')->asset($path, $secure);
           return app('url')->asset("public/".$path, $secure);
     }
+    //imgasset
+    function imgasset($path, $secure = null)
+    {
+       // return app('url')->asset($path, $secure);
+          return app('url')->asset($path, $secure);
+    }
 }
 
 if (! function_exists('auth')) {

@@ -16,7 +16,6 @@ use App\TenantBills;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
-
 class TenantController extends Controller {
 
     public function showtenants() {
@@ -39,94 +38,99 @@ class TenantController extends Controller {
     public function saveTenantInformation(Request $request) {
 
         $data = $request->all();
+        $tenantcode = 'TNT' . $this->generateuniqueCode(5);
 
 
         $new = new Tenant();
-
-        $createdby = $request->session()->get('id');
-
         if ($request->hasFile('pic_file')) {
             $picfile = $request->file('pic_file');
             $profilepic = $picfile->store('profilepics');
+            $new->profile_pic = $profilepic;
         }
 
         if ($request->hasFile('scanned_id')) {
             $scanned_id = $request->file('scanned_id');
-            $scanned_file = $scanned_id->store('scannedids');
+            $scanned_file = $scanned_id->store('scanneddocuments');
+            $new->scanned_id = $scanned_file;
         }
+        $new->title = $data['title'];
+        $new->name = $data['fullname'];
+        $new->dateofbirth = $data['dob'];
+        $new->gender = $data['gender'];
+        $new->nationality = $data['nationality'];
+        $new->hometown = $data['hometown'];
+        $new->email_address = $data['email'];
+        $new->contactno = $data['phone_number'];
+        $new->previous_resident = $data['previous_resident'];
+        $new->current_resident = $data['current_resident'];
+        $new->id_number = $data['id_number'];
+        $new->employment_status = $data['employment_status'];
+        $new->occupation = $data['occupation'];
+        $new->company = $data['company'];
+        $new->company_address = $data['company_address'];
+        $new->company_numbers = $data['office_numbers'];
+        $new->company_area = $data['office-area'];
+        $new->position = $data['position'];
+        $new->company_street = $data['office_street'];
+        $new->company_location = $data['office_location'];
+        $new->marital_status = $data['marital_status'];
+        $new->children = $data['children'];
+        $new->nextkin = $data['nextofkin'];
+        $new->nextkin_contact = $data['phoneno'];
+        $new->nextkin_address = $data['nextkin_address'];
+        $new->nextkin_location = $data['nextkin_hse'];
+        $new->nextkin_occupation = $data['nextkin_occupation']; //emergency_contact
+        $new->nextkin_workplace = $data['nextkin_work'];
+        $new->emergency_contact = $data['emergency_contact'];
+        $new->tenant_code = $tenantcode;
 
-        $new->name = $data['name'];
-        $new->dateofbirth = $data['estate'];
-        $new->gender = $data['currency'];
-        $new->nationality = $data['monthly_charge'];
-        $new->name = $data['name'];
-        $new->postal_address = $data['estate'];
-        $new->gender = $data['currency'];
-        $new->hometown = $data['monthly_charge'];
-        $new->email_address = $data['name'];
-        $new->contactno = $data['estate'];
-        $new->previous_resident = $data['currency'];
-        $new->current_resident = $data['monthly_charge'];
-        $new->id_number = $data['name'];
-        $new->scanned_id = $data['estate'];
-        $new->employment_status = $data['currency'];
-        $new->occupation = $data['monthly_charge'];
-        $new->company = $data['estate'];
-        $new->company_address = $data['currency'];
-        $new->company_numbers = $data['monthly_charge'];
-        $new->company_area = $data['name'];
-        $new->company_street = $data['estate'];
-        $new->company_location = $data['currency'];
-        $new->marital_status = $data['monthly_charge'];
-        $new->children = $data['estate'];
-        $new->nextkin = $data['currency'];
-        $new->nextkin_contact = $data['monthly_charge'];
-        $new->nextkin_address = $data['name'];
-        $new->nextkin_location = $data['estate'];
-        $new->nextkin_occupation = $data['currency'];
-        $new->nextkin_workplace = $data['monthly_charge'];
         $new->created_by = Session::get('id');
         $new->modified_by = Session::get('id');
         $new->modified_at = date('Y-m-d H:i:s');
-//        $documents = $request->file('documents');
 
-        $saved = $new->save();
+        try {
+            $saved = $new->save();
 
-        if ($saved) {
+            if ($saved) {
+                $tenant_id = $new->id;
+                $this->saveTenantRent($data['apartment'], $tenant_id, $data['rent_period'], $data['currency'], $data['amount'], '2018-02-01', '2018-10-10');
+                $this->uploadDocuments($request->file('documents'), $tenant_id);
 
-            $tenant_id = $new->id;
-            $rent_id = $this->saveTenantRent($data['estate'], $data['estate'], $data['estate'], $data['estate'], $data['estate'], $data['estate']);
-            $this->uploadDocuments($request->file('documents'), $tenant_id, $rent_id);
-            return '0';
-        } else {
-            return '1';
+                $data = array('success' => 0, 'tenat_id' => $tenantcode);
+                return json_encode($data);
+            } else {
+                $data = array('success' => 1, 'tenat_id' => '');
+                return json_encode($data);
+            }
+        } catch (\Illuminate\Database\QueryException $e) {
+             $data = array('success' => 2, 'message' => $e->getMessage());
+                return json_encode($data);
         }
     }
 
-    public function uploadDocuments($documents, $tenant, $rent) {
+    public function uploadDocuments($documents, $tenant) {
 
 
 
 
         foreach ($documents as $document) {
-            $filename = $document->store('documents');
+            $filename = $document->store('scanneddocuments');
             TenantDocuments::create([
                 'tenant_id' => $tenant,
-                'rent_id' => $rent,
                 'url' => $filename
             ]);
         }
         return 'Upload successful!';
     }
 
-    public function saveTenantRent($apartment, $tenant, $period, $amount, $startdate, $enddate) {
+    public function saveTenantRent($apartment, $tenant, $period, $currency, $amount, $startdate, $enddate) {
 
         $createdby = Session::get('id');
 
 
-        $rentid = DB::insertGetId('insert into rent (apartment_id,tenant_id,period, amount,start_date,end_date,created_by) values (?,?,?,?,?,?,?)', ["$apartment", "$tenant", "$period", "$amount", "$startdate", "$enddate", $createdby]);
+        DB::insert('insert into rent (apartment_id,tenant_id,period,currency, amount,start_date,end_date,created_by) values (?,?,?,?,?,?,?,?)', ["$apartment", "$tenant", "$period", "$currency", "$amount", "$startdate", "$enddate", $createdby]);
 
-        return $rentid;
+        //  return $rentid;
     }
 
     public function savetenantPayment($rent, $amount, $paymentdate, $description, $mode, $url = null) {
@@ -168,16 +172,71 @@ class TenantController extends Controller {
         $tenant = $data['tenant'];
 
 
-        $bills = DB::table('tenant_bills')
+        $bills = DB::table('tenant_bills_view')
                 ->where('tenant_id', '=', $tenant)
                 ->whereBetween('serviced_date', [$start_date, $end_date])
                 ->get();
-        
+
         return $bills;
     }
 
     public function getTenants() {
-        return Tenant::all()->toJson();
+        return DB::table('tenants_view')->get();
+    }
+
+    public function showtenantinformation($id) {
+
+        $info = $this->getTenantDetail($id);
+        $documents = $this->getTenantDocuments($id);
+        return view('tenantinformation')->with('information', $info)
+                        ->with('documents', $documents);
+    }
+
+    public function getTenantDetail($id) {
+        return DB::table('tenants_view')->where('tenant_code', $id)->get();
+    }
+
+    public function getTenantDocuments($id) {
+        return DB::table('tenants_documents')->where('tenant_id', 1)->get();
+    }
+
+    public function deleteTenantInformation($id) {
+
+        $update = Tenant::find($id);
+        $update->active = 1;
+        $update->modified_by = Session::get('id');
+        $update->modified_at = date('Y-m-d H:i:s');
+        $saved = $update->save();
+
+        if (!$saved) {
+            return '1';
+        } else {
+            return '0';
+        }
+    }
+
+    public function updateTenantInformation(Request $request) {
+//        if ($request->hasFile('pic_file')) {
+//            $picfile = $request->file('pic_file');
+//            $profilepic = $picfile->store('profilepics');
+//            echo'wow';
+//        }
+//
+//        if ($request->hasFile('scanned_id')) {
+//            $scanned_id = $request->file('scanned_id');
+//            $scanned_file = $scanned_id->store('scannedids');
+//            echo 'wowwww';
+//        }
+    }
+
+    private function generateuniqueCode($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 
 }

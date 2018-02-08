@@ -3,7 +3,7 @@
         <a href="dashboard.php" class="logo">
             <!-- Add the class icon to your logo image or logo icon to add the margining -->
 <!--            <img src="" alt="logo"/>-->
-            GROUNDTOUCH
+            ROTAMAC
         </a>
         <!-- Header Navbar: style can be found in header-->
         <!-- Sidebar toggle button-->

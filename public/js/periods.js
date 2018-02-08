@@ -81,7 +81,7 @@ function getRentPeriods()
                     var j = -1;
                     var r = new Array();
                     // represent columns as array
-                    r[++j] = '<td class="subject">' + value.name + '</td>';
+                    r[++j] = '<td class="subject">' + value.name + ' months </td>';
 
 
                     r[++j] = '<td> <button onclick="deletePeriod(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-danger btn-sm deleteBtn" type="button">Delete</button></td>';

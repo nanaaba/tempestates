@@ -8,7 +8,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            New Tenant
+            Tenant Information
         </h1>
         <ol class="breadcrumb">
             <li>
@@ -20,10 +20,16 @@
                 <a href="#"> Tenants</a>
             </li>
             <li class="active">
-                New Tenant
+                Tenant Information
             </li>
         </ol>
     </section>
+    <?php
+    $info = json_decode($information, true);
+    $documents = json_decode($documents, true);
+    $profilepic = $info[0]['profile_pic'];
+    $scanned_id = $info[0]['scanned_id'];
+    ?>
     <!-- Main content -->
     <section class="content">
 
@@ -46,7 +52,7 @@
 
                         <div id="rootwizard">
 
-                            <form id="tenantForm" method="POST" enctype="multipart/form-data" class="form-horizontal">
+                            <form id="updatetenantForm"  enctype="multipart/form-data" class="form-horizontal">
 
                                 <ul class="nav nav-pills">
                                     <li class="nav-item">
@@ -66,12 +72,11 @@
                                         <a href="#tab5" class="nav-link" data-toggle="tab">Related Documents</a>
                                     </li>
                                 </ul>
-
-
+{{ csrf_field() }}
 
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab1">
-                                        <input type="hidden" class="form-control form-control-lg input-lg" id="token" name="_token" value="<?php echo csrf_token() ?>" />
+                                        <input type="hidden" value="{{$info[0]['id']}}" name="tenant_id"/>
 
                                         <h2 class="hidden">&nbsp;</h2>
                                         <div class="row form-group">
@@ -83,7 +88,7 @@
 
                                             <div class="col-sm-9">
                                                 <select class="select2 form-control" name="apartment" id="apartments">
-                                                    <option value="">Choose</option>
+                                                    <option value="{{$info[0]['apartment_id']}}">{{$info[0]['apartment_name']}}</option>
 
                                                 </select>
 
@@ -95,7 +100,7 @@
                                                 </label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="apartment_type" id="apartment_type" type="text" class="form-control required" readonly/>
+                                                <input  name="apartment_type" value="{{$info[0]['apartment_type']}}" id="apartment_type" type="text" class="form-control required" readonly/>
                                             </div>
                                         </div>
 
@@ -107,11 +112,13 @@
                                             <div class="col-sm-9">
                                                 <div class="col-sm-3">
                                                     <input  name="currency" type="text" id="currency"
+                                                            value="{{$info[0]['currency']}}"
                                                             class="form-control " readonly />   
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <input  name="amount" type="text" id="monthly_charge"
-                                                            class="form-control required" />
+                                                            value="{{$info[0]['amount']}}"
+                                                            class="form-control required"  />
                                                 </div>
                                             </div>
                                         </div>
@@ -125,7 +132,7 @@
 
                                             <div class="col-sm-9">
                                                 <select class="select2 form-control" id="rent_periods" name="rent_period">
-                                                    <option value="">Choose</option>
+                                                    <option value="{{$info[0]['period']}}">{{$info[0]['period']}} months</option>
 
                                                 </select>
 
@@ -146,7 +153,7 @@
                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                                     <div class="fileinput-new thumbnail"
                                                          style="width: 200px; height: 200px;">
-                                                        <img src="{{ asset('img/original.jpg')}}" alt="profile pic holder">
+                                                        <img src="<?php echo imgasset("storage/app/$profilepic") ?>" alt="profile pic holder">
                                                     </div>
                                                     <div class="fileinput-preview fileinput-exists thumbnail"
                                                          style="max-width: 200px; max-height: 200px;"></div>
@@ -171,7 +178,7 @@
                                             </div>
                                             <div class="col-sm-9">
                                                 <select class="select2 form-control" name="title" style="width: 100%">
-                                                    <option value="">Choose ...</option>
+                                                    <option value="{{$info[0]['title']}}">{{$info[0]['title']}}</option>
                                                     <option value="Mr.">Mr.</option>
                                                     <option value="Miss">Miss</option>
                                                     <option value="Mrs">Mrs</option>
@@ -183,7 +190,7 @@
                                                 <label  class="form-control-label">Name</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="fullname" type="text" class="form-control"/>
+                                                <input  name="fullname"   value="{{$info[0]['name']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -192,7 +199,7 @@
                                                 <label for="dob" class="form-control-label">Date of Birth</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input id="dob" name="dob" type="date" class="form-control"
+                                                <input id="dob"   value="{{$info[0]['dateofbirth']}}" name="dob" type="text" class="form-control"
                                                        placeholder="dd/mm/yyyy"/>
                                             </div>
                                         </div>
@@ -202,10 +209,10 @@
                                                 <label  class="form-control-label">Gender</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <select class="select2 form-control" name="gender" style="width: 100%">
-                                                    <option>Choose ..</option>
-                                                    <option>Male</option>
-                                                    <option>Female</option>
+                                                <select class="select2 form-control"    name="gender" style="width: 100%">
+                                                    <option value="{{$info[0]['gender']}}">{{$info[0]['gender']}}</option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -215,7 +222,7 @@
                                                 <label class="form-control-label">Nationality</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="nationality" type="text" class="form-control"/>
+                                                <input  name="nationality"   value="{{$info[0]['nationality']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -226,7 +233,7 @@
                                                 <label  class="form-control-label">HomeTown & District</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="hometown" type="text" class="form-control"/>
+                                                <input  name="hometown"   value="{{$info[0]['hometown']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -235,7 +242,7 @@
                                                 <label  class="form-control-label">E-mail Address </label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="email" type="text" class="form-control"/>
+                                                <input  name="email"   value="{{$info[0]['email_address']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -244,7 +251,7 @@
                                                 <label for="dob" class="form-control-label">Phone Number(s)</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="phone_number" type="text" class="form-control"/>
+                                                <input  name="phone_number"   value="{{$info[0]['contactno']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -253,7 +260,7 @@
                                                 <label  class="form-control-label">Current or Present Residential address</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="current_resident" type="text" class="form-control"/>
+                                                <input  name="current_resident"   value="{{$info[0]['current_resident']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>        
@@ -263,7 +270,7 @@
                                                 </label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="previous_resident" type="text" class="form-control"/>
+                                                <input  name="previous_resident"   value="{{$info[0]['previous_resident']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -274,7 +281,7 @@
                                             </div>
                                             <div class="col-sm-9">
                                                 <select class="select2 form-control" name="id_number" id="id_number" style="width: 100%">
-                                                    <option value="">Choose ..</option>
+                                                    <option value="{{$info[0]['id_number']}}">{{$info[0]['id_number']}}</option>
 
                                                 </select>
                                             </div>
@@ -300,6 +307,8 @@
                                                            data-dismiss="fileinput">Remove</a>
                                                     </div>
                                                 </div>
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -310,7 +319,7 @@
                                             </div>
                                             <div class="col-sm-9">
                                                 <select class="form-control select2"  name="employment_status" style="width: 100%">
-                                                    <option value="">Choose</option>
+                                                    <option value="{{$info[0]['employment_status']}}">{{$info[0]['employment_status']}}</option>
                                                     <option value="Employee">Employee</option>
                                                     <option value="Self Employed">Self Employed</option>
                                                     <option value="UnEmployed">UnEmployed</option>
@@ -324,7 +333,7 @@
                                                 <label class="form-control-label">Occupation/Profession</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="occupation" type="text" class="form-control"/>
+                                                <input  name="occupation"   value="{{$info[0]['occupation']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>                   <div class="row form-group ">
@@ -332,7 +341,7 @@
                                                 <label  class="form-control-label">Position/Title</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="position" type="text" class="form-control"/>
+                                                <input  name="position"   value="{{$info[0]['position']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>                   
@@ -341,7 +350,7 @@
                                                 <label  class="form-control-label">Company/Institution Name</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="company" type="text" class="form-control"/>
+                                                <input  name="company"   value="{{$info[0]['company']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>                   
@@ -350,7 +359,7 @@
                                                 <label  class="form-control-label">Postal Address</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="company_address" type="text" class="form-control"/>
+                                                <input  name="company_address"   value="{{$info[0]['company_address']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -360,7 +369,7 @@
                                                 <label  class="form-control-label">Office Numbers</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="office_numbers" type="text" class="form-control"/>
+                                                <input  name="office_numbers"   value="{{$info[0]['company_numbers']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -369,7 +378,7 @@
                                                 <label  class="form-control-label">Area</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="office-area" type="text" class="form-control"/>
+                                                <input  name="office-area"   value="{{$info[0]['company_area']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -378,7 +387,7 @@
                                                 <label  class="form-control-label">Street</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="office_street" type="text" class="form-control"/>
+                                                <input  name="office_street"   value="{{$info[0]['company_street']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -387,7 +396,7 @@
                                                 <label  class="form-control-label">Location Address</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="office_location" type="text" class="form-control"/>
+                                                <input  name="office_location"    value="{{$info[0]['company_location']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -402,7 +411,7 @@
                                             </div>
                                             <div class="col-sm-9">
                                                 <select class="form-control select2" name="marital_status" id="marital_status" style="width: 100%;" >
-                                                    <option value="" >Select </option>
+                                                    <option value="{{$info[0]['marital_status']}}" >{{$info[0]['marital_status']}} </option>
                                                     <option value="Single">Single</option>
                                                     <option value="Married">Married</option>
                                                     <option value="Widow">Widow</option>
@@ -417,7 +426,7 @@
                                                 <label  class="form-control-label">No. Children</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="children" type="text" class="form-control"/>
+                                                <input  name="children"   value="{{$info[0]['children']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -426,7 +435,7 @@
                                                 <label  class="form-control-label">Next of Kin</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="nextofkin" type="text" class="form-control"/>
+                                                <input  name="nextofkin"   value="{{$info[0]['nextkin']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -435,7 +444,7 @@
                                                 <label  class="form-control-label">Phone No.</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="phoneno" type="text" class="form-control"/>
+                                                <input  name="phoneno"   value="{{$info[0]['nextkin_contact']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -444,7 +453,7 @@
                                                 <label  class="form-control-label">Postal Address</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="nextkin_address" type="text" class="form-control"/>
+                                                <input  name="nextkin_address"   value="{{$info[0]['nextkin_address']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -453,7 +462,7 @@
                                                 <label  class="form-control-label">Location:House No.</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="nextkin_hse" type="text" class="form-control"/>
+                                                <input  name="nextkin_hse"   value="{{$info[0]['nextkin_location']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -462,7 +471,7 @@
                                                 <label  class="form-control-label">Occupation/Profession</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="nextkin_occupation" type="text" class="form-control"/>
+                                                <input  name="nextkin_occupation"   value="{{$info[0]['nextkin_occupation']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -471,7 +480,7 @@
                                                 <label  class="form-control-label">Emergency Contact</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="emergency_contact" type="text" class="form-control"/>
+                                                <input  name="emergency_contact"    value="{{$info[0]['emergency_contact']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -480,7 +489,7 @@
                                                 <label  class="form-control-label">Place Of Work</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="nextkin_work" type="text" class="form-control"/>
+                                                <input  name="nextkin_work"   value="{{$info[0]['nextkin_workplace']}}" type="text" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -500,7 +509,17 @@
                                                 </span>
 
                                             </div>
+                                            <br><br>
+                                            <?php
+                                            foreach ($documents as $value) {
+                                                $i = 1;
+                                                echo '<button type="button" class="btn btn-info ">
+                    Download file' . $i . '
+                </button>&nbsp;&nbsp;';
 
+                                                $i++;
+                                            }
+                                            ?>
                                         </div>   
 
 
@@ -527,7 +546,7 @@
                                     <li class="previous"><a href="javascript:;">Previous</a></li>
                                     <li class="next last"><a href="javascript:;">Last</a></li>
                                     <li class="next"><a href="javascript:;">Next</a></li>
-                                    <li class="finish"><a href="javascript:;">Finish</a></li>
+                                    <li class="finish"><a href="javascript:;">finish</a></li>
                                 </ul>
 
                             </form>
@@ -572,163 +591,130 @@
 @endsection 
 
 @section('userjs')
-<script type="text/javascript" src="{{ asset('vendors/sweetalert2/js/sweetalert2.min.js')}}"></script>
-
 <script type="text/javascript">
 
-PNotify.prototype.options.styling = "bootstrap3";
-PNotify.prototype.options.styling = "jqueryui";
-PNotify.prototype.options.styling = "fontawesome";
 
-$('#rootwizard').bootstrapWizard({onTabShow: function (tab, navigation, index) {
-        var $total = navigation.find('li').length;
-        var $current = index + 1;
-        var $percent = ($current / $total) * 100;
-        $('#rootwizard').find('.bar').css({width: $percent + '%'});
-    }});
-$('#rootwizard .finish').click(function () {
-    // var formData = $("#tenantForm").serialize();
-    var formData = new FormData($("#tenantForm")[0]);
+    $('#rootwizard').bootstrapWizard({onTabShow: function (tab, navigation, index) {
+            var $total = navigation.find('li').length;
+            var $current = index + 1;
+            var $percent = ($current / $total) * 100;
+            $('#rootwizard').find('.bar').css({width: $percent + '%'});
+        }});
+    $('#rootwizard .finish').click(function () {
+        var formData = $("#tenantForm").serialize();
+        //var formData = new FormData($("#updatetenantForm")[0]);
 
 
-    console.log('data :' + formData);
-    $.ajax({
-        url: "savetenant",
-        type: "POST",
-        data: formData,
-        cache: false,
-        contentType: false,
-        processData: false,
-        dataType: 'json',
-        success: function (data) {
-            console.log('server data :' + data);
-            if (data.success == 0) {
-                $('#tenantForm select').val('').trigger('change');
+        console.log('data :' + formData);
+        $.ajax({
+            url: "{{url('tenant/update')}}",
+            type: "PUT",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log('server data :' + data);
 
-                document.getElementById("tenantForm").reset();
-                new PNotify({
-                    title: 'Success',
-                    text: "Information saved successfully.Tenant Code is" + data.tenat_id,
-                    type: 'success'
-                });
-                // swal("Success", "Information saved successfully.Tenant Code is"+data.tenat_id, 'success');
-            } else if (data.success == 1) {
-                new PNotify({
-                    title: 'Error',
-                    text: "Error in Saving Tenant Information",
-                    type: 'error'
-                });
-                //swal("Error", "Error in Saving Tenant Information", 'error');
-
-            } else {
-                // swal("Error", data.message, 'error');
-                new PNotify({
-                    title: 'Error',
-                    text: data.message,
-                    type: 'error'
-                });
 
             }
 
+        });
+        // alert('Finished!, Starting over!');
 
-        }
-
+        //$('#rootwizard').find("a[href*='tab1']").trigger('click');
     });
-    // alert('Finished!, Starting over!');
+    $('.select2').select2();
 
-    //$('#rootwizard').find("a[href*='tab1']").trigger('click');
-});
-$('.select2').select2();
-
-getApartments();
+    getApartments();
 
 
-function getApartments() {
+    function getApartments() {
 
 
-    $.ajax({
-        url: "{{url('apartment/all')}}",
-        type: "GET",
-        dataType: 'json',
-        success: function (data) {
+        $.ajax({
+            url: "{{url('apartment/all')}}",
+            type: "GET",
+            dataType: 'json',
+            success: function (data) {
 
-            $.each(data, function (i, item) {
+                $.each(data, function (i, item) {
 
-                $('#apartments').append($('<option>', {
-                    value: item.id,
-                    text: item.name
-                }));
-            });
-        }
+                    $('#apartments').append($('<option>', {
+                        value: item.id,
+                        text: item.name
+                    }));
+                });
+            }
 
+        });
+    }
+
+    $('#apartments').change(function () {
+        var id = $(this).val();
+        getApartmentInfo(id);
     });
-}
 
-$('#apartments').change(function () {
-    var id = $(this).val();
-    getApartmentInfo(id);
-});
-
-function getApartmentInfo(id) {
+    function getApartmentInfo(id) {
 
 
-    $.ajax({
-        url: "../apartment/" + id,
-        type: "GET",
-        dataType: 'json',
-        success: function (data) {
-            $('#apartment_type').val(data[0].type);
-            $('#monthly_charge').val(data[0].monthly_charge);
-            $('#currency').val(data[0].currency);
+        $.ajax({
+            url: "../../apartment/" + id,
+            type: "GET",
+            dataType: 'json',
+            success: function (data) {
+                $('#apartment_type').val(data[0].type);
+                $('#monthly_charge').val(data[0].monthly_charge);
+                $('#currency').val(data[0].currency);
 
-            //currency
-        }
+                //currency
+            }
 //up_facilities
-    });
-}
-getRentPeriods();
-function getRentPeriods() {
+        });
+    }
+    getRentPeriods();
+    function getRentPeriods() {
 
 
-    $.ajax({
-        url: "{{url('configuration/getrentperiods')}}",
-        type: "GET",
-        dataType: 'json',
-        success: function (data) {
+        $.ajax({
+            url: "{{url('configuration/getrentperiods')}}",
+            type: "GET",
+            dataType: 'json',
+            success: function (data) {
 
-            $.each(data, function (i, item) {
+                $.each(data, function (i, item) {
 
-                $('#rent_periods').append($('<option>', {
-                    value: item.name,
-                    text: item.name + " months"
-                }));
-            });
-        }
+                    $('#rent_periods').append($('<option>', {
+                        value: item.name,
+                        text: item.name + " months"
+                    }));
+                });
+            }
 
-    });
-}
+        });
+    }
 
-getIds();
-function getIds() {
+    getIds();
+    function getIds() {
 
 
-    $.ajax({
-        url: "{{url('configuration/getidentificationcards')}}",
-        type: "GET",
-        dataType: 'json',
-        success: function (data) {
+        $.ajax({
+            url: "{{url('configuration/getidentificationcards')}}",
+            type: "GET",
+            dataType: 'json',
+            success: function (data) {
 
-            $.each(data, function (i, item) {
+                $.each(data, function (i, item) {
 
-                $('#id_number').append($('<option>', {
-                    value: item.name,
-                    text: item.name
-                }));
-            });
-        }
+                    $('#id_number').append($('<option>', {
+                        value: item.name,
+                        text: item.name
+                    }));
+                });
+            }
 
-    });
-}
+        });
+    }
 
 </script>
 @endsection

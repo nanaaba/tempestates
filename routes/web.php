@@ -16,31 +16,34 @@ Route::get('/', function () {
 });
 Route::get('dashboard', 'DashboardController@showdashboard');
 Route::get('estates', 'EstatesController@showestates');
+Route::get('services', 'ServiceController@showservices');
+
 Route::get('apartments/facilities', 'ApartmentController@showapartmentsfacilities');
 Route::get('apartments', 'ApartmentController@showaparments');
 Route::get('facilities', 'FacilityController@showfacility');
 Route::get('tenants/new', 'TenantController@showtenants');
-Route::get('tenants/all', 'TenantController@showalltenants');
+Route::get('tenants/showall', 'TenantController@showalltenants');
+Route::get('tenants/information/{id}', 'TenantController@showtenantinformation');
 Route::get('tenants/services', 'TenantController@showtenantsservices');
 Route::get('tenants/bill', 'TenantController@showtenantsbill');
 Route::get('configuration/apartmenttypes', 'ConfigurationController@showapartmenttypes');
 Route::get('configuration/rentperiods', 'ConfigurationController@showrentperiods');
 Route::get('configuration/identification', 'ConfigurationController@showidentification');
-
-
 Route::get('account', 'AccountController@showbanks');
-Route::get('banks', 'BankController@showbanks');
-Route::get('services', 'ServiceController@showservices');
+Route::get('banking/banks', 'BankController@showbanks');
+Route::get('banking/rentpayments', 'BankController@showrentpayments');
+Route::get('banking/clearpayments', 'BankController@showclearpayments');
+Route::get('banking/clearedpayments', 'BankController@showclearedpayments');
 
 
 Route::get('/logout', function() {
-        //Uncomment to see the logs record
-        //\Log::info("Session before: ".print_r($request->session()->all(), true));
-         Session::flush();
-        //Uncomment to see the logs record
-        //\Log::info("Session after: ".print_r($request->session()->all(), true));
-        return redirect('/');
-    });
+    //Uncomment to see the logs record
+    //\Log::info("Session before: ".print_r($request->session()->all(), true));
+    Session::flush();
+    //Uncomment to see the logs record
+    //\Log::info("Session after: ".print_r($request->session()->all(), true));
+    return redirect('/');
+});
 
 
 
@@ -85,7 +88,10 @@ Route::post('tenants/savetenant', 'TenantController@saveTenantInformation');
 Route::post('tenants/service', 'TenantController@saveTenantService');
 Route::get('tenants/all', 'TenantController@getTenants');
 Route::post('retreivetenantbills', 'TenantController@retreiveTenantBill');
-Route::post('tenants/savetenant', 'TenantController@saveTenantInformation');
+Route::delete('tenants/{id}', 'TenantController@deleteTenantInformation');
+Route::get('tenant/{id}', 'TenantController@getTenantDetail');
+
+Route::put('tenant/update', 'TenantController@updateTenantInformation');
 
 
 //configuration
@@ -98,6 +104,12 @@ Route::get('configuration/getidentificationcards', 'ConfigurationController@getI
 Route::delete('configuration/deleteapartmentype/{id}', 'ConfigurationController@deleteApartmentType');
 Route::delete('configuration/deleteperiod/{id}', 'ConfigurationController@deleteRentPeriod');
 Route::delete('configuration/deleteidentificationcard/{id}', 'ConfigurationController@deleteIdentification');
+
+//anking//saverentpayments
+Route::get('banks/all', 'BankController@getBanks');
+Route::post('banking/saverentpayments', 'BankController@saveRentPayment');
+Route::post('banking/savebank', 'BankController@saveBank');
+Route::get('banking/getpayments', 'BankController@getRentpayments');
 
 
 

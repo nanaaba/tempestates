@@ -87,8 +87,8 @@
                                 <span class="mm-text "> New Tenant</span>
                             </a>
                         </li>
-                         <li   class="{{ Request::is('tenants/all') ? 'active' : '' }}">
-                            <a href="{{ url('tenants/all') }}">
+                         <li   class="{{ Request::is('tenants/showall') ? 'active' : '' }}">
+                            <a href="{{ url('tenants/showall') }}">
                                 <i class="menu-icon ti-layout-list-large-image"></i>
                                 <span class="mm-text "> All Tenants</span>
                             </a>
@@ -108,12 +108,43 @@
                     </ul>
                 </li>
 
-                <li   class="{{ Request::is('banks') ? 'active' : '' }}">
-                    <a href="{{ url('banks') }}">
-                        <i class="menu-icon ti-layout-list-large-image"></i>
-                        <span class="mm-text ">Banks </span>
+                
+                  <li class="menu-dropdown {{ Request::is('banking*') ? 'active' : '' }}">
+                    <a href="javascript:void(0)">
+                        <i class="menu-icon ti-check-box"></i>
+                        <span>Banking</span>
+                        <span class="fa arrow"></span>
                     </a>
+                    <ul class="sub-menu">
+                        <li   class="{{ Request::is('banking/banks') ? 'active' : '' }}">
+                            <a href="{{ url('banking/banks') }}">
+                                <i class="menu-icon ti-layout-list-large-image"></i>
+                                <span class="mm-text "> Banks</span>
+                            </a>
+                        </li>
+                         <li   class="{{ Request::is('banking/rentpayments') ? 'active' : '' }}">
+                            <a href="{{ url('banking/rentpayments') }}">
+                                <i class="menu-icon ti-layout-list-large-image"></i>
+                                <span class="mm-text ">Tenants Rent Payments</span>
+                            </a>
+                        </li>
+                         <li   class="{{ Request::is('banking/clearpayments') ? 'active' : '' }}">
+                            <a href="{{ url('banking/clearpayments') }}">
+                                <i class="menu-icon ti-layout-list-large-image"></i>
+                                <span class="mm-text "> Clear Cash Payments </span>
+                            </a>
+                        </li>
+                         <li   class="{{ Request::is('banking/clearedpayments') ? 'active' : '' }}">
+                            <a href="{{ url('banking/clearedpayments') }}">
+                                <i class="menu-icon ti-layout-list-large-image"></i>
+                                <span class="mm-text ">View Cleared Payments </span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
+                
+                
 
             </ul>
             <!-- / .navigation --> </div>

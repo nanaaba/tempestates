@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Bank;
+use App\RentPayments;
 use Illuminate\Support\Facades\Session;
 
 class BankController extends Controller {
@@ -25,7 +26,7 @@ class BankController extends Controller {
     public function getBanks() {
 
         // $banks = DB::table('banks_view')->get();
-        return DB::table('banks_view')->where('active', 0)
+        return DB::table('banks')->where('active', 0)
                         ->get();
         //return $banks;
     }
@@ -57,5 +58,60 @@ class BankController extends Controller {
         }
     }
 
-  
+    public function showrentpayments() {
+        return view('rentpayments');
+    }
+
+    public function showclearpayments() {
+        return view('clearpayments');
+    }
+
+    public function showclearedpayments() {
+        return view('clearedpayments');
+    }
+
+    public function saveRentPayment(Request $request) {
+
+        $data = $request->all();
+        $mode = $data['mode'];
+        $new = new RentPayments();
+        if ($mode == "Bank Deposit") {
+            if ($request->hasFile('depositurl')) {
+                $scanned_id = $request->file('depositurl');
+                $depositurl = $scanned_id->store('scanneddocuments');
+                $bank = $data['bank'];
+                $new->bank_id = $bank[0];
+                $new->bank_name = $bank[1];
+                $new->accountno = $bank[2];
+                $new->deposit_url = $depositurl;
+            }
+        }
+
+        if ($mode == "Cheque") {
+            if ($request->hasFile('chequeurl')) {
+                $scanned_id = $request->file('chequeurl');
+                $chequeurl = $scanned_id->store('scanneddocuments');
+                $new->cheque_url = $chequeurl;
+            }
+        }
+        $new->tenant_id = $data['tenant'];
+        $new->amount = $data['amount'];
+        $new->description = $data['description'];
+        $new->payment_date = $data['payment_date'];
+        $new->mode = $data['mode'];
+        $new->created_by = Session::get('id');
+        $new->created_at = date('Y-m-d H:i:s');
+
+        $saved = $new->save();
+        if (!$saved) {
+            return '1';
+        } else {
+            return '0';
+        }
+    }
+
+    
+    public function getRentpayments() {
+          return DB::table('rent_payments')->get();
+    }
 }

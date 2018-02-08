@@ -8,7 +8,7 @@
 
         <meta name="_token" content="{{ csrf_token() }}">
 
-        <title>GroundTouch</title>
+        <title>Rotamach</title>
         <link type="text/css" rel="stylesheet" href="{{ asset('css/app.css')}}"/>
         <link type="text/css" rel="stylesheet" href="{{ asset('vendors/iCheck/css/all.css')}}"/>
         <!-- end of global css -->

@@ -8,7 +8,7 @@
 
         <meta name="_token" content="{{ csrf_token() }}">
 
-        <title>GroundTouch</title>
+        <title>Rotamach</title>
         <link type="text/css" href="{{ asset('css/app.css')}}" rel="stylesheet"/>
         <!-- end of global css -->
         <!--page level css-->
@@ -28,7 +28,14 @@
         <link rel="stylesheet" type="text/css" href="{{asset('css/custom_css/invoice.css')}}">
         <link href="{{asset('vendors/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('vendors/select2/css/select2-bootstrap.css')}}" rel="stylesheet" type="text/css">
-
+<link rel="stylesheet" href="{{ asset('vendors/animate/animate.min.css')}}"/>
+    <link rel="stylesheet" href="{{ asset('vendors/pnotify/css/pnotify.css')}}">
+    <link href="{{ asset('vendors/pnotify/css/pnotify.brighttheme.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('vendors/pnotify/css/pnotify.buttons.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('vendors/pnotify/css/pnotify.mobile.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('vendors/pnotify/css/pnotify.history.css')}}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/custom_css/toastr_notificatons.css')}}">
+    
     </head>
     <body class="skin-default">
         <div class="preloader">
@@ -64,6 +71,17 @@
         <script src="{{ asset('js/custom_js/datepickers.js')}}" type="text/javascript"></script>
         <script src="{{asset('vendors/bootstrap-multiselect/js/bootstrap-multiselect.js')}}" type="text/javascript"></script>
         <script src="{{asset('vendors/select2/js/select2.js')}}" type="text/javascript"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.animate.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.buttons.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.confirm.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.nonblock.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.mobile.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.desktop.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.history.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.callbacks.js')}}"></script>
+<script src="{{asset('js/custom_js/notifications.js')}}"></script>
+<script src="{{asset('js/jquery.printElement.min.js')}}"></script>
 
         <script type="text/javascript">
 $('.select2').select2();

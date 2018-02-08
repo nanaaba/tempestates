@@ -58,7 +58,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-fw ti-calendar"></i>
                                                 </div>
-                                                <input type="text" class="form-control float-right" id="date-range0" name="daterange" placeholder="YYYY-MM-DD to YYYY-MM-DD">
+                                                <input type="text" class="form-control float-right" id="date-range0" name="daterange" required placeholder="YYYY-MM-DD to YYYY-MM-DD">
                                             </div>
                                         </div>
                                     </div>
@@ -99,14 +99,14 @@
                                         <div class="col-md-6 col-sm-12 col-12 col-lg-6 col-xl-6 invoice_bg">
                                             <h4><strong>Billing Details:</strong></h4>
                                             <address>
-                                                Lewis Doe
-                                                <br/> 6889 Lunette Street
-                                                <br/> Melbourne,Austria
-                                                <br/> <strong>Phone:</strong>12-345-678
-                                                <br/> <strong>Mail Id:</strong> Adelle_Champlin@yahoo.com
+                                                <span id='tenant_name'></span>
+                                                <br/><strong>Apartment Name:</strong> <span id='apartment_name'></span>
+                                                <br/> <strong>Apartment Type:</strong><span id='apartment_type'></span>
+                                                <br/> <strong>Phone:</strong><span id='contact'></span>
+                                                <br/> <strong>Mail Id:</strong> <span id='email'></span>
                                             </address>
                                         </div>
-                                        <div class="col-md-6 col-sm-12 col-12 col-lg-6 col-xl-6 invoice_bg text-right">
+                                        <div class="col-md-6 col-sm-12 col-12 col-lg-6 col-xl-6 invoice_bg ">
                                             <div class="float-right">
                                                 <h4><strong>#678956 / 25 Sep 2016</strong></h4>
                                                 <h4><strong>Invoice Info:</strong></h4>
@@ -153,7 +153,7 @@
                                                             </strong>
                                                         </td>
                                                         <td class="highrow text-right">
-                                                            <strong contenteditable ><span id="totalbill"></span></strong>
+                                                            <strong  ><span id="totalbill"></span></strong>
                                                         </td>
                                                     </tr>
                                                 </tfoot>
@@ -182,7 +182,7 @@
                                                 <button type="button"
                                                         class="btn btn-responsive button-alignment btn-primary mb-3"
                                                         data-toggle="button">
-                                                    <span style="color:#fff;" onclick='printDiv();'>
+                                                    <span style="color:#fff;" onclick='printContent("invoicediv");'>
                                                         <i class="fa fa-fw ti-printer"></i>
                                                         Print
                                                     </span>
@@ -222,6 +222,9 @@
 @section('userjs')
 
 <script type="text/javascript">
+    PNotify.prototype.options.styling = "bootstrap3";
+    PNotify.prototype.options.styling = "jqueryui";
+    PNotify.prototype.options.styling = "fontawesome";
 
     getTenants();
     function getTenants() {
@@ -236,7 +239,7 @@
                 $.each(data, function (i, item) {
 
                     $('#tenants').append($('<option>', {
-                        value: item.id,
+                        value: item.tenant_code,
                         text: item.name
                     }));
                 });
@@ -262,23 +265,27 @@
                     if (data.length == 0) {
                         console.log("NO DATA!");
                         $('#loaderModal').modal('hide');
-
-                        swal("Success!", "No data", "info");
+                        new PNotify({
+                            title: 'No Data',
+                            text: "No bills for tenant within date range",
+                            type: 'info'
+                        });
 
                     } else {
                         $.each(data, function (key, value) {
                             total = total + parseFloat(value.amount);
                             var row = ' <tr>' +
-                                    '<td contenteditable>' +
-                                    value.service_id +
+                                    '<td>' +
+                                    value.service_name +
                                     '</td>' +
                                     '<td></td>' +
-                                    '<td class="text-right" contenteditable>GHS ' + value.amount + '</td>' +
+                                    '<td class="text-right">GHS ' + value.amount + '</td>' +
                                     '</tr>';
 
                             $('#invoiceTbl').append(row);
                             $('#totalbill').html('GHS ' + total);
                             $('#loaderModal').modal('hide');
+                            getTenantInfo($('#tenants').val());
                             $('#invoicediv').show();
                         });
                     }
@@ -296,24 +303,54 @@
 
     }
 
+
+
+    function printContent(el) {
+        var restorepage = $('body').html();
+        var printcontent = $('#' + el).clone();
+        $('body').empty().html(printcontent);
+        window.print();
+        $('body').html(restorepage);
+    }
     function printDiv()
     {
+        $("invoicediv").printElement();
 
-        var divToPrint = document.getElementById('invoicediv');
-
-        var newWin = window.open('', 'Print-Window');
-
-        newWin.document.open();
-
-        newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
-
-        newWin.document.close();
-
-        setTimeout(function () {
-            newWin.close();
-        }, 10);
+//        var divToPrint = document.getElementById('invoicediv');
+//
+//        var newWin = window.open('', 'Print-Window');
+//
+//        newWin.document.open();
+//
+//        newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
+//
+//        newWin.document.close();
+//
+//        setTimeout(function () {
+//            newWin.close();
+//        }, 10);
 
     }
+
+    function getTenantInfo(id) {
+
+
+        $.ajax({
+            url: "../tenant/" + id,
+            type: "GET",
+            dataType: 'json',
+            success: function (data) {
+                $('#tenant_name').html(data[0].name);
+                $('#contact').html(data[0].contactno);
+                $('#email').html(data[0].email_address);
+                $('#apartment_name').html(data[0].apartment_name);
+                $('#apartment_type').html(data[0].apartment_type);
+
+            }
+//up_facilities
+        });
+    }
+
 </script>
 
 @endsection

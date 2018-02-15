@@ -55,11 +55,20 @@
                                         <label for="region" class="control-label">Apartment Type:</label>
                                         <input type="text" class="form-control" name="apartment_type" id="apartment_type"  readonly>
                                     </div>
+                                   
+                                    
                                     <div class="form-group">
-                                        <label for="region" class="control-label">Payment Date:</label>
-                                        <input type="date" class="form-control" name="payment_date"  
-                                               />
+                                    <label for="my-element">
+                                      Payment Date:
+                                    </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-fw ti-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control float-right"  name="payment_date"   data-language="en" id="paymentdate">
                                     </div>
+                                    <!-- /.input group -->
+                                </div>
                                 </div>
 
                                 <div class="col-md-6">
@@ -196,7 +205,9 @@
 
 <script  type="text/javascript">
 
-
+$('#paymentdate').datepicker({
+        format: 'dd-mm-yyyy'
+    });
 
 var datatable = $('#paymentsTbl').DataTable({
     responsive: true,
@@ -216,7 +227,7 @@ function getPayments()
 {
 
     $.ajax({
-        url: 'getpayments',
+        url: 'payments/all',
         type: "GET",
         dataType: "json",
         success: function (data) {
@@ -234,7 +245,7 @@ function getPayments()
                     var j = -1;
                     var r = new Array();
                     // represent columns as array
-                    r[++j] = '<td class="subject">' + value.tenant_id + '</td>';
+                    r[++j] = '<td class="subject">'+ value.title +' '  + value.name + '</td>';
                     r[++j] = '<td class="subject">' + value.description + '</td>';
                     r[++j] = '<td class="subject">' + value.amount + '</td>';
                     r[++j] = '<td class="subject">' + value.mode + '</td>';
@@ -272,19 +283,20 @@ $('#savePaymentsForm').on('submit', function (e) {
         url: "{{url('banking/saverentpayments')}}",
         type: "POST",
         data: formData,
+        dataType:"json",
         success: function (data) {
             console.log(data);
             $('#newModal').modal('hide');
             $('input:submit').removeAttr("disabled");
 
             document.getElementById("savePaymentsForm").reset();
-            if (data == 0) {
-                swal("Success!", "Payments Added ", "success");
+            if (data.success == 0) {
+                swal("Success!", data.message, "success");
                 getPayments();
-            } else if (data == 1) {
-                swal("Error!", "Couldnt add service", "error");
+            } else if (data.success == 1) {
+                swal("Error!", data.message, "error");
             } else {
-                swal("Error!", data, "error");
+                swal("Error!", data.message, "error");
 
             }
         },
@@ -343,7 +355,7 @@ function getTenantInfo(id) {
 
 
     $.ajax({
-        url: "../tenant/" + id,
+        url: "../tenants/" + id,
         type: "GET",
         dataType: 'json',
         success: function (data) {
@@ -411,7 +423,7 @@ function getTenants() {
             $.each(data, function (i, item) {
 
                 $('#tenants').append($('<option>', {
-                    value: item.tenant_code,
+                    value: item.id,
                     text: item.name
                 }));
             });

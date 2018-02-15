@@ -29,6 +29,8 @@
     $documents = json_decode($documents, true);
     $profilepic = $info[0]['profile_pic'];
     $scanned_id = $info[0]['scanned_id'];
+    //print_r($info);
+    //print_r($documents);
     ?>
     <!-- Main content -->
     <section class="content">
@@ -52,7 +54,7 @@
 
                         <div id="rootwizard">
 
-                            <form id="updatetenantForm"  enctype="multipart/form-data" class="form-horizontal">
+                            <form id="tenantForm"  enctype="multipart/form-data" class="form-horizontal">
 
                                 <ul class="nav nav-pills">
                                     <li class="nav-item">
@@ -72,11 +74,14 @@
                                         <a href="#tab5" class="nav-link" data-toggle="tab">Related Documents</a>
                                     </li>
                                 </ul>
-{{ csrf_field() }}
 
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab1">
+                                        <input type="hidden" class="form-control form-control-lg input-lg" id="token" name="_token" value="<?php echo csrf_token() ?>" />
+
                                         <input type="hidden" value="{{$info[0]['id']}}" name="tenant_id"/>
+                                        <input type="hidden" value="{{$profilepic}}" name="profilepic"/>
+                                        <input type="hidden" value="{{$scanned_id}}" name="scannedid"/>
 
                                         <h2 class="hidden">&nbsp;</h2>
                                         <div class="row form-group">
@@ -279,11 +284,19 @@
                                             <div class="col-sm-3 float-sm-right">
                                                 <label for="dob" class="form-control-label">ID Number</label>
                                             </div>
-                                            <div class="col-sm-9">
+                                            <div class="col-sm-6">
                                                 <select class="select2 form-control" name="id_number" id="id_number" style="width: 100%">
                                                     <option value="{{$info[0]['id_number']}}">{{$info[0]['id_number']}}</option>
 
                                                 </select>
+                                            </div>
+                                            <div class="col-sm-3">
+
+                                                <?php
+                                                echo '<a target="_blank" href ="' . imgasset("storage/app/" . $scanned_id . "") . '" type="button" class="btn btn-info ">
+                    View Scanned ID
+                </a>';
+                                                ?>
                                             </div>
                                         </div>
                                         <div class="row form-group">
@@ -292,13 +305,14 @@
                                                 </label>
                                             </div>
                                             <div class="col-sm-9">
+
                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
 
                                                     <div class="fileinput-preview fileinput-exists thumbnail"
                                                          style="max-width: 200px; max-height: 200px;"></div>
                                                     <div>
                                                         <span class="btn btn-default btn-file">
-                                                            <span class="fileinput-new">Select File</span>
+                                                            <span class="fileinput-new">Change File</span>
                                                             <span class="fileinput-exists">Change</span>
                                                             <input  name="scanned_id" type="file"
                                                                     class="form-control"/>
@@ -511,11 +525,12 @@
                                             </div>
                                             <br><br>
                                             <?php
+                                            $i = 1;
                                             foreach ($documents as $value) {
-                                                $i = 1;
-                                                echo '<button type="button" class="btn btn-info ">
+
+                                                echo '<a target="_blank" href ="' . imgasset("storage/app/" . $value['url'] . "") . '" type="button" class="btn btn-info ">
                     Download file' . $i . '
-                </button>&nbsp;&nbsp;';
+                </a>&nbsp;&nbsp;';
 
                                                 $i++;
                                             }
@@ -591,130 +606,163 @@
 @endsection 
 
 @section('userjs')
+<script type="text/javascript" src="{{ asset('vendors/sweetalert2/js/sweetalert2.min.js')}}"></script>
+
 <script type="text/javascript">
 
+PNotify.prototype.options.styling = "bootstrap3";
+PNotify.prototype.options.styling = "jqueryui";
+PNotify.prototype.options.styling = "fontawesome";
 
-    $('#rootwizard').bootstrapWizard({onTabShow: function (tab, navigation, index) {
-            var $total = navigation.find('li').length;
-            var $current = index + 1;
-            var $percent = ($current / $total) * 100;
-            $('#rootwizard').find('.bar').css({width: $percent + '%'});
-        }});
-    $('#rootwizard .finish').click(function () {
-        var formData = $("#tenantForm").serialize();
-        //var formData = new FormData($("#updatetenantForm")[0]);
-
-
-        console.log('data :' + formData);
-        $.ajax({
-            url: "{{url('tenant/update')}}",
-            type: "PUT",
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                console.log('server data :' + data);
+$('#rootwizard').bootstrapWizard({onTabShow: function (tab, navigation, index) {
+        var $total = navigation.find('li').length;
+        var $current = index + 1;
+        var $percent = ($current / $total) * 100;
+        $('#rootwizard').find('.bar').css({width: $percent + '%'});
+    }});
+$('#rootwizard .finish').click(function () {
+    //var formData = $("#tenantForm").serialize();
+    var formData = new FormData($("#tenantForm")[0]);
 
 
-            }
+    console.log('data :' + formData);
+    $.ajax({
+        url: "{{url('tenants/update')}}",
+        type: "POST",
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+      dataType: 'json',
+        success: function (data) {
+            console.log('server data :' + data);
+            if (data.success == 0) {
+                $('#tenantForm select').val('').trigger('change');
 
-        });
-        // alert('Finished!, Starting over!');
-
-        //$('#rootwizard').find("a[href*='tab1']").trigger('click');
-    });
-    $('.select2').select2();
-
-    getApartments();
-
-
-    function getApartments() {
-
-
-        $.ajax({
-            url: "{{url('apartment/all')}}",
-            type: "GET",
-            dataType: 'json',
-            success: function (data) {
-
-                $.each(data, function (i, item) {
-
-                    $('#apartments').append($('<option>', {
-                        value: item.id,
-                        text: item.name
-                    }));
+//                document.getElementById("tenantForm").reset();
+                new PNotify({
+                    title: 'Success',
+                    text: "Tenant Information updated successfully.",
+                    type: 'success'
                 });
+                // swal("Success", "Information saved successfully.Tenant Code is"+data.tenat_id, 'success');
+            } else if (data.success == 1) {
+                new PNotify({
+                    title: 'Error',
+                    text: "Error in Saving Tenant Information",
+                    type: 'error'
+                });
+                //swal("Error", "Error in Saving Tenant Information", 'error');
+
+            } else {
+                // swal("Error", data.message, 'error');
+                new PNotify({
+                    title: 'Error',
+                    text: data.message,
+                    type: 'error'
+                });
+
             }
 
-        });
-    }
 
-    $('#apartments').change(function () {
-        var id = $(this).val();
-        getApartmentInfo(id);
+        }
+
     });
+    // alert('Finished!, Starting over!');
 
-    function getApartmentInfo(id) {
+    //$('#rootwizard').find("a[href*='tab1']").trigger('click');
+});
+$('.select2').select2();
+
+getApartments();
 
 
-        $.ajax({
-            url: "../../apartment/" + id,
-            type: "GET",
-            dataType: 'json',
-            success: function (data) {
-                $('#apartment_type').val(data[0].type);
-                $('#monthly_charge').val(data[0].monthly_charge);
-                $('#currency').val(data[0].currency);
+function getApartments() {
 
-                //currency
-            }
+
+    $.ajax({
+        url: "{{url('apartment/all')}}",
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
+
+            $.each(data, function (i, item) {
+
+                $('#apartments').append($('<option>', {
+                    value: item.id,
+                    text: item.name
+                }));
+            });
+        }
+
+    });
+}
+
+$('#apartments').change(function () {
+    var id = $(this).val();
+    getApartmentInfo(id);
+});
+
+function getApartmentInfo(id) {
+
+
+    $.ajax({
+        url: "../../apartment/" + id,
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
+            $('#apartment_type').val(data[0].type);
+            $('#monthly_charge').val(data[0].monthly_charge);
+            $('#currency').val(data[0].currency);
+
+            //currency
+        }
 //up_facilities
-        });
-    }
-    getRentPeriods();
-    function getRentPeriods() {
+    });
+}
+getRentPeriods();
+function getRentPeriods() {
 
 
-        $.ajax({
-            url: "{{url('configuration/getrentperiods')}}",
-            type: "GET",
-            dataType: 'json',
-            success: function (data) {
+    $.ajax({
+        url: "{{url('configuration/getrentperiods')}}",
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
 
-                $.each(data, function (i, item) {
+            $.each(data, function (i, item) {
 
-                    $('#rent_periods').append($('<option>', {
-                        value: item.name,
-                        text: item.name + " months"
-                    }));
-                });
-            }
+                $('#rent_periods').append($('<option>', {
+                    value: item.name,
+                    text: item.name + " months"
+                }));
+            });
+        }
 
-        });
-    }
+    });
+}
 
-    getIds();
-    function getIds() {
+getIds();
+function getIds() {
 
 
-        $.ajax({
-            url: "{{url('configuration/getidentificationcards')}}",
-            type: "GET",
-            dataType: 'json',
-            success: function (data) {
+    $.ajax({
+        url: "{{url('configuration/getidentificationcards')}}",
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
 
-                $.each(data, function (i, item) {
+            $.each(data, function (i, item) {
 
-                    $('#id_number').append($('<option>', {
-                        value: item.name,
-                        text: item.name
-                    }));
-                });
-            }
+                $('#id_number').append($('<option>', {
+                    value: item.name,
+                    text: item.name
+                }));
+            });
+        }
 
-        });
-    }
+    });
+}
 
 </script>
 @endsection

@@ -76,7 +76,9 @@ $(document).ready(function() {
         return dat;
     };
     var dat = new Date();
-    $('#my-element').datepicker();
+    $('#my-element').datepicker({
+        format: 'dd-mm-yyyy'
+    });
     $('#my-element1').datepicker({multipleDates: true});
     $('#monthpicker').datepicker();
     $('#minMaxExample').datepicker({

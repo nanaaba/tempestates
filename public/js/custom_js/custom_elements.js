@@ -57,9 +57,9 @@ $(document).ready(function() {
 //    });
     
     
-    $("#selectize3").selectize({
-        maxItems: 3
-    });
+//    $("#selectize3").selectize({
+//        maxItems: 3
+//    });
     $('#selectize-tags1').selectize({
         plugins: ['restore_on_backspace'],
         delimiter: ',',

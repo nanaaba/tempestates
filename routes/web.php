@@ -90,8 +90,9 @@ Route::get('tenants/all', 'TenantController@getTenants');
 Route::post('retreivetenantbills', 'TenantController@retreiveTenantBill');
 Route::delete('tenants/{id}', 'TenantController@deleteTenantInformation');
 Route::get('tenant/{id}', 'TenantController@getTenantDetail');
+Route::get('tenants/{id}', 'TenantController@getTenantInformation');
 
-Route::put('tenant/update', 'TenantController@updateTenantInformation');
+Route::post('tenants/update', 'TenantController@updateTenantInformation');
 
 
 //configuration
@@ -105,11 +106,16 @@ Route::delete('configuration/deleteapartmentype/{id}', 'ConfigurationController@
 Route::delete('configuration/deleteperiod/{id}', 'ConfigurationController@deleteRentPeriod');
 Route::delete('configuration/deleteidentificationcard/{id}', 'ConfigurationController@deleteIdentification');
 
-//anking//saverentpayments
 Route::get('banks/all', 'BankController@getBanks');
 Route::post('banking/saverentpayments', 'BankController@saveRentPayment');
 Route::post('banking/savebank', 'BankController@saveBank');
-Route::get('banking/getpayments', 'BankController@getRentpayments');
+Route::get('banking/getunclearedpayments', 'BankController@getUnClearedpayments');
+Route::get('banking/getclearedpayments', 'BankController@getClearedpayments');
+Route::post('clearpayments', 'BankController@markpaymentsascleared');
+Route::delete('banking/{id}', 'BankController@deletebank');
+Route::get('banking/{id}', 'BankController@getBankDetail');
+Route::put('banking/updatebank', 'BankController@updateBank');
+Route::get('banking/payments/all', 'BankController@getRentpayments');
 
 
 

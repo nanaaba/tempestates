@@ -116,7 +116,7 @@ function getPayments()
 {
 
     $.ajax({
-        url: 'getpayments',
+        url: 'getclearedpayments',
         type: "GET",
         dataType: "json",
         success: function (data) {
@@ -134,7 +134,7 @@ function getPayments()
                     var j = -1;
                     var r = new Array();
                     // represent columns as array
-                    r[++j] = '<td class="subject">' + value.tenant_id + '</td>';
+                    r[++j] = '<td class="subject">' + value.title + ' ' + value.name + '</td>';
                     r[++j] = '<td class="subject">' + value.description + '</td>';
                     r[++j] = '<td class="subject">' + value.amount + '</td>';
                     r[++j] = '<td class="subject">' + value.mode + '</td>';

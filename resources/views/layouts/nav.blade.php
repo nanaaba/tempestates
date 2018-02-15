@@ -125,13 +125,13 @@
                          <li   class="{{ Request::is('banking/rentpayments') ? 'active' : '' }}">
                             <a href="{{ url('banking/rentpayments') }}">
                                 <i class="menu-icon ti-layout-list-large-image"></i>
-                                <span class="mm-text ">Tenants Rent Payments</span>
+                                <span class="mm-text ">Tenants  Payments</span>
                             </a>
                         </li>
                          <li   class="{{ Request::is('banking/clearpayments') ? 'active' : '' }}">
                             <a href="{{ url('banking/clearpayments') }}">
                                 <i class="menu-icon ti-layout-list-large-image"></i>
-                                <span class="mm-text "> Clear Cash Payments </span>
+                                <span class="mm-text "> Clear Cash/Cheque Payments </span>
                             </a>
                         </li>
                          <li   class="{{ Request::is('banking/clearedpayments') ? 'active' : '' }}">

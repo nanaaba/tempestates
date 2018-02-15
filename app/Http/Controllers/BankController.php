@@ -72,8 +72,11 @@ class BankController extends Controller {
 
     public function saveRentPayment(Request $request) {
 
+        
+        
         $data = $request->all();
         $mode = $data['mode'];
+        $payment_date =  date('Y-m-d', strtotime( $request['payment_date']));
         $new = new RentPayments();
         if ($mode == "Bank Deposit") {
             if ($request->hasFile('depositurl')) {
@@ -96,13 +99,73 @@ class BankController extends Controller {
         }
         $new->tenant_id = $data['tenant'];
         $new->amount = $data['amount'];
-        $new->description = $data['description'];
-        $new->payment_date = $data['payment_date'];
+        $new->description = $data['description']; 
+        $new->payment_date = $payment_date;
         $new->mode = $data['mode'];
         $new->created_by = Session::get('id');
         $new->created_at = date('Y-m-d H:i:s');
 
-        $saved = $new->save();
+        try {
+            $saved = $new->save();
+
+            if ($saved) {
+
+                $data = array('success' => 0, 'message' => 'success');
+                return json_encode($data);
+            } else {
+                $data = array('success' => 1, 'message' => 'error');
+                return json_encode($data);
+            }
+        } catch (\Illuminate\Database\QueryException $e) {
+            $data = array('success' => 2, 'message' => $e->getMessage());
+            return json_encode($data);
+        }
+    }
+
+    public function getRentpayments() {
+        return DB::table('payments_view')
+                ->get();
+    }
+
+    public function markpaymentsascleared(Request $request) {
+
+
+        $data = $request->all();
+        $bank_name = $data['bank'];
+        $total_amount = $data['totalmount'];
+        $deposited_by = $data['depositedby'];
+        $payment_date = $data['paymentdate'];
+        $scanned_url = "";
+        $bank_code = $this->clearpayments($bank_name, $total_amount, $deposited_by, $payment_date, $scanned_url);
+
+        $inflowsids = $data['inflows'];
+        $this->updatepaymentsascleared($bank_code, $inflowsids);
+        return $bank_code;
+    }
+
+    public function clearpayments($bank_name, $total_amount, $deposited_by, $payment_date, $scanned_url) {
+
+        $code = $this->unquecodeGenerator(8);
+        $bank_code = 'BNK' . $code;
+        $createdby = Session::get('userid');
+
+        DB::insert('insert into cleared_payments (bank_code,bank_name,total_amount, deposited_by,payment_date,scanned_url,created_by) values (?, ?,?,?,?,?,?)', ["$bank_code", "$bank_name", "$total_amount", "$deposited_by", "$payment_date", "$scanned_url", $createdby]);
+
+        return $bank_code;
+    }
+
+    public function updatepaymentsascleared($bank_code, $paymentsids) {
+
+        DB::statement('update rent_payments set cleared_code= "' . $bank_code . '" where id in(' . $paymentsids . ')');
+    }
+
+    public function deletebank($id) {
+        $update = Bank::find($id);
+        $update->active = 1;
+        $update->modified_by = Session::get('id');
+        $update->last_modified = date('Y-m-d H:i:s');
+        $saved = $update->save();
+
         if (!$saved) {
             return '1';
         } else {
@@ -111,7 +174,59 @@ class BankController extends Controller {
     }
 
     
-    public function getRentpayments() {
-          return DB::table('rent_payments')->get();
+    public function getBankDetail($id) {
+
+        return Bank::where('id', $id)
+                        ->get();
     }
+    
+    
+        public function updateBank(Request $request) {
+
+        $data = $request->all();
+        
+        $new = Bank::find($data['code']);
+        $new->bank_name = $data['bank_name'];
+        $new->location = $data['location'];
+        $new->branch = $data['branch'];
+        $new->relationship_officer = $data['relationship_officer'];
+        $new->relationship_contact = $data['relationship_contact'];
+        $new->account_type = $data['account_type'];
+        $new->currency = $data['currency'];
+        $new->account_no = $data['account_number'];
+        $new->modified_by = Session::get('id');
+
+
+        try {
+
+            $new->save();
+            return '0';
+        } catch (\Illuminate\Database\QueryException $e) {
+            return 'Duplicate entry  for account number. ' . $data['account_number'] . ' already exist';
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+    
+    
+    public function getUnClearedpayments() {
+                return DB::table('payments_view')->whereNull('cleared_code')->whereIn('mode', ['Cash','Cheque'])->get();
+
+    }
+    
+     public function getClearedpayments() {
+                return DB::table('payments_view')->whereNotNull('cleared_code')->get();
+
+    }
+    public function unquecodeGenerator($length) {
+        $chars = "1234567890";
+        $clen = strlen($chars) - 1;
+        $id = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $id .= $chars[mt_rand(0, $clen)];
+        }
+        return ($id);
+    }
+
 }

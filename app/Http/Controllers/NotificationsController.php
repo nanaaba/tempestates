@@ -20,7 +20,9 @@ use Mail;
 
 class NotificationsController extends Controller {
 
-    public function sendemail($receiver, $data) {
+    public function sendemail($receiver, $subject, $message) {
+
+        $data = array('subject' => $subject, 'message' => $message);
 
         Mail::to($receiver)->send(new mailme($data));
     }

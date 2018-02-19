@@ -55,11 +55,19 @@
                                         <label for="region" class="control-label">Apartment Type:</label>
                                         <input type="text" class="form-control" name="apartment_type" id="apartment_type"  readonly>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="region" class="control-label">Service Date:</label>
-                                        <input type="date" class="form-control" name="date_serviced"   required
-                                               />
+
+                                     <div class="form-group">
+                                    <label for="my-element">
+                                      Service Date:
+                                    </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-fw ti-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control float-right"  name="date_serviced"   data-language="en" id="paymentdate">
                                     </div>
+                                    <!-- /.input group -->
+                                </div>
                                 </div>
 
                                 <div class="col-md-6">
@@ -125,6 +133,9 @@ getServices();
 getTenants();
 
 
+$('#paymentdate').datepicker({
+        format: 'dd-mm-yyyy'
+    });
 
 
 $('#saveServiceForm').on('submit', function (e) {
@@ -142,7 +153,7 @@ $('#saveServiceForm').on('submit', function (e) {
             $('#newModal').modal('hide');
             $('input:submit').removeAttr("disabled");
 
-            document.getElementById("saveServiceForm").reset();
+          //  document.getElementById("saveServiceForm").reset();
             if (data == 0) {
                 swal("Success!", "Service Added", "success");
                 getApartments();
@@ -195,7 +206,7 @@ function getTenantInfo(id) {
 
 
     $.ajax({
-        url: "../tenant/" + id,
+        url: "../tenants/" + id,
         type: "GET",
         dataType: 'json',
         success: function (data) {
@@ -242,7 +253,7 @@ function getTenants() {
             $.each(data, function (i, item) {
 
                 $('#tenants').append($('<option>', {
-                    value: item.tenant_code,
+                    value: item.id,
                     text: item.name
                 }));
             });

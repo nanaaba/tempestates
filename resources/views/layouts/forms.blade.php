@@ -30,6 +30,10 @@
     <link href="{{ asset('vendors/pnotify/css/pnotify.mobile.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('vendors/pnotify/css/pnotify.history.css')}}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/custom_css/toastr_notificatons.css')}}">
+   <link href="{{ asset('vendors/datetime/css/jquery.datetimepicker.css')}}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('vendors/airdatepicker/css/datepicker.min.css')}}" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/datepicker.css')}}">
+     
     </head>
     <body class="skin-default">
         <div class="preloader">
@@ -119,6 +123,12 @@
         <!-- end of global js -->
         <!-- begining of page level js -->
         <script src="{{ asset('vendors/moment/js/moment.min.js')}}"></script>
+<script src="{{ asset('vendors/datetime/js/jquery.datetimepicker.full.min.js')}}" type="text/javascript"></script>
+<!-- bootstrap time picker -->
+<script src="{{ asset('vendors/airdatepicker/js/datepicker.min.js')}}" type="text/javascript"></script>
+<script src="{{ asset('vendors/airdatepicker/js/datepicker.en.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/custom_js/advanceddate_pickers.js')}}" type="text/javascript"></script>
+
         <script src="{{ asset('vendors/jasny-bootstrap/js/jasny-bootstrap.js')}}" type="text/javascript"></script>
         <script src="{{asset('vendors/bootstrap-multiselect/js/bootstrap-multiselect.js')}}" type="text/javascript"></script>
         <script src="{{asset('vendors/select2/js/select2.js')}}" type="text/javascript"></script>

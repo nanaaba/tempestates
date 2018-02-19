@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Bank;
 use App\RentPayments;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\TenantController;
 
 class BankController extends Controller {
 
@@ -72,11 +73,13 @@ class BankController extends Controller {
 
     public function saveRentPayment(Request $request) {
 
-        
-        
+
+
         $data = $request->all();
+
+
         $mode = $data['mode'];
-        $payment_date =  date('Y-m-d', strtotime( $request['payment_date']));
+        $payment_date = date('Y-m-d', strtotime($request['payment_date']));
         $new = new RentPayments();
         if ($mode == "Bank Deposit") {
             if ($request->hasFile('depositurl')) {
@@ -99,7 +102,7 @@ class BankController extends Controller {
         }
         $new->tenant_id = $data['tenant'];
         $new->amount = $data['amount'];
-        $new->description = $data['description']; 
+        $new->description = $data['description'];
         $new->payment_date = $payment_date;
         $new->mode = $data['mode'];
         $new->created_by = Session::get('id');
@@ -110,8 +113,20 @@ class BankController extends Controller {
 
             if ($saved) {
 
-                $data = array('success' => 0, 'message' => 'success');
-                return json_encode($data);
+                $dataresponse = array('success' => 0, 'message' => 'success');
+
+                $tenant = new TenantController();
+                $tenantInformation = $tenant->getTenantInformation($data['tenant']);
+                $info = json_decode($tenantInformation, true);
+
+                $notifications = new NotificationsController();
+                $message = 'Hi ' . $info[0]['title'] . ' ' . $info[0]['name'] . ','
+                        . 'Please an amount of GHS ' . $data['amount'] . ' payments have been received through '
+                        . $data['mode'] . ' payments on '.$request['payment_date'].'.';
+                $notifications->sendemail($info[0]['email_address'], 'Payments received', $message);
+                $notifications->sendsms($info[0]['contactno'], $message);
+
+                return json_encode($dataresponse);
             } else {
                 $data = array('success' => 1, 'message' => 'error');
                 return json_encode($data);
@@ -124,7 +139,7 @@ class BankController extends Controller {
 
     public function getRentpayments() {
         return DB::table('payments_view')
-                ->get();
+                        ->get();
     }
 
     public function markpaymentsascleared(Request $request) {
@@ -173,18 +188,16 @@ class BankController extends Controller {
         }
     }
 
-    
     public function getBankDetail($id) {
 
         return Bank::where('id', $id)
                         ->get();
     }
-    
-    
-        public function updateBank(Request $request) {
+
+    public function updateBank(Request $request) {
 
         $data = $request->all();
-        
+
         $new = Bank::find($data['code']);
         $new->bank_name = $data['bank_name'];
         $new->location = $data['location'];
@@ -207,17 +220,15 @@ class BankController extends Controller {
             return $e->getMessage();
         }
     }
-    
-    
+
     public function getUnClearedpayments() {
-                return DB::table('payments_view')->whereNull('cleared_code')->whereIn('mode', ['Cash','Cheque'])->get();
-
+        return DB::table('payments_view')->whereNull('cleared_code')->whereIn('mode', ['Cash', 'Cheque'])->get();
     }
-    
-     public function getClearedpayments() {
-                return DB::table('payments_view')->whereNotNull('cleared_code')->get();
 
+    public function getClearedpayments() {
+        return DB::table('payments_view')->whereNotNull('cleared_code')->get();
     }
+
     public function unquecodeGenerator($length) {
         $chars = "1234567890";
         $clen = strlen($chars) - 1;

@@ -68,7 +68,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6 pull-right">
-                                    <button type="submit" class="btn btn-primary btn-block">Save</button>
+                                    <button type="submit" class="btn btn-primary btn-block">Search</button>
                                 </div>
                             </div>
                         </form>
@@ -123,14 +123,13 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-condensed" id="customtable">
+                                            <table class="table table-striped table-condensed" >
                                                 <thead>
                                                     <tr class="bg-primary">
                                                         <th>
                                                             <strong>Description</strong>
                                                         </th>
 
-                                                        <th></th>
                                                         <th class="text-right">
                                                             <strong>Amount</strong>
                                                         </th>
@@ -143,16 +142,14 @@
                                                 <tfoot>
 
                                                     <tr>
-                                                        <td class="emptyrow">
-                                                            <i class="livicon" data-name="barcode" data-size="60" data-loop="true"></i>
-                                                        </td>
+                                                       
 
-                                                        <td class="emptyrow text-right">
+                                                        <td class=" text-right">
                                                             <strong>
                                                                 Total: &nbsp;
                                                             </strong>
                                                         </td>
-                                                        <td class="highrow text-right">
+                                                        <td class=" text-right">
                                                             <strong  ><span id="totalbill"></span></strong>
                                                         </td>
                                                     </tr>
@@ -239,7 +236,7 @@
                 $.each(data, function (i, item) {
 
                     $('#tenants').append($('<option>', {
-                        value: item.tenant_code,
+                        value: item.id,
                         text: item.name
                     }));
                 });
@@ -278,7 +275,6 @@
                                     '<td>' +
                                     value.service_name +
                                     '</td>' +
-                                    '<td></td>' +
                                     '<td class="text-right">GHS ' + value.amount + '</td>' +
                                     '</tr>';
 
@@ -336,7 +332,7 @@
 
 
         $.ajax({
-            url: "../tenant/" + id,
+            url: "../tenants/" + id,
             type: "GET",
             dataType: 'json',
             success: function (data) {

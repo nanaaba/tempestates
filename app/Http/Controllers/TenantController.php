@@ -9,12 +9,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\NotificationsController;
 use Illuminate\Http\Request;
 use App\Tenant;
 use App\TenantDocuments;
 use App\TenantBills;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ApartmentController;
 
 class TenantController extends Controller {
 
@@ -44,7 +47,6 @@ class TenantController extends Controller {
         $new = new Tenant();
         if ($request->hasFile('pic_file')) {
             //unlink file
-            $this->deleteFile($data['profilepic']);
             $picfile = $request->file('pic_file');
             $profilepic = $picfile->store('profilepics');
             $new->profile_pic = $profilepic;
@@ -57,6 +59,7 @@ class TenantController extends Controller {
             $scanned_file = $scanned_id->store('scanneddocuments');
             $new->scanned_id = $scanned_file;
         }
+
         $new->title = $data['title'];
         $new->name = $data['fullname'];
         $new->dateofbirth = $data['dob'];
@@ -97,8 +100,24 @@ class TenantController extends Controller {
 
             if ($saved) {
                 $tenant_id = $new->id;
-                $this->saveTenantRent($data['apartment'], $tenant_id, $data['rent_period'], $data['currency'], $data['amount'], '2018-02-01', '2018-10-10');
-                $this->uploadDocuments($request->file('documents'), $tenant_id);
+                $this->saveTenantRent($data['apartment'], $tenant_id, $data['rent_period'], $data['currency'], $data['amount'], $data['start_date'], $data['end_date']);
+                if ($request->hasFile('documents')) {
+                    $this->uploadDocuments($request->file('documents'), $tenant_id);
+                }
+
+                $apartment = new ApartmentController();
+                $apartmentInformation = $apartment->getApartmentDetail($data['apartment']);
+                $apartinfo = json_decode($apartmentInformation, true);
+
+
+                $message = "Hello," . $data['title'] . ' ' . $data['fullname'] .
+                        '.You have rented our ' . $apartinfo[0]['name'] . 'for the period of ' . $data['rent_period'] . 'months.'
+                        . ' Please kindly take notice of your tenant code : ' . $tenantcode . '. '
+                        . 'Thank you for choosing Rotamac Real Estates.Enjoy your stay in your new apartment';
+
+                $notifications = new NotificationsController();
+                $notifications->sendemail($data['email'], ' Tenant Registration', $message);
+                $notifications->sendsms($data['phone_number'], $message);
 
                 $data = array('success' => 0, 'tenat_id' => $tenantcode);
                 return json_encode($data);
@@ -131,6 +150,8 @@ class TenantController extends Controller {
 
         $createdby = Session::get('id');
 
+        $startdate = date('Y-m-d', strtotime($startdate));
+        $enddate = date('Y-m-d', strtotime($enddate));
 
         DB::insert('insert into rent (apartment_id,tenant_id,period,currency, amount,start_date,end_date,created_by) values (?,?,?,?,?,?,?,?)', ["$apartment", "$tenant", "$period", "$currency", "$amount", "$startdate", "$enddate", $createdby]);
 
@@ -159,16 +180,33 @@ class TenantController extends Controller {
         $data = $request->all();
 
         $new = new TenantBills();
+        $date_serviced = date('Y-m-d', strtotime($request['date_serviced']));
 
         $new->tenant_id = $data['tenant'];
         $new->amount = $data['service_amount'];
-        $new->serviced_date = $data['date_serviced'];
+        $new->serviced_date = $date_serviced;
         $new->description = $data['service_description'];
         $new->service_id = $data['service_type'];
 
         $saved = $new->save();
 
         if ($saved) {
+
+            $service = new ServiceController();
+            $serviceInformation = $service->getServiceDetail($data['service_type']);
+            $serviceinfo = json_decode($serviceInformation, true);
+
+
+            $tenants_info = $this->getTenantInformation($data['tenant']);
+            $info = json_decode($tenants_info, true);
+            $message = "Hello," . $info[0]['title'] . ' ' . $info[0]['name'] . " Please you requested for this service "
+                    . $data['service_description'] . ' on ' . $data['date_serviced'] .
+                    '. Your charge is GHS ' . $data['service_amount'] . '. Your bill will be sent at the end of the month.'
+                    . 'Thank you for choosing Rotamac Real Estates.';
+
+            $notifications = new NotificationsController();
+            $notifications->sendemail($info[0]['email_address'], $serviceinfo[0]['name'] . ' Service Requested', $message);
+            //$notifications->sendsms($data['phone_number'], $message);
 
             return '0';
         } else {
@@ -289,10 +327,18 @@ class TenantController extends Controller {
             if ($saved) {
 
                 $this->updateTenantRent($data['apartment'], $data['tenant_id'], $data['rent_period'], $data['currency'], $data['amount'], '2018-02-01', '2018-10-10');
-                if (!empty($request->hasFile('documents'))) {
+                if (!empty($data->hasFile('documents'))) {
                     $this->uploadDocuments($request->file('documents'), $data['tenant_id']);
                 }
                 $data = array('success' => 0, 'tenat_id' => '');
+
+                $message = "Thank you for renting one of our Estates."
+                        . "We hope you enjoy your stay.Thank you for choosing Rotamac.";
+                $notifications = new NotificationsController();
+
+                $notifications->sendemail($data['email'], 'Tenant Registered Successfully', $message);
+                $notifications->sendsms($data['phone_number'], $message);
+
                 return json_encode($data);
             } else {
                 $data = array('success' => 1, 'tenat_id' => '');
@@ -321,8 +367,7 @@ class TenantController extends Controller {
         parent::delete();
     }
 
-    
-      public function getTenantInformation($id) {
+    public function getTenantInformation($id) {
         return DB::table('tenants_view')->where('id', $id)->get();
     }
 

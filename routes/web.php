@@ -14,6 +14,8 @@
 Route::get('/', function () {
     return view('login');
 });
+Route::get('testsms', 'NotificationsController@testsms');
+
 Route::get('dashboard', 'DashboardController@showdashboard');
 Route::get('estates', 'EstatesController@showestates');
 Route::get('services', 'ServiceController@showservices');

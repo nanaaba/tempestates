@@ -50,10 +50,10 @@ class ApartmentController extends Controller {
 
         $id = $data['code'];
         $update = Apartment::find($id);
-        $update->name = $data['name'];
-        $update->estate_id = $data['estate'];
-        $update->currency = $data['currency'];
-        $update->monthly_charge = $data['monthly_charge'];
+        $update->name = strip_tags($data['name']);
+        $update->estate_id = strip_tags($data['estate']);
+        $update->currency = strip_tags($data['currency']);
+        $update->monthly_charge = strip_tags($data['monthly_charge']);
         $update->modified_by = Session::get('id');
         $update->modified_at = date('Y-m-d H:i:s');
         $update->type = $data['type'];
@@ -73,11 +73,11 @@ class ApartmentController extends Controller {
         $data = $request->all();
         $new = new Apartment();
 
-        $new->name = $data['name'];
-        $new->estate_id = $data['estate'];
-        $new->type = $data['type'];
-        $new->currency = $data['currency'];
-        $new->monthly_charge = $data['monthly_charge'];
+        $new->name = strip_tags($data['name']);
+        $new->estate_id = strip_tags($data['estate']);
+        $new->type = strip_tags($data['type']);
+        $new->currency = strip_tags($data['currency']);
+        $new->monthly_charge = strip_tags($data['monthly_charge']);
         $new->created_by = Session::get('id');
         $new->created_at = date('Y-m-d H:i:s');
 

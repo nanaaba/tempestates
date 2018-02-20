@@ -81,10 +81,12 @@ function getUsers()
                     r[++j] = '<td >' + value.name + '</td>';
                     r[++j] = '<td>' + value.email + '</td>';
                     r[++j] = '<td>' + value.role + '</td>';
+                    r[++j] = '<td>' + value.contactno + '</td>';
+
                     r[++j] = '<td>' + value.datecreated + '</td>';
                     r[++j] = '<td>\n\
 <button onclick="editUser(\'' + value.id + '\')" class="btn btn-outline-info btn-sm editBtn"  type="button">Edit</button>\n\
-\n\<button onclick="deleteUser(\'' + value.id + '\',\'' + value.institution_name + '\',\'' + value.firstname + '\')" class="btn btn-outline-danger btn-sm editBtn"  type="button">Delete</button>\n\
+\n\<button onclick="deleteUser(\'' + value.id + '\',\'' + value.name + '\')" class="btn btn-outline-danger btn-sm editBtn"  type="button">Delete</button>\n\
 </td>';
 
                     rowNode = datatable.row.add(r);
@@ -112,25 +114,19 @@ function editUser(id) {
         type: "GET",
         //dataType: 'json',
         success: function (data) {
-            $("#usergroups  option[value='']").prop("selected", true);
+            $("#role  option[value='']").prop("selected", true);
 
-            console.log(data[0].instituition_code);
-            if (data[0].instituition_code == null) {
-                $("input").prop("readonly", false);
-            }
-            if (data[0].instituition_code != null) {
-                $("input").prop("readonly", true);
-            }
-            var name = data[0].firstname;
+
+            var name = data[0].name;
             var email = data[0].email;
-            var usergroup = data[0].usergroup;
             var role = data[0].role;
+            var contactno = data[0].contactno;
             var id = data[0].id;
             $('#username').val(name);
             $('#upuserid').val(id);
             $('#upemail').val(email);
-            $('#role').val(role);
-            $("#usergroups  option[value=" + usergroup + "]").prop("selected", true);
+             $('#upcontactno').val(contactno);
+            $("#role  option[value=" + role + "]").prop("selected", true);
 
             $('#edituserModal').modal('show');
 
@@ -150,7 +146,7 @@ $('#updateUserForm').on('submit', function (e) {
     $('input:submit').attr("disabled", true);
 
     $.ajax({
-        url: 'userinfo',
+        url: 'user',
         type: "PUT",
         data: formData,
         success: function (data) {
@@ -177,34 +173,17 @@ $('#updateUserForm').on('submit', function (e) {
 
 
 
-function deleteUser(code, institution, title) {
-    console.log(code + 'inst:' + institution);
+function deleteUser(code, title) {
 
 
-    if (!institution.trim()) {
 
-        //delete user
-        $('#userdeleteenabled').show();
-        $('#userdeletedisabled').hide();
-        $('#deleteuser').removeAttr('disabled');
-    }
-
-    if (institution.trim()) {
-
-        console.log('not null');
-
-        $('#userdeleteenabled').hide();
-        $('#userdeletedisabled').show();
-        $('#deleteuser').attr('disabled', 'disabled');
-
-    }
     $('#code').val(code);
-    $('#userholder').html(title);
+    $('#holdername').html(title);
     $('#confirmModal').modal('show');
 }
 
 
-$('#deleteUserForm').on('submit', function (e) {
+$('#deleteForm').on('submit', function (e) {
     e.preventDefault();
     $('input:submit').attr("disabled", true);
     var code = $('#code').val();

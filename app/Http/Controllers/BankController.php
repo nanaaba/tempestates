@@ -37,14 +37,14 @@ class BankController extends Controller {
         $data = $request->all();
         $new = new Bank();
 
-        $new->bank_name = $data['bank_name'];
+        $new->bank_name = strip_tags($data['bank_name']);
         $new->location = $data['location'];
-        $new->branch = $data['branch'];
-        $new->relationship_officer = $data['relationship_officer'];
-        $new->relationship_contact = $data['relationship_contact'];
-        $new->account_type = $data['account_type'];
-        $new->currency = $data['currency'];
-        $new->account_no = $data['account_number'];
+        $new->branch = strip_tags($data['branch']);
+        $new->relationship_officer = strip_tags($data['relationship_officer']);
+        $new->relationship_contact = strip_tags($data['relationship_contact']);
+        $new->account_type = strip_tags($data['account_type']);
+        $new->currency = strip_tags($data['currency']);
+        $new->account_no = strip_tags($data['account_number']);
         $new->created_by = Session::get('id');
 
 
@@ -102,9 +102,9 @@ class BankController extends Controller {
         }
         $new->tenant_id = $data['tenant'];
         $new->amount = $data['amount'];
-        $new->description = $data['description'];
-        $new->payment_date = $payment_date;
-        $new->mode = $data['mode'];
+        $new->description = strip_tags($data['description']);
+        $new->payment_date = strip_tags($payment_date);
+        $new->mode = strip_tags($data['mode']);
         $new->created_by = Session::get('id');
         $new->created_at = date('Y-m-d H:i:s');
 
@@ -199,14 +199,14 @@ class BankController extends Controller {
         $data = $request->all();
 
         $new = Bank::find($data['code']);
-        $new->bank_name = $data['bank_name'];
-        $new->location = $data['location'];
-        $new->branch = $data['branch'];
-        $new->relationship_officer = $data['relationship_officer'];
-        $new->relationship_contact = $data['relationship_contact'];
+        $new->bank_name = strip_tags($data['bank_name']);
+        $new->location = strip_tags($data['location']);
+        $new->branch = strip_tags($data['branch']);
+        $new->relationship_officer = strip_tags($data['relationship_officer']);
+        $new->relationship_contact = strip_tags($data['relationship_contact']);
         $new->account_type = $data['account_type'];
         $new->currency = $data['currency'];
-        $new->account_no = $data['account_number'];
+        $new->account_no = strip_tags($data['account_number']);
         $new->modified_by = Session::get('id');
 
 

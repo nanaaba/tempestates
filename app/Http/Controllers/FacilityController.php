@@ -55,7 +55,7 @@ class FacilityController extends Controller {
 
         $id = $data['code'];
         $update = Facility::find($id);
-        $update->name = $data['name'];
+        $update->name = strip_tags($data['name']);
         $update->modified_by = Session::get('id');
         $update->modified_at = date('Y-m-d H:i:s');
 
@@ -72,7 +72,7 @@ class FacilityController extends Controller {
         $data = $request->all();
         $new = new Facility();
 
-        $new->name = $data['name'];
+        $new->name = strip_tags($data['name']);
 
         $new->created_by = Session::get('id');
         $new->created_at = date('Y-m-d H:i:s');
@@ -103,14 +103,6 @@ class FacilityController extends Controller {
         ApartmentFacilities::insert($data); // Eloquent
     }
 
-    private function generateuniqueCode($length = 10) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }
+   
 
 }

@@ -10,14 +10,14 @@
 
                 <li  id="active" class="{{ Request::is('dashboard') ? 'active' : '' }}">
                     <a href="{{ url('dashboard') }}">
-                        <i class="menu-icon ti-layout-list-large-image"></i>
+                        <i class="menu-icon ti-desktop"></i>
                         <span class="mm-text ">Dashboard </span>
                     </a>
                 </li>
                 
                    <li class="menu-dropdown {{ Request::is('configuration*') ? 'active' : '' }}">
                     <a href="javascript:void(0)">
-                        <i class="menu-icon ti-check-box"></i>
+                        <i class="menu-icon ti-widget"></i>
                             <span>Configuration</span>
                         <span class="fa arrow"></span>
                     </a>
@@ -47,14 +47,14 @@
 
                 <li  id="active" class="{{ Request::is('estates') ? 'active' : '' }}">
                     <a href="{{ url('estates') }}">
-                        <i class="menu-icon ti-layout-list-large-image"></i>
+                        <i class="menu-icon ti-bar-chart"></i>
                         <span class="mm-text ">Estates/Courts </span>
                     </a>
                 </li>
 
                 <li   class="{{ Request::is('apartments') ? 'active' : '' }}">
                     <a href="{{ url('apartments') }}">
-                        <i class="menu-icon ti-layout-list-large-image"></i>
+                        <i class="menu-icon ti-layout-grid3"></i>
                         <span class="mm-text ">Apartments </span>
                     </a>
                 </li>
@@ -62,13 +62,13 @@
 
                 <li   class="{{ Request::is('facilities') ? 'active' : '' }}">
                     <a href="{{ url('facilities') }}">
-                        <i class="menu-icon ti-layout-list-large-image"></i>
+                        <i class="menu-icon ti-truck"></i>
                         <span class="mm-text ">Facilities </span>
                     </a>
                 </li>
                 <li   class="{{ Request::is('services') ? 'active' : '' }}">
                     <a href="{{ url('services') }}">
-                        <i class="menu-icon ti-layout-list-large-image"></i>
+                        <i class="menu-icon ti-shopping-cart-full"></i>
                         <span class="mm-text ">Services </span>
                     </a>
                 </li>
@@ -76,7 +76,7 @@
 
                 <li class="menu-dropdown {{ Request::is('tenants*') ? 'active' : '' }}">
                     <a href="javascript:void(0)">
-                        <i class="menu-icon ti-check-box"></i>
+                        <i class="menu-icon ti-user"></i>
                         <span>Tenants</span>
                         <span class="fa arrow"></span>
                     </a>
@@ -111,7 +111,7 @@
                 
                   <li class="menu-dropdown {{ Request::is('banking*') ? 'active' : '' }}">
                     <a href="javascript:void(0)">
-                        <i class="menu-icon ti-check-box"></i>
+                        <i class="menu-icon ti-briefcase"></i>
                         <span>Banking</span>
                         <span class="fa arrow"></span>
                     </a>
@@ -146,7 +146,7 @@
                 
                 <li   class="{{ Request::is('account/users') ? 'active' : '' }}">
                     <a href="{{ url('account/users') }}">
-                        <i class="menu-icon ti-layout-list-large-image"></i>
+                        <i class="menu-icon ti-face-smile"></i>
                         <span class="mm-text ">Users </span>
                     </a>
                 </li>

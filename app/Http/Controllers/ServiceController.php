@@ -48,9 +48,9 @@ class ServiceController extends Controller {
 
         $id = $data['code'];
         $update = Service::find($id);
-        $update->name = $data['name'];
-        $update->amount = $data['amount'];
-        $update->description = $data['description'];
+        $update->name = strip_tags($data['name']);
+        $update->amount = strip_tags($data['amount']);
+        $update->description = strip_tags($data['description']);
 
         $update->modified_by = Session::get('id');
         $update->modified_at = date('Y-m-d H:i:s');
@@ -68,9 +68,9 @@ class ServiceController extends Controller {
         $data = $request->all();
         $new = new Service();
 
-        $new->name = $data['name'];
-        $new->amount = $data['amount'];
-        $new->description = $data['description'];
+        $new->name = strip_tags($data['name']);
+        $new->amount = strip_tags($data['amount']);
+        $new->description = strip_tags($data['description']);
 
         $new->created_by = Session::get('id');
         $new->created_at = date('Y-m-d H:i:s');

@@ -53,42 +53,42 @@ class TenantController extends Controller {
         }
 
         if ($request->hasFile('scanned_id')) {
-            $this->deleteFile($data['scanned_id']);
+            $this->deleteFile(strip_tags($data['scanned_id']));
 
             $scanned_id = $request->file('scanned_id');
             $scanned_file = $scanned_id->store('scanneddocuments');
             $new->scanned_id = $scanned_file;
         }
 
-        $new->title = $data['title'];
-        $new->name = $data['fullname'];
-        $new->dateofbirth = $data['dob'];
-        $new->gender = $data['gender'];
-        $new->nationality = $data['nationality'];
-        $new->hometown = $data['hometown'];
-        $new->email_address = $data['email'];
-        $new->contactno = $data['phone_number'];
-        $new->previous_resident = $data['previous_resident'];
-        $new->current_resident = $data['current_resident'];
-        $new->id_number = $data['id_number'];
-        $new->employment_status = $data['employment_status'];
-        $new->occupation = $data['occupation'];
-        $new->company = $data['company'];
-        $new->company_address = $data['company_address'];
-        $new->company_numbers = $data['office_numbers'];
-        $new->company_area = $data['office-area'];
-        $new->position = $data['position'];
-        $new->company_street = $data['office_street'];
-        $new->company_location = $data['office_location'];
-        $new->marital_status = $data['marital_status'];
-        $new->children = $data['children'];
-        $new->nextkin = $data['nextofkin'];
-        $new->nextkin_contact = $data['phoneno'];
-        $new->nextkin_address = $data['nextkin_address'];
-        $new->nextkin_location = $data['nextkin_hse'];
-        $new->nextkin_occupation = $data['nextkin_occupation']; //emergency_contact
-        $new->nextkin_workplace = $data['nextkin_work'];
-        $new->emergency_contact = $data['emergency_contact'];
+        $new->title = strip_tags($data['title']);
+        $new->name = strip_tags($data['fullname']);
+        $new->dateofbirth = strip_tags($data['dob']);
+        $new->gender = strip_tags($data['gender']);
+        $new->nationality = strip_tags($data['nationality']);
+        $new->hometown = strip_tags($data['hometown']);
+        $new->email_address = strip_tags($data['email']);
+        $new->contactno = strip_tags($data['phone_number']);
+        $new->previous_resident = strip_tags($data['previous_resident']);
+        $new->current_resident = strip_tags($data['current_resident']);
+        $new->id_number = strip_tags($data['id_number']);
+        $new->employment_status = strip_tags($data['employment_status']);
+        $new->occupation = strip_tags($data['occupation']);
+        $new->company = strip_tags($data['company']);
+        $new->company_address = strip_tags($data['company_address']);
+        $new->company_numbers = strip_tags($data['office_numbers']);
+        $new->company_area = strip_tags($data['office-area']);
+        $new->position = strip_tags($data['position']);
+        $new->company_street = strip_tags($data['office_street']);
+        $new->company_location = strip_tags($data['office_location']);
+        $new->marital_status = strip_tags($data['marital_status']);
+        $new->children = strip_tags($data['children']);
+        $new->nextkin = strip_tags($data['nextofkin']);
+        $new->nextkin_contact = strip_tags($data['phoneno']);
+        $new->nextkin_address = strip_tags($data['nextkin_address']);
+        $new->nextkin_location = strip_tags($data['nextkin_hse']);
+        $new->nextkin_occupation = strip_tags($data['nextkin_occupation']); //emergency_contact
+        $new->nextkin_workplace = strip_tags($data['nextkin_work']);
+        $new->emergency_contact = strip_tags($data['emergency_contact']);
         $new->tenant_code = $tenantcode;
 
         $new->created_by = Session::get('id');
@@ -100,24 +100,24 @@ class TenantController extends Controller {
 
             if ($saved) {
                 $tenant_id = $new->id;
-                $this->saveTenantRent($data['apartment'], $tenant_id, $data['rent_period'], $data['currency'], $data['amount'], $data['start_date'], $data['end_date']);
+                $this->saveTenantRent(strip_tags($data['apartment']), $tenant_id, strip_tags($data['rent_period']), strip_tags($data['currency']), strip_tags($data['amount']), strip_tags($data['start_date']), strip_tags($data['end_date']));
                 if ($request->hasFile('documents')) {
                     $this->uploadDocuments($request->file('documents'), $tenant_id);
                 }
 
                 $apartment = new ApartmentController();
-                $apartmentInformation = $apartment->getApartmentDetail($data['apartment']);
+                $apartmentInformation = $apartment->getApartmentDetail(strip_tags($data['apartment']));
                 $apartinfo = json_decode($apartmentInformation, true);
 
 
-                $message = "Hello," . $data['title'] . ' ' . $data['fullname'] .
-                        '.You have rented our ' . $apartinfo[0]['name'] . 'for the period of ' . $data['rent_period'] . 'months.'
+                $message = "Hello," . strip_tags($data['title']) . ' ' . strip_tags($data['fullname']) .
+                        '.You have rented our ' . $apartinfo[0]['name'] . 'for the period of ' . strip_tags($data['rent_period']) . 'months.'
                         . ' Please kindly take notice of your tenant code : ' . $tenantcode . '. '
                         . 'Thank you for choosing Rotamac Real Estates.Enjoy your stay in your new apartment';
 
                 $notifications = new NotificationsController();
-                $notifications->sendemail($data['email'], ' Tenant Registration', $message);
-                $notifications->sendsms($data['phone_number'], $message);
+                $notifications->sendemail(strip_tags($data['email']), ' Tenant Registration', $message);
+                $notifications->sendsms(strip_tags($data['phone_number']), $message);
 
                 $data = array('success' => 0, 'tenat_id' => $tenantcode);
                 return json_encode($data);
@@ -182,31 +182,31 @@ class TenantController extends Controller {
         $new = new TenantBills();
         $date_serviced = date('Y-m-d', strtotime($request['date_serviced']));
 
-        $new->tenant_id = $data['tenant'];
-        $new->amount = $data['service_amount'];
+        $new->tenant_id = strip_tags($data['tenant']);
+        $new->amount = strip_tags($data['service_amount']);
         $new->serviced_date = $date_serviced;
-        $new->description = $data['service_description'];
-        $new->service_id = $data['service_type'];
+        $new->description = strip_tags($data['service_description']);
+        $new->service_id = strip_tags($data['service_type']);
 
         $saved = $new->save();
 
         if ($saved) {
 
             $service = new ServiceController();
-            $serviceInformation = $service->getServiceDetail($data['service_type']);
+            $serviceInformation = $service->getServiceDetail(strip_tags($data['service_type']));
             $serviceinfo = json_decode($serviceInformation, true);
 
 
-            $tenants_info = $this->getTenantInformation($data['tenant']);
+            $tenants_info = $this->getTenantInformation(strip_tags($data['tenant']));
             $info = json_decode($tenants_info, true);
             $message = "Hello," . $info[0]['title'] . ' ' . $info[0]['name'] . " Please you requested for this service "
-                    . $data['service_description'] . ' on ' . $data['date_serviced'] .
-                    '. Your charge is GHS ' . $data['service_amount'] . '. Your bill will be sent at the end of the month.'
+                    . strip_tags($data['service_description']) . ' on ' . strip_tags($data['date_serviced']) .
+                    '. Your charge is GHS ' . strip_tags($data['service_amount']) . '. Your bill will be sent at the end of the month.'
                     . 'Thank you for choosing Rotamac Real Estates.';
 
             $notifications = new NotificationsController();
             $notifications->sendemail($info[0]['email_address'], $serviceinfo[0]['name'] . ' Service Requested', $message);
-            //$notifications->sendsms($data['phone_number'], $message);
+            //$notifications->sendsms(strip_tags($data['phone_number']), $message);
 
             return '0';
         } else {
@@ -218,10 +218,10 @@ class TenantController extends Controller {
 
         $data = $request->all();
 
-        $daterange = explode("to", $data['daterange']);
+        $daterange = explode("to", strip_tags($data['daterange']));
         $start_date = $daterange[0];
         $end_date = $daterange[1];
-        $tenant = $data['tenant'];
+        $tenant = strip_tags($data['tenant']);
 
 
         $bills = DB::table('tenant_bills_view')
@@ -272,7 +272,7 @@ class TenantController extends Controller {
 
         $data = $request->all();
 
-        $new = Tenant::find($data['tenant_id']);
+        $new = Tenant::find(strip_tags($data['tenant_id']));
 
         if (!empty($request->hasFile('pic_file'))) {
 
@@ -289,35 +289,35 @@ class TenantController extends Controller {
 
 
 //        
-        $new->title = $data['title'];
-        $new->name = $data['fullname'];
-        $new->dateofbirth = $data['dob'];
-        $new->gender = $data['gender'];
-        $new->nationality = $data['nationality'];
-        $new->hometown = $data['hometown'];
-        $new->email_address = $data['email'];
-        $new->contactno = $data['phone_number'];
-        $new->previous_resident = $data['previous_resident'];
-        $new->current_resident = $data['current_resident'];
-        $new->id_number = $data['id_number'];
-        $new->employment_status = $data['employment_status'];
-        $new->occupation = $data['occupation'];
-        $new->company = $data['company'];
-        $new->company_address = $data['company_address'];
-        $new->company_numbers = $data['office_numbers'];
-        $new->company_area = $data['office-area'];
-        $new->position = $data['position'];
-        $new->company_street = $data['office_street'];
-        $new->company_location = $data['office_location'];
-        $new->marital_status = $data['marital_status'];
-        $new->children = $data['children'];
-        $new->nextkin = $data['nextofkin'];
-        $new->nextkin_contact = $data['phoneno'];
-        $new->nextkin_address = $data['nextkin_address'];
-        $new->nextkin_location = $data['nextkin_hse'];
-        $new->nextkin_occupation = $data['nextkin_occupation']; //emergency_contact
-        $new->nextkin_workplace = $data['nextkin_work'];
-        $new->emergency_contact = $data['emergency_contact'];
+        $new->title = strip_tags($data['title']);
+        $new->name = strip_tags($data['fullname']);
+        $new->dateofbirth = strip_tags($data['dob']);
+        $new->gender = strip_tags($data['gender']);
+        $new->nationality = strip_tags($data['nationality']);
+        $new->hometown = strip_tags($data['hometown']);
+        $new->email_address = strip_tags($data['email']);
+        $new->contactno = strip_tags($data['phone_number']);
+        $new->previous_resident = strip_tags($data['previous_resident']);
+        $new->current_resident = strip_tags($data['current_resident']);
+        $new->id_number = strip_tags($data['id_number']);
+        $new->employment_status = strip_tags($data['employment_status']);
+        $new->occupation = strip_tags($data['occupation']);
+        $new->company = strip_tags($data['company']);
+        $new->company_address = strip_tags($data['company_address']);
+        $new->company_numbers = strip_tags($data['office_numbers']);
+        $new->company_area = strip_tags($data['office-area']);
+        $new->position = strip_tags($data['position']);
+        $new->company_street = strip_tags($data['office_street']);
+        $new->company_location = strip_tags($data['office_location']);
+        $new->marital_status = strip_tags($data['marital_status']);
+        $new->children = strip_tags($data['children']);
+        $new->nextkin = strip_tags($data['nextofkin']);
+        $new->nextkin_contact = strip_tags($data['phoneno']);
+        $new->nextkin_address = strip_tags($data['nextkin_address']);
+        $new->nextkin_location = strip_tags($data['nextkin_hse']);
+        $new->nextkin_occupation = strip_tags($data['nextkin_occupation']); //emergency_contact
+        $new->nextkin_workplace = strip_tags($data['nextkin_work']);
+        $new->emergency_contact = strip_tags($data['emergency_contact']);
         $new->modified_by = Session::get('id');
         $new->modified_at = date('Y-m-d H:i:s');
 
@@ -326,9 +326,9 @@ class TenantController extends Controller {
 
             if ($saved) {
 
-                $this->updateTenantRent($data['apartment'], $data['tenant_id'], $data['rent_period'], $data['currency'], $data['amount'], '2018-02-01', '2018-10-10');
+                $this->updateTenantRent(strip_tags($data['apartment']), strip_tags($data['tenant_id']), strip_tags($data['rent_period']), strip_tags($data['currency']), strip_tags($data['amount']), '2018-02-01', '2018-10-10');
                 if (!empty($data->hasFile('documents'))) {
-                    $this->uploadDocuments($request->file('documents'), $data['tenant_id']);
+                    $this->uploadDocuments($request->file('documents'), strip_tags($data['tenant_id']));
                 }
                 $data = array('success' => 0, 'tenat_id' => '');
 
@@ -336,8 +336,8 @@ class TenantController extends Controller {
                         . "We hope you enjoy your stay.Thank you for choosing Rotamac.";
                 $notifications = new NotificationsController();
 
-                $notifications->sendemail($data['email'], 'Tenant Registered Successfully', $message);
-                $notifications->sendsms($data['phone_number'], $message);
+                $notifications->sendemail(strip_tags($data['email']), 'Tenant Registered Successfully', $message);
+                $notifications->sendsms(strip_tags($data['phone_number']), $message);
 
                 return json_encode($data);
             } else {

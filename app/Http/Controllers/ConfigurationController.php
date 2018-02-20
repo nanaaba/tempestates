@@ -61,7 +61,7 @@ class ConfigurationController extends Controller {
 
         try {
             $new = new ApartmentTypes;
-            $new->name = $data['name'];
+            $new->name = strip_tags($data['name']);
             $new->save();
             return '0';
         } catch (\Illuminate\Database\QueryException $e) {
@@ -82,7 +82,7 @@ class ConfigurationController extends Controller {
 
         try {
             $new = new RentPeriod;
-            $new->name = $data['name'];
+            $new->name = strip_tags($data['name']);
             $new->save();
             return '0';
         } catch (\Illuminate\Database\QueryException $e) {
@@ -103,7 +103,7 @@ class ConfigurationController extends Controller {
 
         try {
             $new = new Identicationcards;
-            $new->name = $data['name'];
+            $new->name = strip_tags($data['name']);
             $new->save();
             return '0';
         } catch (\Illuminate\Database\QueryException $e) {

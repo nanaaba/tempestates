@@ -67,6 +67,29 @@
 <!-- date-range-picker -->
 
 <script type="text/javascript">
+
+$('.numbersOnly').keyup(function () {
+    if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+        this.value = this.value.replace(/[^0-9\.]/g, '');
+    }
+});
+
+
+(function($) {
+	$.sanitize = function(input) {
+		var output = input.replace(/<script[^>]*?>.*?<\/script>/gi, '').
+					 replace(/<[\/\!]*?[^<>]*?>/gi, '').
+					 replace(/<style[^>]*?>.*?<\/style>/gi, '').
+					 replace(/<![\s\S]*?--[ \t\n\r]*>/gi, '');
+	    return output;
+	};
+})(jQuery);
+
+
+
+
+
+
 $('.select2').select2();
 getApartmentTypes();
 

@@ -42,6 +42,8 @@ class LoginController extends Controller {
             $request->session()->put('first_login', $first_login);
             $request->session()->put('role', $role);
             $request->session()->put('id', $id);
+            
+            $this->setLastLogin($id);
             return $users;
         }
     }
@@ -65,4 +67,12 @@ class LoginController extends Controller {
         }
     }
 
+    public function setLastLogin($id) {
+
+
+        $update = User::find($id);
+        $update->last_login = date('Y-m-d H:i:s');
+         $update->save();
+        
+    }
 }

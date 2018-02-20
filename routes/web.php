@@ -14,6 +14,17 @@
 Route::get('/', function () {
     return view('login');
 });
+
+Route::get('/logout', function() {
+    Session::flush();
+
+    return redirect('/');
+});
+Route::post('login/authenticateuser', 'LoginController@authenticateUser');
+
+
+Route::group(['middleware' => 'check-userauth'], function () {
+
 Route::get('testsms', 'NotificationsController@testsms');
 
 Route::get('dashboard', 'DashboardController@showdashboard');
@@ -83,7 +94,6 @@ Route::get('account/user/{id}', 'AccountController@getUserInfo');
 Route::delete('account/deleteuser/{id}', 'AccountController@deleteUser');
 Route::put('account/user', 'AccountController@updateUserInfo');
 Route::post('account/saveuser', 'AccountController@saveUserInfo');
-Route::post('login/authenticateuser', 'LoginController@authenticateUser');
 Route::post('login/updatepassword', 'LoginController@updatePassword');
 
 //tenant information savetenant
@@ -122,6 +132,10 @@ Route::get('banking/payments/all', 'BankController@getRentpayments');
 
 
 
+
+
+});
+
 Route::get('posts/{something}', function () {
     //
 })->middleware(['down.for.maintenance']);
@@ -130,7 +144,3 @@ Route::get('role', [
     'middleware' => 'Role:editor',
     'uses' => 'TestController@index',
 ]);
-
-
-
-

@@ -36,6 +36,7 @@ Route::get('banking/banks', 'BankController@showbanks');
 Route::get('banking/rentpayments', 'BankController@showrentpayments');
 Route::get('banking/clearpayments', 'BankController@showclearpayments');
 Route::get('banking/clearedpayments', 'BankController@showclearedpayments');
+Route::get('account/users', 'AccountController@showusers');
 
 
 Route::get('/logout', function() {

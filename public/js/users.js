@@ -1,4 +1,15 @@
+var datatable = $('#usersTbl').DataTable({
+    responsive: true,
+    language: {
+        paginate:
+                {previous: "&laquo;", next: "&raquo;"},
+        search: "_INPUT_",
+        searchPlaceholder: "Search…"
+    },
+    "order": [[4, "desc"]]
 
+
+});
 $('.select2').select2();
 
 $('#saveUserForm').on('submit', function (e) {
@@ -40,20 +51,6 @@ $('#saveUserForm').on('submit', function (e) {
 });
 
 
-var datatable = $('#usersTbl').DataTable({
-    responsive: true,
-    language: {
-        paginate:
-                {previous: "&laquo;", next: "&raquo;"},
-        search: "_INPUT_",
-        searchPlaceholder: "Search…"
-    },
-    "order": [[5, "desc"]]
-
-
-});
-
-
 
 
 
@@ -78,27 +75,12 @@ function getUsers()
             } else {
                 $.each(data, function (key, value) {
 
-                    if (value.firstname == null) {
-                        value.firstname = '';
-                    }
-                    if (value.institution_name == null) {
-                        value.institution_name = '';
-                    }
-
-                    if (value.usergroup_name == null) {
-                        value.usergroup_name = '';
-                    }
-                    if (value.role == null) {
-                        value.role = '';
-                    }
                     var j = -1;
                     var r = new Array();
                     // represent columns as array
-                    r[++j] = '<td >' + value.firstname + '</td>';
+                    r[++j] = '<td >' + value.name + '</td>';
                     r[++j] = '<td>' + value.email + '</td>';
-                    r[++j] = '<td>' + value.institution_name + '</td>';
                     r[++j] = '<td>' + value.role + '</td>';
-                    r[++j] = '<td>' + value.usergroup_name + '</td>';
                     r[++j] = '<td>' + value.datecreated + '</td>';
                     r[++j] = '<td>\n\
 <button onclick="editUser(\'' + value.id + '\')" class="btn btn-outline-info btn-sm editBtn"  type="button">Edit</button>\n\
@@ -119,6 +101,8 @@ function getUsers()
 
 
 }
+
+
 
 function editUser(id) {
 
@@ -250,21 +234,3 @@ $('#deleteUserForm').on('submit', function (e) {
 
 });
 
-
-$.ajax({
-    url: 'getusergroups',
-    type: "GET",
-    dataType: 'json',
-    success: function (data) {
-
-
-        $.each(data, function (i, item) {
-
-            $('.usergroups').append($('<option>', {
-                value: item.id,
-                text: item.name
-            }));
-        });
-
-    }
-});

@@ -144,7 +144,12 @@
                 </li>
 
                 
-                
+                <li   class="{{ Request::is('account/users') ? 'active' : '' }}">
+                    <a href="{{ url('account/users') }}">
+                        <i class="menu-icon ti-layout-list-large-image"></i>
+                        <span class="mm-text ">Users </span>
+                    </a>
+                </li>
 
             </ul>
             <!-- / .navigation --> </div>

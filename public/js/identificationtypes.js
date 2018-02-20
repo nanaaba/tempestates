@@ -13,6 +13,7 @@ $('#saveIdentificationTypeForm').on('submit', function (e) {
     e.preventDefault();
     // var validator = $("#saveRegionForm").validate();
     var formData = $(this).serialize();
+    $('#loaderModal').modal('show');
 
     $('input:submit').attr("disabled", true);
     $.ajax({
@@ -22,6 +23,7 @@ $('#saveIdentificationTypeForm').on('submit', function (e) {
         success: function (data) {
             console.log(data);
             $('#districtModal').modal('hide');
+            $('#loaderModal').modal('hide');
 
             document.getElementById("saveIdentificationTypeForm").reset();
             if (data == 0) {
@@ -35,6 +37,8 @@ $('#saveIdentificationTypeForm').on('submit', function (e) {
             }
         },
         error: function (jXHR, textStatus, errorThrown) {
+                $('#loaderModal').modal('show');
+
             swal("Error!", "Contact System Administrator ", "error");
         }
     });
@@ -117,7 +121,7 @@ $('#deleteForm').on('submit', function (e) {
     $('#loaderModal').modal('show');
 
     $.ajax({
-        url: 'deleteidentificationcard/'+code,
+        url: 'deleteidentificationcard/' + code,
         type: "DELETE",
         data: {_token: token},
         success: function (data) {

@@ -21,6 +21,7 @@ $('#saveBankForm').on('submit', function (e) {
     e.preventDefault();
     // var validator = $("#saveRegionForm").validate();
     var formData = $(this).serialize();
+    $('#loaderModal').modal('show');
 
     $('input:submit').attr("disabled", true);
     $.ajax({
@@ -30,6 +31,7 @@ $('#saveBankForm').on('submit', function (e) {
         success: function (data) {
             console.log(data);
             $('#districtModal').modal('hide');
+            $('#loaderModal').modal('hide');
 
             document.getElementById("saveBankForm").reset();
             if (data == 0) {
@@ -114,7 +116,7 @@ function getInfo(id) {
 
 
     $.ajax({
-        url:  id,
+        url: id,
         type: "GET",
         dataType: "json",
         success: function (data) {
@@ -193,7 +195,7 @@ $('#deleteForm').on('submit', function (e) {
     $('#loaderModal').modal('show');
 
     $.ajax({
-        url:  code,
+        url: code,
         type: "DELETE",
         data: {_token: token},
         success: function (data) {

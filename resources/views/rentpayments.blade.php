@@ -55,20 +55,20 @@
                                         <label for="region" class="control-label">Apartment Type:</label>
                                         <input type="text" class="form-control" name="apartment_type" id="apartment_type"  readonly>
                                     </div>
-                                   
-                                    
+
+
                                     <div class="form-group">
-                                    <label for="my-element">
-                                      Payment Date:
-                                    </label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-fw ti-calendar"></i>
+                                        <label for="my-element">
+                                            Payment Date:
+                                        </label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-fw ti-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control float-right"  name="payment_date"   data-language="en" id="paymentdate">
                                         </div>
-                                        <input type="text" class="form-control float-right"  name="payment_date"   data-language="en" id="paymentdate">
+                                        <!-- /.input group -->
                                     </div>
-                                    <!-- /.input group -->
-                                </div>
                                 </div>
 
                                 <div class="col-md-6">
@@ -162,7 +162,7 @@
                                             <th>
                                                 Payment Date
                                             </th>
-                                           
+
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -206,8 +206,8 @@
 <script  type="text/javascript">
 
 $('#paymentdate').datepicker({
-        format: 'dd-mm-yyyy'
-    });
+    format: 'dd-mm-yyyy'
+});
 
 var datatable = $('#paymentsTbl').DataTable({
     responsive: true,
@@ -245,7 +245,7 @@ function getPayments()
                     var j = -1;
                     var r = new Array();
                     // represent columns as array
-                    r[++j] = '<td class="subject">'+ value.title +' '  + value.name + '</td>';
+                    r[++j] = '<td class="subject">' + value.title + ' ' + value.name + '</td>';
                     r[++j] = '<td class="subject">' + value.description + '</td>';
                     r[++j] = '<td class="subject">' + value.amount + '</td>';
                     r[++j] = '<td class="subject">' + value.mode + '</td>';
@@ -277,17 +277,19 @@ $('#savePaymentsForm').on('submit', function (e) {
     e.preventDefault();
     // var validator = $("#saveRegionForm").validate();
     var formData = $(this).serialize();
+    $('#loaderModal').modal('show');
 
     $('input:submit').attr("disabled", true);
     $.ajax({
         url: "{{url('banking/saverentpayments')}}",
         type: "POST",
         data: formData,
-        dataType:"json",
+        dataType: "json",
         success: function (data) {
             console.log(data);
             $('#newModal').modal('hide');
             $('input:submit').removeAttr("disabled");
+            $('#loaderModal').modal('hide');
 
             document.getElementById("savePaymentsForm").reset();
             if (data.success == 0) {

@@ -11,8 +11,8 @@
 
 $('#saveApartmentTypeForm').on('submit', function (e) {
     e.preventDefault();
-    // var validator = $("#saveRegionForm").validate();
     var formData = $(this).serialize();
+    $('#loaderModal').modal('show');
 
     $('input:submit').attr("disabled", true);
     $.ajax({
@@ -22,6 +22,7 @@ $('#saveApartmentTypeForm').on('submit', function (e) {
         success: function (data) {
             console.log(data);
             $('#districtModal').modal('hide');
+            $('#loaderModal').modal('hide');
 
             document.getElementById("saveApartmentTypeForm").reset();
             if (data == 0) {
@@ -117,7 +118,7 @@ $('#deleteForm').on('submit', function (e) {
     $('#loaderModal').modal('show');
 
     $.ajax({
-        url: 'deleteapartmentype/'+code,
+        url: 'deleteapartmentype/' + code,
         type: "DELETE",
         data: {_token: token},
         success: function (data) {

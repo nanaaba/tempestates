@@ -13,6 +13,7 @@ $('#saveServiceForm').on('submit', function (e) {
     e.preventDefault();
     // var validator = $("#saveRegionForm").validate();
     var formData = $(this).serialize();
+    $('#loaderModal').modal('show');
 
     $('input:submit').attr("disabled", true);
     $.ajax({
@@ -22,6 +23,7 @@ $('#saveServiceForm').on('submit', function (e) {
         success: function (data) {
             console.log(data);
             $('#districtModal').modal('hide');
+            $('#loaderModal').modal('hide');
 
             document.getElementById("saveServiceForm").reset();
             if (data == 0) {
@@ -61,6 +63,7 @@ getServices();
 
 function getServices()
 {
+    $('#loaderModal').modal('show');
 
     $.ajax({
         url: 'services/all',
@@ -70,6 +73,7 @@ function getServices()
 
             console.log(data);
             datatable.clear().draw();
+            $('#loaderModal').modal('hide');
 
 
             if (data.length == 0) {
@@ -115,6 +119,7 @@ function editDistrict(code) {
 
 
 function getServiceInfo(id) {
+    $('#loaderModal').modal('show');
 
 
     $.ajax({
@@ -122,11 +127,13 @@ function getServiceInfo(id) {
         type: "GET",
         dataType: "json",
         success: function (data) {
+            $('#loaderModal').modal('hide');
+
             console.log(data[0].name);
             $('#up_servicename').val(data[0].name);
             $('#up_servdesc').val(data[0].description);
             $('#up_amt').val(data[0].amount);
-           
+
             $('#code').val(id);
 
         },

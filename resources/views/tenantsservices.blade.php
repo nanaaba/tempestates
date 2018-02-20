@@ -142,6 +142,7 @@ $('#saveServiceForm').on('submit', function (e) {
     e.preventDefault();
     // var validator = $("#saveRegionForm").validate();
     var formData = $(this).serialize();
+    $('#loaderModal').modal('show');
 
     $('input:submit').attr("disabled", true);
     $.ajax({
@@ -152,6 +153,7 @@ $('#saveServiceForm').on('submit', function (e) {
             console.log(data);
             $('#newModal').modal('hide');
             $('input:submit').removeAttr("disabled");
+    $('#loaderModal').modal('hide');
 
           //  document.getElementById("saveServiceForm").reset();
             if (data == 0) {
@@ -166,6 +168,8 @@ $('#saveServiceForm').on('submit', function (e) {
         },
         error: function (jXHR, textStatus, errorThrown) {
             $('input:submit').removeAttr("disabled");
+                $('#loaderModal').modal('hide');
+
             swal("Error!", "Contact System Administrator ", "error");
         }
     });

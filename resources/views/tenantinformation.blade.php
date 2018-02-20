@@ -624,6 +624,7 @@ $('#rootwizard .finish').click(function () {
     //var formData = $("#tenantForm").serialize();
     var formData = new FormData($("#tenantForm")[0]);
 
+    $('#loaderModal').modal('show');
 
     console.log('data :' + formData);
     $.ajax({
@@ -633,11 +634,12 @@ $('#rootwizard .finish').click(function () {
         cache: false,
         contentType: false,
         processData: false,
-      dataType: 'json',
+        dataType: 'json',
         success: function (data) {
             console.log('server data :' + data);
             if (data.success == 0) {
                 $('#tenantForm select').val('').trigger('change');
+                $('#loaderModal').modal('hide');
 
 //                document.getElementById("tenantForm").reset();
                 new PNotify({

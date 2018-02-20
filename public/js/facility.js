@@ -13,6 +13,7 @@ $('#saveFacilityForm').on('submit', function (e) {
     e.preventDefault();
     // var validator = $("#saveRegionForm").validate();
     var formData = $(this).serialize();
+    $('#loaderModal').modal('show');
 
     $('input:submit').attr("disabled", true);
     $.ajax({
@@ -22,6 +23,7 @@ $('#saveFacilityForm').on('submit', function (e) {
         success: function (data) {
             console.log(data);
             $('#districtModal').modal('hide');
+            $('#loaderModal').modal('hide');
 
             document.getElementById("saveFacilityForm").reset();
             if (data == 0) {
@@ -61,12 +63,14 @@ getFacilitys();
 
 function getFacilitys()
 {
+    $('#loaderModal').modal('show');
 
     $.ajax({
         url: 'facility/all',
         type: "GET",
         dataType: "json",
         success: function (data) {
+    $('#loaderModal').modal('hide');
 
             console.log(data);
             datatable.clear().draw();
@@ -84,7 +88,7 @@ function getFacilitys()
                     r[++j] = '<td class="subject">' + value.name + '</td>';
                     r[++j] = '<td><button onclick="deleteType(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-danger btn-sm deleteBtn" type="button">Delete</button></td>';
 //<button onclick="editDistrict(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-info btn-sm editBtn" type="button">Edit</button>\n\
-                              
+
                     rowNode = datatable.row.add(r);
                 });
 

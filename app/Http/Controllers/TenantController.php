@@ -43,91 +43,97 @@ class TenantController extends Controller {
         $data = $request->all();
         $tenantcode = 'TNT' . $this->generateuniqueCode(5);
 
+        $email = strip_tags($data['email']);
+        $exist = $this->checkemailexistence($email);
+        if ($exist == 1) {
+            $data = array('success' => 2, 'message' => "Email already exist");
+            return json_encode($data);
+        } else {
+            $new = new Tenant();
+            if ($request->hasFile('pic_file')) {
+                //unlink file
+                $picfile = $request->file('pic_file');
+                $profilepic = $picfile->store('profilepics');
+                $new->profile_pic = $profilepic;
+            }
 
-        $new = new Tenant();
-        if ($request->hasFile('pic_file')) {
-            //unlink file
-            $picfile = $request->file('pic_file');
-            $profilepic = $picfile->store('profilepics');
-            $new->profile_pic = $profilepic;
-        }
+            if ($request->hasFile('scanned_id')) {
+                $this->deleteFile(strip_tags($data['scanned_id']));
 
-        if ($request->hasFile('scanned_id')) {
-            $this->deleteFile(strip_tags($data['scanned_id']));
+                $scanned_id = $request->file('scanned_id');
+                $scanned_file = $scanned_id->store('scanneddocuments');
+                $new->scanned_id = $scanned_file;
+            }
 
-            $scanned_id = $request->file('scanned_id');
-            $scanned_file = $scanned_id->store('scanneddocuments');
-            $new->scanned_id = $scanned_file;
-        }
+            $new->title = strip_tags($data['title']);
+            $new->name = strip_tags($data['fullname']);
+            $new->dateofbirth = strip_tags(date('Y-m-d', strtotime($data['dob'])));
+            $new->gender = strip_tags($data['gender']);
+            $new->nationality = strip_tags($data['nationality']);
+            $new->hometown = strip_tags($data['hometown']);
+            $new->email_address = strip_tags($data['email']);
+            $new->contactno = strip_tags($data['phone_number']);
+            $new->previous_resident = strip_tags($data['previous_resident']);
+            $new->current_resident = strip_tags($data['current_resident']);
+            $new->id_number = strip_tags($data['id_number']);
+            $new->employment_status = strip_tags($data['employment_status']);
+            $new->occupation = strip_tags($data['occupation']);
+            $new->company = strip_tags($data['company']);
+            $new->company_address = strip_tags($data['company_address']);
+            $new->company_numbers = strip_tags($data['office_numbers']);
+            $new->company_area = strip_tags($data['office-area']);
+            $new->position = strip_tags($data['position']);
+            $new->company_street = strip_tags($data['office_street']);
+            $new->company_location = strip_tags($data['office_location']);
+            $new->marital_status = strip_tags($data['marital_status']);
+            $new->children = strip_tags($data['children']);
+            $new->nextkin = strip_tags($data['nextofkin']);
+            $new->nextkin_contact = strip_tags($data['phoneno']);
+            $new->nextkin_address = strip_tags($data['nextkin_address']);
+            $new->nextkin_location = strip_tags($data['nextkin_hse']);
+            $new->nextkin_occupation = strip_tags($data['nextkin_occupation']); //emergency_contact
+            $new->nextkin_workplace = strip_tags($data['nextkin_work']);
+            $new->emergency_contact = strip_tags($data['emergency_contact']);
+            $new->tenant_code = $tenantcode;
 
-        $new->title = strip_tags($data['title']);
-        $new->name = strip_tags($data['fullname']);
-        $new->dateofbirth = strip_tags($data['dob']);
-        $new->gender = strip_tags($data['gender']);
-        $new->nationality = strip_tags($data['nationality']);
-        $new->hometown = strip_tags($data['hometown']);
-        $new->email_address = strip_tags($data['email']);
-        $new->contactno = strip_tags($data['phone_number']);
-        $new->previous_resident = strip_tags($data['previous_resident']);
-        $new->current_resident = strip_tags($data['current_resident']);
-        $new->id_number = strip_tags($data['id_number']);
-        $new->employment_status = strip_tags($data['employment_status']);
-        $new->occupation = strip_tags($data['occupation']);
-        $new->company = strip_tags($data['company']);
-        $new->company_address = strip_tags($data['company_address']);
-        $new->company_numbers = strip_tags($data['office_numbers']);
-        $new->company_area = strip_tags($data['office-area']);
-        $new->position = strip_tags($data['position']);
-        $new->company_street = strip_tags($data['office_street']);
-        $new->company_location = strip_tags($data['office_location']);
-        $new->marital_status = strip_tags($data['marital_status']);
-        $new->children = strip_tags($data['children']);
-        $new->nextkin = strip_tags($data['nextofkin']);
-        $new->nextkin_contact = strip_tags($data['phoneno']);
-        $new->nextkin_address = strip_tags($data['nextkin_address']);
-        $new->nextkin_location = strip_tags($data['nextkin_hse']);
-        $new->nextkin_occupation = strip_tags($data['nextkin_occupation']); //emergency_contact
-        $new->nextkin_workplace = strip_tags($data['nextkin_work']);
-        $new->emergency_contact = strip_tags($data['emergency_contact']);
-        $new->tenant_code = $tenantcode;
+            $new->created_by = Session::get('id');
+            $new->modified_by = Session::get('id');
+            $new->modified_at = date('Y-m-d H:i:s');
 
-        $new->created_by = Session::get('id');
-        $new->modified_by = Session::get('id');
-        $new->modified_at = date('Y-m-d H:i:s');
+            try {
+                $saved = $new->save();
 
-        try {
-            $saved = $new->save();
+                if ($saved) {
+                    $tenant_id = $new->id;
+                    $this->saveTenantRent(strip_tags($data['apartment']), $tenant_id, strip_tags($data['rent_period']), strip_tags($data['currency']), strip_tags($data['amount']), strip_tags($data['start_date']), strip_tags($data['end_date']));
+                    if ($request->hasFile('documents')) {
+                        $this->uploadDocuments($request->file('documents'), $tenant_id);
+                    }
 
-            if ($saved) {
-                $tenant_id = $new->id;
-                $this->saveTenantRent(strip_tags($data['apartment']), $tenant_id, strip_tags($data['rent_period']), strip_tags($data['currency']), strip_tags($data['amount']), strip_tags($data['start_date']), strip_tags($data['end_date']));
-                if ($request->hasFile('documents')) {
-                    $this->uploadDocuments($request->file('documents'), $tenant_id);
+                    $apartment = new ApartmentController();
+                    $apartmentInformation = $apartment->getApartmentDetail(strip_tags($data['apartment']));
+                    $apartinfo = json_decode($apartmentInformation, true);
+
+
+                    $message = "Hello," . strip_tags($data['title']) . ' ' . strip_tags($data['fullname']) .
+                            '.You have rented our ' . $apartinfo[0]['name'] . 'for the period of ' . strip_tags($data['rent_period']) . 'months.'
+                            . ' Please kindly take notice of your tenant code : ' . $tenantcode . '. '
+                            . 'Thank you for choosing Rotamac Real Estates.Enjoy your stay in your new apartment';
+
+                    $notifications = new NotificationsController();
+                    $notifications->sendemail(strip_tags($data['email']), ' Tenant Registration', $message);
+                    $notifications->sendsms(strip_tags($data['phone_number']), $message);
+
+                    $data = array('success' => 0, 'tenat_id' => $tenantcode);
+                    return json_encode($data);
+                } else {
+                    $data = array('success' => 1, 'tenat_id' => '');
+                    return json_encode($data);
                 }
-
-                $apartment = new ApartmentController();
-                $apartmentInformation = $apartment->getApartmentDetail(strip_tags($data['apartment']));
-                $apartinfo = json_decode($apartmentInformation, true);
-
-
-                $message = "Hello," . strip_tags($data['title']) . ' ' . strip_tags($data['fullname']) .
-                        '.You have rented our ' . $apartinfo[0]['name'] . 'for the period of ' . strip_tags($data['rent_period']) . 'months.'
-                        . ' Please kindly take notice of your tenant code : ' . $tenantcode . '. '
-                        . 'Thank you for choosing Rotamac Real Estates.Enjoy your stay in your new apartment';
-
-                $notifications = new NotificationsController();
-                $notifications->sendemail(strip_tags($data['email']), ' Tenant Registration', $message);
-                $notifications->sendsms(strip_tags($data['phone_number']), $message);
-
-                $data = array('success' => 0, 'tenat_id' => $tenantcode);
-                return json_encode($data);
-            } else {
-                $data = array('success' => 1, 'tenat_id' => '');
+            } catch (\Illuminate\Database\QueryException $e) {
+                $data = array('success' => 2, 'message' => $e->getMessage());
                 return json_encode($data);
             }
-        } catch (\Illuminate\Database\QueryException $e) {
-            $data = array('success' => 2, 'message' => $e->getMessage());
-            return json_encode($data);
         }
     }
 
@@ -206,7 +212,7 @@ class TenantController extends Controller {
 
             $notifications = new NotificationsController();
             $notifications->sendemail($info[0]['email_address'], $serviceinfo[0]['name'] . ' Service Requested', $message);
-            //$notifications->sendsms(strip_tags($data['phone_number']), $message);
+            $notifications->sendsms(strip_tags($data['phone_number']), $message);
 
             return '0';
         } else {
@@ -271,6 +277,14 @@ class TenantController extends Controller {
 
 
         $data = $request->all();
+        
+        
+        $email = strip_tags($data['email']);
+        $exist = $this->checkemailexistence($email);
+        if ($exist == 1) {
+            $data = array('success' => 2, 'message' => "Email already exist");
+            return json_encode($data);
+        }
 
         $new = Tenant::find(strip_tags($data['tenant_id']));
 
@@ -327,17 +341,11 @@ class TenantController extends Controller {
             if ($saved) {
 
                 $this->updateTenantRent(strip_tags($data['apartment']), strip_tags($data['tenant_id']), strip_tags($data['rent_period']), strip_tags($data['currency']), strip_tags($data['amount']), '2018-02-01', '2018-10-10');
-                if (!empty($data->hasFile('documents'))) {
+                if (!empty($request->hasFile('documents'))) {
                     $this->uploadDocuments($request->file('documents'), strip_tags($data['tenant_id']));
                 }
                 $data = array('success' => 0, 'tenat_id' => '');
 
-                $message = "Thank you for renting one of our Estates."
-                        . "We hope you enjoy your stay.Thank you for choosing Rotamac.";
-                $notifications = new NotificationsController();
-
-                $notifications->sendemail(strip_tags($data['email']), 'Tenant Registered Successfully', $message);
-                $notifications->sendsms(strip_tags($data['phone_number']), $message);
 
                 return json_encode($data);
             } else {
@@ -369,6 +377,21 @@ class TenantController extends Controller {
 
     public function getTenantInformation($id) {
         return DB::table('tenants_view')->where('id', $id)->get();
+    }
+
+    function checkemailexistence($email) {
+
+        $result = ORM::for_table('tenant_view')->where(array(
+           'email_address'=>$email,
+            'acive'=>0
+        ))
+                ->find_one();
+
+
+        if (empty($result)) {
+            return '0';
+        }
+        return '1';
     }
 
 }

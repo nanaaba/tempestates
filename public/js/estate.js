@@ -13,6 +13,7 @@ $('#saveEstateForm').on('submit', function (e) {
     e.preventDefault();
     // var validator = $("#saveRegionForm").validate();
     var formData = $(this).serialize();
+    $('#loaderModal').modal('show');
 
     $('input:submit').attr("disabled", true);
     $.ajax({
@@ -22,6 +23,7 @@ $('#saveEstateForm').on('submit', function (e) {
         success: function (data) {
             console.log(data);
             $('#districtModal').modal('hide');
+            $('#loaderModal').modal('hide');
 
             document.getElementById("saveEstateForm").reset();
             if (data == 0) {
@@ -35,6 +37,8 @@ $('#saveEstateForm').on('submit', function (e) {
             }
         },
         error: function (jXHR, textStatus, errorThrown) {
+            $('#loaderModal').modal('hide');
+
             swal("Error!", "Contact System Administrator ", "error");
         }
     });
@@ -103,11 +107,11 @@ function getEstates()
 
 
 
-function editDistrict(code, name,location) {
+function editDistrict(code, name, location) {
     console.log('goood');
     $('#code').val(code);
     $('#estatename').val(name);
-     $('#location').val(location);
+    $('#location').val(location);
     $('#editModal').modal('show');
 }
 
@@ -157,12 +161,12 @@ $('#deleteForm').on('submit', function (e) {
     $('input:submit').attr("disabled", true);
     var code = $('#code').val();
     var token = $('#token').val();
-    console.log('code :'+code);
+    console.log('code :' + code);
     $('#confirmModal').modal('hide');
     $('#loaderModal').modal('show');
 
     $.ajax({
-        url: 'estate/'+code,
+        url: 'estate/' + code,
         type: "DELETE",
         data: {_token: token},
         success: function (data) {

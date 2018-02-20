@@ -177,11 +177,15 @@ $('#paymentsForm').on('submit', function (e) {
         swal("Error!", "Amount should be the same", "error");
 
     } else {
+        $('#loaderModal').modal('show');
+
         $.ajax({
             url: "{{url('clearpayments')}}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
+                $('#loaderModal').modal('hide');
+
                 console.log('banks' + data);
                 swal("Success", data, "success");
 

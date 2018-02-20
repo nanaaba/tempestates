@@ -149,11 +149,11 @@
                                                     <input type="text" class="form-control float-right datepick"  name="start_date"   data-language="en" id="start_date">
                                                 </div>
                                             </div>
-<!--                                            <div class="col-sm-3">
-                                                <button type="button" class="btn btn-info " onclick="computeEndDate()">
-                                                    Compute End Date
-                                                </button>
-                                            </div>-->
+                                            <!--                                            <div class="col-sm-3">
+                                                                                            <button type="button" class="btn btn-info " onclick="computeEndDate()">
+                                                                                                Compute End Date
+                                                                                            </button>
+                                                                                        </div>-->
                                             <!-- /.input group -->
                                         </div>
 
@@ -161,7 +161,7 @@
                                             <div class="col-sm-3">
 
                                                 <label for="my-element">
-                                                     End Date:
+                                                    End Date:
                                                 </label>
                                             </div>
                                             <div class="col-sm-9">
@@ -236,8 +236,9 @@
                                                 <label for="dob" class="form-control-label">Date of Birth</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input id="dob" name="dob" type="date" class="form-control"
-                                                       placeholder="dd/mm/yyyy"/>
+                                                
+                                                <input type="text" class="form-control float-right datepick"  name="dob"   data-language="en" id="dob">
+
                                             </div>
                                         </div>
 
@@ -619,172 +620,175 @@
 <script type="text/javascript" src="{{ asset('vendors/sweetalert2/js/sweetalert2.min.js')}}"></script>
 
 <script type="text/javascript">
-                                                    $('.datepick').datepicker({
-                                                        format: 'dd-mm-yyyy'
-                                                    });
-                                                    PNotify.prototype.options.styling = "bootstrap3";
-                                                    PNotify.prototype.options.styling = "jqueryui";
-                                                    PNotify.prototype.options.styling = "fontawesome";
+$('.datepick').datepicker({
+    format: 'dd-mm-yyyy'
+});
+PNotify.prototype.options.styling = "bootstrap3";
+PNotify.prototype.options.styling = "jqueryui";
+PNotify.prototype.options.styling = "fontawesome";
 
-                                                    $('#rootwizard').bootstrapWizard({onTabShow: function (tab, navigation, index) {
-                                                            var $total = navigation.find('li').length;
-                                                            var $current = index + 1;
-                                                            var $percent = ($current / $total) * 100;
-                                                            $('#rootwizard').find('.bar').css({width: $percent + '%'});
-                                                        }});
-                                                    $('#rootwizard .finish').click(function () {
-                                                        // var formData = $("#tenantForm").serialize();
-                                                        var formData = new FormData($("#tenantForm")[0]);
+$('#rootwizard').bootstrapWizard({onTabShow: function (tab, navigation, index) {
+        var $total = navigation.find('li').length;
+        var $current = index + 1;
+        var $percent = ($current / $total) * 100;
+        $('#rootwizard').find('.bar').css({width: $percent + '%'});
+    }});
+$('#rootwizard .finish').click(function () {
+    // var formData = $("#tenantForm").serialize();
+    var formData = new FormData($("#tenantForm")[0]);
 
+    $('#loaderModal').modal('show');
 
-                                                        console.log('data :' + formData);
-                                                        $.ajax({
-                                                            url: "savetenant",
-                                                            type: "POST",
-                                                            data: formData,
-                                                            cache: false,
-                                                            contentType: false,
-                                                            processData: false,
-                                                            dataType: 'json',
-                                                            success: function (data) {
-                                                                console.log('server data :' + data);
-                                                                if (data.success == 0) {
-                                                                    $('#tenantForm select').val('').trigger('change');
+    console.log('data :' + formData);
+    $.ajax({
+        url: "savetenant",
+        type: "POST",
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: 'json',
+        success: function (data) {
+                $('#loaderModal').modal('hide');
 
-                                                                    document.getElementById("tenantForm").reset();
-                                                                    new PNotify({
-                                                                        title: 'Success',
-                                                                        text: "Information saved successfully.Tenant Code is" + data.tenat_id,
-                                                                        type: 'success'
-                                                                    });
-                                                                    // swal("Success", "Information saved successfully.Tenant Code is"+data.tenat_id, 'success');
-                                                                } else if (data.success == 1) {
-                                                                    new PNotify({
-                                                                        title: 'Error',
-                                                                        text: "Error in Saving Tenant Information",
-                                                                        type: 'error'
-                                                                    });
-                                                                    //swal("Error", "Error in Saving Tenant Information", 'error');
+            console.log('server data :' + data);
+            if (data.success == 0) {
+                $('#tenantForm select').val('').trigger('change');
 
-                                                                } else {
-                                                                    // swal("Error", data.message, 'error');
-                                                                    new PNotify({
-                                                                        title: 'Error',
-                                                                        text: data.message,
-                                                                        type: 'error'
-                                                                    });
+                document.getElementById("tenantForm").reset();
+                new PNotify({
+                    title: 'Success',
+                    text: "Information saved successfully.Tenant Code is" + data.tenat_id,
+                    type: 'success'
+                });
+                // swal("Success", "Information saved successfully.Tenant Code is"+data.tenat_id, 'success');
+            } else if (data.success == 1) {
+                new PNotify({
+                    title: 'Error',
+                    text: "Error in Saving Tenant Information",
+                    type: 'error'
+                });
+                //swal("Error", "Error in Saving Tenant Information", 'error');
 
-                                                                }
+            } else {
+                // swal("Error", data.message, 'error');
+                new PNotify({
+                    title: 'Error',
+                    text: data.message,
+                    type: 'error'
+                });
 
-
-                                                            }
-
-                                                        });
-                                                        // alert('Finished!, Starting over!');
-
-                                                        //$('#rootwizard').find("a[href*='tab1']").trigger('click');
-                                                    });
-                                                    $('.select2').select2();
-
-                                                    getApartments();
+            }
 
 
-                                                    function getApartments() {
+        }
+
+    });
+    // alert('Finished!, Starting over!');
+
+    //$('#rootwizard').find("a[href*='tab1']").trigger('click');
+});
+$('.select2').select2();
+
+getApartments();
 
 
-                                                        $.ajax({
-                                                            url: "{{url('apartment/all')}}",
-                                                            type: "GET",
-                                                            dataType: 'json',
-                                                            success: function (data) {
-
-                                                                $.each(data, function (i, item) {
-
-                                                                    $('#apartments').append($('<option>', {
-                                                                        value: item.id,
-                                                                        text: item.name
-                                                                    }));
-                                                                });
-                                                            }
-
-                                                        });
-                                                    }
-
-                                                    $('#apartments').change(function () {
-                                                        var id = $(this).val();
-                                                        getApartmentInfo(id);
-                                                    });
-
-                                                    function getApartmentInfo(id) {
+function getApartments() {
 
 
-                                                        $.ajax({
-                                                            url: "../apartment/" + id,
-                                                            type: "GET",
-                                                            dataType: 'json',
-                                                            success: function (data) {
-                                                                $('#apartment_type').val(data[0].type);
-                                                                $('#monthly_charge').val(data[0].monthly_charge);
-                                                                $('#currency').val(data[0].currency);
+    $.ajax({
+        url: "{{url('apartment/all')}}",
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
 
-                                                                //currency
-                                                            }
+            $.each(data, function (i, item) {
+
+                $('#apartments').append($('<option>', {
+                    value: item.id,
+                    text: item.name
+                }));
+            });
+        }
+
+    });
+}
+
+$('#apartments').change(function () {
+    var id = $(this).val();
+    getApartmentInfo(id);
+});
+
+function getApartmentInfo(id) {
+
+
+    $.ajax({
+        url: "../apartment/" + id,
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
+            $('#apartment_type').val(data[0].type);
+            $('#monthly_charge').val(data[0].monthly_charge);
+            $('#currency').val(data[0].currency);
+
+            //currency
+        }
 //up_facilities
-                                                        });
-                                                    }
-                                                    getRentPeriods();
-                                                    function getRentPeriods() {
+    });
+}
+getRentPeriods();
+function getRentPeriods() {
 
 
-                                                        $.ajax({
-                                                            url: "{{url('configuration/getrentperiods')}}",
-                                                            type: "GET",
-                                                            dataType: 'json',
-                                                            success: function (data) {
+    $.ajax({
+        url: "{{url('configuration/getrentperiods')}}",
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
 
-                                                                $.each(data, function (i, item) {
+            $.each(data, function (i, item) {
 
-                                                                    $('#rent_periods').append($('<option>', {
-                                                                        value: item.name,
-                                                                        text: item.name + " months"
-                                                                    }));
-                                                                });
-                                                            }
+                $('#rent_periods').append($('<option>', {
+                    value: item.name,
+                    text: item.name + " months"
+                }));
+            });
+        }
 
-                                                        });
-                                                    }
+    });
+}
 
-                                                    getIds();
-                                                    function getIds() {
+getIds();
+function getIds() {
 
 
-                                                        $.ajax({
-                                                            url: "{{url('configuration/getidentificationcards')}}",
-                                                            type: "GET",
-                                                            dataType: 'json',
-                                                            success: function (data) {
+    $.ajax({
+        url: "{{url('configuration/getidentificationcards')}}",
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
 
-                                                                $.each(data, function (i, item) {
+            $.each(data, function (i, item) {
 
-                                                                    $('#id_number').append($('<option>', {
-                                                                        value: item.name,
-                                                                        text: item.name
-                                                                    }));
-                                                                });
-                                                            }
+                $('#id_number').append($('<option>', {
+                    value: item.name,
+                    text: item.name
+                }));
+            });
+        }
 
-                                                        });
-                                                    }
+    });
+}
 
-                                                    function computeEndDate() {
-                                                        var rent = $('#rent_periods').val();
-                                                        var startdate = $('#start_date').val();
-                                                        var endDateMoment = moment(startdate); // moment(...) can also be used to parse dates in string format
-                                                        var endate = endDateMoment.add(rent, 'months');
-                                                        console.log('end date' + endate);
-                                                        $('#end_date').val(endate);
+function computeEndDate() {
+    var rent = $('#rent_periods').val();
+    var startdate = $('#start_date').val();
+    var endDateMoment = moment(startdate); // moment(...) can also be used to parse dates in string format
+    var endate = endDateMoment.add(rent, 'months');
+    console.log('end date' + endate);
+    $('#end_date').val(endate);
 
-                                                    }
+}
 
 </script>
 @endsection

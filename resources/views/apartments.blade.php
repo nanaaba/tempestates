@@ -272,6 +272,7 @@ $('#saveApartmentForm').on('submit', function (e) {
     e.preventDefault();
     // var validator = $("#saveRegionForm").validate();
     var formData = $(this).serialize();
+    $('#loaderModal').modal('show');
 
     $('input:submit').attr("disabled", true);
     $.ajax({
@@ -282,6 +283,8 @@ $('#saveApartmentForm').on('submit', function (e) {
             console.log(data);
             $('#newModal').modal('hide');
             $('input:submit').removeAttr("disabled");
+            $('#loaderModal').modal('hide');
+
 
             document.getElementById("saveApartmentForm").reset();
             if (data == 0) {
@@ -296,6 +299,8 @@ $('#saveApartmentForm').on('submit', function (e) {
         },
         error: function (jXHR, textStatus, errorThrown) {
             $('input:submit').removeAttr("disabled");
+            $('#loaderModal').modal('show');
+
             swal("Error!", "Contact System Administrator ", "error");
         }
     });
@@ -369,8 +374,12 @@ function editType(code, name) {
     console.log('goood');
     $('#code').val(code);
     $('#apartmentname').val(name);
+    $('#loaderModal').modal('show');
+
     getApartmentInfo(code);
     getApartmentFacilities(code);
+    $('#loaderModal').modal('hide');
+
     $('#editModal').modal('show');
 
 }
@@ -449,7 +458,7 @@ function getApartmentFacilities(id) {
             $.each(data, function (i, item) {
                 facilities.push(item.facility);
             });
-            console.log('facilities ::' + data+'||'+facilities);
+            console.log('facilities ::' + data + '||' + facilities);
             $('#up_facilities').val(facilities).change();
 
         }

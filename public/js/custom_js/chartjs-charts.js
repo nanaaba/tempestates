@@ -1,29 +1,29 @@
 "use strict";
-$(document).ready(function() {
+$(document).ready(function () {
 
     //start line chart
     var lineChartData = {
         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         datasets: [{
-            fill: true,
-            pointBackgroundColor: "rgba(79, 193, 233, 1)",
-            pointBorderColor: "#FFF",
-            borderJoinStyle: 'miter',
-            pointBorderWidth: "1",
-            label: "data1",
-            data: [30, 48, 35, 24, 35, 27, 50, 40, 60, 35, 46, 30],
-            backgroundColor: "rgba(79, 193, 233, 1)"
-        }, {
-            fill: true,
-            pointBackgroundColor: "rgba(220, 220, 220, 1)",
-            pointBorderColor: "#FFF",
-            borderJoinStyle: 'miter',
-            pointBorderWidth: "1",
-            pointStrokeColor: "#FFF",
-            label: "data2",
-            data: [130, 63, 103, 51, 93, 55, 80, 140, 100, 92, 108, 110],
-            backgroundColor: "rgba(220, 220, 220, 1)"
-        }]
+                fill: false,
+                pointBackgroundColor: "rgba(79, 193, 233, 1)",
+                pointBorderColor: "#FFF",
+                borderJoinStyle: 'miter',
+                pointBorderWidth: "1",
+                label: "data1",
+                data: [30, 48, 35, 24, 35, 27, 50, 40, 60, 35, 46, 30],
+                backgroundColor: "rgba(79, 193, 233, 1)"
+            }, {
+                fill: false,
+                pointBackgroundColor: "rgba(220, 220, 220, 1)",
+                pointBorderColor: "#FFF",
+                borderJoinStyle: 'miter',
+                pointBorderWidth: "1",
+                pointStrokeColor: "#FFF",
+                label: "data2",
+                data: [130, 63, 103, 51, 93, 55, 80, 140, 100, 92, 108, 110],
+                backgroundColor: "rgba(220, 220, 220, 1)"
+            }]
 
     };
 
@@ -44,6 +44,23 @@ $(document).ready(function() {
         });
     }
 
+    function draw6() {
+
+        var selector1 = '#line2-chart';
+
+        $(selector1).attr('width', $(selector1).parent().width());
+        var myLine = new Chart($("#line2-chart"), {
+            type: 'bar',
+            data: lineChartData,
+            options: {
+                title: {
+                    display: false,
+                    text: 'Line Chart'
+                }
+            }
+        });
+    }
+    draw6();
     draw();
     //end line chart
 
@@ -51,21 +68,21 @@ $(document).ready(function() {
     var barChartData = {
         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         datasets: [{
-            label: "data1",
-            backgroundColor: "#4FC1E9",
-            hoverBackgroundColor: "#4FC1E9",
-            data: [65, 59, 90, 81, 56, 55, 40, 30, 50, 20, 80, 99]
-        }, {
-            label: "data2",
-            backgroundColor: "#ffb65f",
-            hoverBackgroundColor: "#FFb65f",
-            data: [28, 48, 40, 19, 96, 27, 40, 60, 30, 90, 50, 87]
-        }, {
-            label: "data3",
-            backgroundColor: "#428BCA",
-            hoverBackgroundColor: "#428BCA",
-            data: [30, 20, 100, 10, 80, 27, 50, 30, 60, 40, 80, 66, 90]
-        }]
+                label: "data1",
+                backgroundColor: "#4FC1E9",
+                hoverBackgroundColor: "#4FC1E9",
+                data: [65, 59, 90, 81, 56, 55, 40, 30, 50, 20, 80, 99]
+            }, {
+                label: "data2",
+                backgroundColor: "#ffb65f",
+                hoverBackgroundColor: "#FFb65f",
+                data: [28, 48, 40, 19, 96, 27, 40, 60, 30, 90, 50, 87]
+            }, {
+                label: "data3",
+                backgroundColor: "#428BCA",
+                hoverBackgroundColor: "#428BCA",
+                data: [30, 20, 100, 10, 80, 27, 50, 30, 60, 40, 80, 66, 90]
+            }]
 
     };
 
@@ -89,20 +106,20 @@ $(document).ready(function() {
     var radarChartData = {
         labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Partying", "Running"],
         datasets: [{
-            backgroundColor: "rgba(160,212,104,0.5)",
-            hoverBackgroundColor: "rgba(160,212,104,0.5)",
-            pointBackgroundColor: "rgba(160,212,104,0.5)",
-            pointHoverBackgroundColor: "#fff",
-            data: [65, 59, 90, 81, 56, 55, 40],
-            label: 'data1'
-        }, {
-            backgroundColor: "rgba(255,206,84,0.5)",
-            hoverBackgroundColor: "rgba(255,206,84,0.5)",
-            pointBackgroundColor: "rgba(255,206,84,0.5)",
-            pointHoverBackgroundColor: "#fff",
-            data: [28, 48, 40, 19, 96, 27, 100],
-            label: 'data2'
-        }]
+                backgroundColor: "rgba(160,212,104,0.5)",
+                hoverBackgroundColor: "rgba(160,212,104,0.5)",
+                pointBackgroundColor: "rgba(160,212,104,0.5)",
+                pointHoverBackgroundColor: "#fff",
+                data: [65, 59, 90, 81, 56, 55, 40],
+                label: 'data1'
+            }, {
+                backgroundColor: "rgba(255,206,84,0.5)",
+                hoverBackgroundColor: "rgba(255,206,84,0.5)",
+                pointBackgroundColor: "rgba(255,206,84,0.5)",
+                pointHoverBackgroundColor: "#fff",
+                data: [28, 48, 40, 19, 96, 27, 100],
+                label: 'data2'
+            }]
 
     };
 
@@ -127,22 +144,22 @@ $(document).ready(function() {
 
     var chartData = {
         datasets: [{
-            data: [
-                15,
-                18,
-                10,
-                8,
-                16
-            ],
-            backgroundColor: [
-                "#428BCA",
-                "#FFb65f",
-                "#4FC1E9",
-                "#22d69d",
-                "#Fb8678"
-            ],
-            label: 'My dataset' // for legend
-        }],
+                data: [
+                    15,
+                    18,
+                    10,
+                    8,
+                    16
+                ],
+                backgroundColor: [
+                    "#428BCA",
+                    "#FFb65f",
+                    "#4FC1E9",
+                    "#22d69d",
+                    "#Fb8678"
+                ],
+                label: 'My dataset' // for legend
+            }],
         labels: [
             "data1",
             "data2",
@@ -176,18 +193,18 @@ $(document).ready(function() {
             "Info"
         ],
         datasets: [{
-            data: [300, 50, 100],
-            backgroundColor: [
-                "#428BCA",
-                "#22d69d",
-                "#4FC1E9"
-            ],
-            hoverBackgroundColor: [
-                "#428BCA",
-                "#22d69d",
-                "#4FC1E9"
-            ]
-        }]
+                data: [300, 50, 100],
+                backgroundColor: [
+                    "#428BCA",
+                    "#22d69d",
+                    "#4FC1E9"
+                ],
+                hoverBackgroundColor: [
+                    "#428BCA",
+                    "#22d69d",
+                    "#4FC1E9"
+                ]
+            }]
     };
 
     function draw4() {
@@ -214,18 +231,18 @@ $(document).ready(function() {
             "Primary"
         ],
         datasets: [{
-            data: [300, 50, 100],
-            backgroundColor: [
-                "#4FC1E9",
-                "#DCDCDC",
-                "#428BCA"
-            ],
-            hoverBackgroundColor: [
-                "#4FC1E9",
-                "#DCDCDC",
-                "#428BCA"
-            ]
-        }]
+                data: [300, 50, 100],
+                backgroundColor: [
+                    "#4FC1E9",
+                    "#DCDCDC",
+                    "#428BCA"
+                ],
+                hoverBackgroundColor: [
+                    "#4FC1E9",
+                    "#DCDCDC",
+                    "#428BCA"
+                ]
+            }]
 
     };
 

@@ -12,7 +12,7 @@
  */
 
 Route::get('blank', function () {
-    return view('datatables');
+    return view('chartjs_charts');
 });
 
 Route::get('/', function () {

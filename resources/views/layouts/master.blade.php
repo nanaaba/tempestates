@@ -64,7 +64,7 @@
         <!--        <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/dataTables.bootstrap.css')}}"/>-->
         <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/rowReorder.bootstrap.css')}}"/>
         <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/scroller.bootstrap.css')}}">
-    
+        <link href="{{asset('css/custom_css/chartjs-charts.css')}}" rel="stylesheet" type="text/css">
     </head>
     <body class="skin-default">
         <div class="preloader">

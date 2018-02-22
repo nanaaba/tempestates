@@ -31,15 +31,15 @@
         <div class="row">
             <div class="col-lg-12">
 
-                <div class="panel ">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title">
                             <i class="ti-layout-tab"></i> 
                             New Tenant Form
                         </h3>
 
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
 
                         <!-- CSRF Token -->
 
@@ -100,16 +100,16 @@
                                         </div>
 
                                         <div class="row form-group">
-                                            <div class="col-sm-3">
+                                            <div class="col-lg-3">
                                                 <label  class="form-control-label float-sm-right">Monthly Amount 
                                                 </label>
                                             </div>
-                                            <div class="col-sm-9">
-                                                <div class="col-sm-3">
+                                            <div class="col-lg-9">
+                                                <div class="col-lg-3">
                                                     <input  name="currency" type="text" id="currency"
                                                             class="form-control " readonly />   
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-lg-6">
                                                     <input  name="amount" type="text" id="monthly_charge"
                                                             class="form-control required" />
                                                 </div>

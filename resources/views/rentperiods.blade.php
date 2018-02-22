@@ -28,19 +28,21 @@
                 </button>
             </div>
         </div>
-                    <p style="color: red">NB:<small>Kindly convert periods to months,pls enter figures only for eg. 12 months should be 12</small></p>
+        <p style="color: red">NB:<small>Kindly convert periods to months,pls enter figures only for eg. 12 months should be 12</small></p>
+
+
 
         <div class="row">
             <div class="col-lg-12">
 
-                <div class="panel ">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <i class="ti-layout-grid3"></i> Rent Periods
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="ti-layout-grid3"></i>  Rent Periods
                         </h3>
 
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="periodsTbl">
                                 <thead>
@@ -49,7 +51,7 @@
                                             Name
                                         </th>
 
-                                        
+
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -62,6 +64,7 @@
                 </div>
             </div>
         </div>
+
         <div id="districtModal" class="modal fade animated" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -85,7 +88,7 @@
                                 </div>
                             </div>
 
-                           
+
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-danger">Submit</button>
@@ -96,8 +99,8 @@
                 </div>
             </div>
         </div>
-  
-        
+
+
         <div class="background-overlay"></div>
     </section>
     <!-- /.content -->
@@ -107,9 +110,6 @@
 @endsection 
 
 @section('userjs')
-<script type="text/javascript" src="{{ asset('vendors/datatables/js/jquery.dataTables.js')}}"></script>
-<script type="text/javascript" src="{{ asset('vendors/datatables/js/dataTables.bootstrap.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/custom_js/datatables_custom.js')}}"></script>
 <script src="{{ asset('vendors/toastr/js/toastr.min.js')}}"></script>
 
 <script src="{{ asset('js/periods.js')}}" type="text/javascript"></script>

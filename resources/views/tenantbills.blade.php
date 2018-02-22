@@ -24,24 +24,21 @@
 
 
 
-        <div class="row">
+          <div class="row">
             <div class="col-lg-12">
 
-                <div class="panel ">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <i class="ti-layout-grid3"></i> Tenants Bill 
-                        </h3>
-
+                <div class="card ">
+                    <div class="card-header">
+                        <h3>Tenant Bill</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <form id="billsForm">
                             <div class="row">
                                 <input type="hidden" class="form-control form-control-lg input-lg"  name="_token" value="<?php echo csrf_token() ?>" />
 
 
-                                <div class="col-md-12">
-                                    <div class="col-md-4">
+                                <div class="row col-lg-12">
+                                    <div class="col-lg-4">
                                         <div class="form-group ">
                                             <label for="region" class="control-label">Tenant Name:</label>
                                             <select class="form-control select2" name="tenant" id="tenants"  required style="width: 100%">
@@ -50,7 +47,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-lg-8">
 
                                         <div class="form-group">
                                             <label for="region" class="control-label">Service Date:</label>
@@ -66,8 +63,10 @@
 
                                 </div>
                             </div>
+                            <br><br>
                             <div class="row">
-                                <div class="col-md-6 pull-right">
+                                <div class="col-lg-6 "></div>
+                                <div class="col-lg-6 ">
                                     <button type="submit" class="btn btn-primary btn-block">Search</button>
                                 </div>
                             </div>
@@ -76,6 +75,7 @@
                 </div>
             </div>
         </div>
+
 
 
 

@@ -21,6 +21,7 @@
     <!-- Main content -->
     <section class="content">
 
+
         <div class="">
             <div class="right_aligned" style="margin-bottom: 15px;">
                 <button type="button" class="btn btn-info " data-toggle="modal" data-target="#districtModal">
@@ -29,17 +30,18 @@
             </div>
         </div>
 
+
         <div class="row">
             <div class="col-lg-12">
 
-                <div class="panel ">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <i class="ti-layout-grid3"></i> Facility
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="ti-layout-grid3"></i> Facilities 
                         </h3>
 
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="districtTbl">
                                 <thead>
@@ -56,10 +58,15 @@
                                 </tbody>
                             </table>
                         </div>
+
+
+
                     </div>
                 </div>
             </div>
         </div>
+
+
         <div id="districtModal" class="modal fade animated" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -127,7 +134,7 @@
                 </div>
             </div>
         </div>
-  <div class="background-overlay"></div>
+        <div class="background-overlay"></div>
     </section>
     <!-- /.content -->
 </aside>
@@ -136,9 +143,6 @@
 @endsection 
 
 @section('userjs')
-<script type="text/javascript" src="{{ asset('vendors/datatables/js/jquery.dataTables.js')}}"></script>
-<script type="text/javascript" src="{{ asset('vendors/datatables/js/dataTables.bootstrap.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/custom_js/datatables_custom.js')}}"></script>
 <script src="{{ asset('vendors/toastr/js/toastr.min.js')}}"></script>
 
 <script src="{{ asset('js/facility.js')}}" type="text/javascript"></script>

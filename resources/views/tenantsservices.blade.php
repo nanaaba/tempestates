@@ -26,14 +26,14 @@
         <div class="row">
             <div class="col-lg-12">
 
-                <div class="panel ">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title">
                             <i class="ti-layout-grid3"></i> Request Service Form
                         </h3>
 
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <form id="saveServiceForm">
                             <div class="row">
                                 <input type="hidden" class="form-control form-control-lg input-lg"  name="_token" value="<?php echo csrf_token() ?>" />
@@ -91,7 +91,8 @@
 
                             </div>
                             <div class="row">
-                                <div class="col-md-6 pull-right">
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-6">
                                     <button type="submit" class="btn btn-primary btn-block">Save</button>
                                 </div>
                             </div>
@@ -101,19 +102,21 @@
             </div>
         </div>
 
-
+        
+        
         <div class="row">
             <div class="col-lg-12">
 
-                <div class="panel ">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <i class="ti-layout-grid3"></i>Tenants Bills
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="ti-layout-grid3"></i> Tenants Bill 
                         </h3>
 
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <div class="table-responsive">
+                              <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="servicesTbl">
                                 <thead>
                                     <tr>
@@ -138,10 +141,17 @@
                                 </tbody>
                             </table>
                         </div>
+          
+                        </div>
+
+
                     </div>
                 </div>
             </div>
         </div>
+
+
+
 
 
         <div class="modal fade" id="loaderModal" data-keyboard="false" data-backdrop="static" role="dialog" >
@@ -253,9 +263,6 @@
 @endsection 
 
 @section('userjs')
-<script type="text/javascript" src="{{ asset('vendors/datatables/js/jquery.dataTables.js')}}"></script>
-<script type="text/javascript" src="{{ asset('vendors/datatables/js/dataTables.bootstrap.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/custom_js/datatables_custom.js')}}"></script>
 <script src="{{ asset('vendors/toastr/js/toastr.min.js')}}"></script>
 
 <script  type="text/javascript">

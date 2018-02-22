@@ -20,6 +20,72 @@
         </div>
     </section>
     <section class="content">
+        
+        
+         <div class="row">
+        <div class="col-sm-6 col-md-6 col-xl-3">
+            <div class="flip">
+                <div class="widget-bg-color-icon card-box front">
+                    <div class="bg-icon float-left">
+                        <i class="ti-user text-warning"></i>
+                    </div>
+                    <div class="text-right">
+                        <h3 class="text-dark"><b>13</b></h3>
+                        <p>Tenants</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+               
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-xl-3">
+            <div class="flip">
+                <div class="widget-bg-color-icon card-box front">
+                    <div class="bg-icon float-left">
+                        <i class="ti-home text-success"></i>
+                    </div>
+                    <div class="text-right">
+                        <h3><b id="widget_count3">5</b></h3>
+                        <p>Available Apartments</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+             
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-6 col-xl-3">
+            <div class="flip">
+                <div class="widget-bg-color-icon card-box front">
+                    <div class="bg-icon float-left">
+                        <i class="ti-alarm-clock text-danger"></i>
+                    </div>
+                    <div class="text-right">
+                        <h3 class="text-dark"><b>0</b></h3>
+                        <p>Today Birthdays</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-xl-3">
+            <div class="flip">
+                <div class="widget-bg-color-icon card-box front">
+                    <div class="bg-icon float-left">
+                        <i class="ti-receipt text-info"></i>
+                    </div>
+                    <div class="text-right">
+                        <h3 class="text-dark"><b>3</b></h3>
+                        <p>Expiring Rent</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+        
         <div class="row">
             <div class="col-lg-12">
                 <!-- Basic charts strats here-->

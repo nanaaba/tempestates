@@ -12,6 +12,8 @@
         <link type="text/css" rel="stylesheet" href="{{ asset('vendors/iCheck/css/all.css')}}"/>
         <!-- end of global css -->
         <!--page level css -->
+        
+        
         <link rel="stylesheet" href="{{ asset('vendors/swiper/css/swiper.min.css')}}">
         <link href="{{ asset('vendors/nvd3/css/nv.d3.min.css')}}" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="{{asset('vendors/lcswitch/css/lc_switch.css')}}">

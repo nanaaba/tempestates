@@ -5,7 +5,7 @@ $(document).ready(function () {
     var lineChartData = {
         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         datasets: [{
-                fill: false,
+                fill: true,
                 pointBackgroundColor: "rgba(79, 193, 233, 1)",
                 pointBorderColor: "#FFF",
                 borderJoinStyle: 'miter',
@@ -14,7 +14,7 @@ $(document).ready(function () {
                 data: [30, 48, 35, 24, 35, 27, 50, 40, 60, 35, 46, 30],
                 backgroundColor: "rgba(79, 193, 233, 1)"
             }, {
-                fill: false,
+                fill: true,
                 pointBackgroundColor: "rgba(220, 220, 220, 1)",
                 pointBorderColor: "#FFF",
                 borderJoinStyle: 'miter',

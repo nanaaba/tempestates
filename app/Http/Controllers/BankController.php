@@ -122,7 +122,7 @@ class BankController extends Controller {
                 $message = 'Hi ' . $info[0]['title'] . ' ' . $info[0]['name'] . ','
                         . 'Please an amount of GHS ' . $data['amount'] . ' payments have been received through '
                         . $data['mode'] . ' payments on ' . $request['payment_date'] . '.';
-                $notifications->sendemail($info[0]['email_address'], 'Payments received', $message);
+                $notifications->sendemail($info[0]['email_address'], 'Payment Notification', $message);
                 //   $notifications->sendsms($info[0]['contactno'], $message);
 
                 return json_encode($dataresponse);

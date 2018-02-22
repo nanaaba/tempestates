@@ -46,4 +46,9 @@ class ReportController extends Controller {
         return view('reportclearedpayments');
     }
 
+    
+    public function getPaymentsTrend() {
+        $currentyear = date("Y");
+        return DB::table('cummulative_payments')->where('year',$currentyear)->get();
+    }
 }

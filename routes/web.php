@@ -158,6 +158,7 @@ Route::post('banking/updaterentpayments', 'BankController@updateRentPayment');
 Route::post('banking/paymentswithinperiod', 'BankController@getRentpaymentsPeriod');
 
 //reports
+Route::get('reports/paymentstrend', 'ReportController@getPaymentsTrend');
 
 
 

@@ -150,7 +150,7 @@ function getPayments() {
 
 
     return    $.ajax({
-        url: "{{url('banking/payments/all')}}",
+        url: "{{url('reports/paymentstrend')}}",
         type: "GET",
         dataType: 'json'
 

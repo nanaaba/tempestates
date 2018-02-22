@@ -16,11 +16,9 @@
         <link href="{{ asset('vendors/nvd3/css/nv.d3.min.css')}}" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="{{asset('vendors/lcswitch/css/lc_switch.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('css/custom.css')}}">
-        <link rel="stylesheet" href="{{asset('css/custom_css/skins/skin-default.css')}}" type="text/css" id="skin"/>
         <link href="{{asset('css/custom_css/dashboard1.css')}}" rel="stylesheet" type="text/css"/>
         <link href="{{asset('css/custom_css/dashboard1_timeline.css')}}" rel="stylesheet"/>
         <link rel="stylesheet" type="text/css" href="{{asset('css/custom.css')}}">
-        <link rel="stylesheet" href="{{asset('css/custom_css/skins/skin-default.css')}}" type="text/css" id="skin" />
         <!--end of page level css-->
         <link href="{{asset('vendors/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('vendors/select2/css/select2-bootstrap.css')}}" rel="stylesheet" type="text/css">
@@ -54,23 +52,31 @@
         <link href="{{asset('css/buttons_sass.css')}}" rel="stylesheet">
         <link href="{{asset('css/advbuttons.css')}}" rel="stylesheet">
 
-        <link rel="stylesheet" type="text/css" href="{{asset('css/custom.css')}}">
 
         <link rel="stylesheet" type="text/css" href="{{asset('css/custom_css/invoice.css')}}">
 
         <link href="{{ asset('vendors/datetime/css/jquery.datetimepicker.css')}}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('vendors/airdatepicker/css/datepicker.min.css')}}" rel="stylesheet"/>
         <link rel="stylesheet" type="text/css" href="{{ asset('css/datepicker.css')}}">
-     
+
     </head>
     <body class="skin-default">
         <div class="preloader">
             <div class="loader_img"><img src="{{asset('img/loader.gif')}}" alt="loading..." height="64" width="64"></div>
         </div>
-        @include('layouts.header')
-        <div class="wrapper row-offcanvas row-offcanvas-left">
-            @include('layouts.nav')
-
+        <header class="header">
+            @include('layouts.header2')
+        </header>        <div class="wrapper row-offcanvas row-offcanvas-left">
+            <aside class="left-side sidebar-offcanvas">
+                <!-- sidebar: style can be found in sidebar-->
+                <section class="sidebar">
+                    <div id="menu" role="navigation">
+                        @include('layouts.leftmenu')
+                    </div>
+                    <!-- menu -->
+                </section>
+                <!-- /.sidebar -->
+            </aside>
 
 
             @yield('content')

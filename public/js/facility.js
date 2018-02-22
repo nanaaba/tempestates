@@ -63,7 +63,7 @@ getFacilitys();
 
 function getFacilitys()
 {
-    $('#loaderModal').modal('show');
+    //$('#loaderModal').modal('show');
 
     $.ajax({
         url: 'facility/all',

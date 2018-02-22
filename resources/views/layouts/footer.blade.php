@@ -29,31 +29,6 @@
 <script type="text/javascript" src="{{ asset('vendors/bootstrapwizard/js/jquery.bootstrap.wizard.js')}}"></script>
 <script type="text/javascript" src="{{ asset('vendors/bootstrapvalidator/js/bootstrapValidator.min.js')}}"></script>
 
-<!--<script type="text/javascript" src="{{asset('js/custom_js/sparkline/jquery.flot.spline.js')}}"></script>
-
-<script type="text/javascript" src="{{asset('vendors//flip/js/jquery.flip.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('vendors//lcswitch/js/lc_switch.min.js')}}"></script>
-
-<script type="text/javascript" src="{{asset('vendors//flotchart/js/jquery.flot.js')}}"></script>
-<script type="text/javascript" src="{{asset('vendors//flotchart/js/jquery.flot.resize.js')}}"></script>
-<script type="text/javascript" src="{{asset('vendors//flotchart/js/jquery.flot.stack.js')}}"></script>
-<script type="text/javascript" src="{{asset('vendors//flotspline/js/jquery.flot.spline.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('vendors//flot.tooltip/js/jquery.flot.tooltip.js')}}"></script>
-
-<script type="text/javascript" src="{{asset('vendors//swiper/js/swiper.min.js')}}"></script>
-
-<script src="{{asset('vendors//chartjs/js/Chart.js')}}"></script>
-
-<script type="text/javascript" src="{{asset('js/nvd3/d3.v3.min.js')}}"></script>-->
-<!--<script type="text/javascript" src="{{asset('vendors//nvd3/js/nv.d3.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('vendors//moment/js/moment.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('vendors//advanced_newsTicker/js/newsTicker.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/dashboard1.js')}}"></script>-->
-
-<!-- The File Upload user interface plugin -->
-<!--<script src="{{asset('js/custom_js/custom_elements.js')}}" type="text/javascript"></script>-->
-<!--<script type="text/javascript" src="{{ asset('js/custom_js/form_wizards.js')}}"></script>-->
-
 
 <!-- end o<!-- bootstrap time picker -->
 <script type="text/javascript" src="{{asset('js/custom_js/invoice.js')}}"></script>

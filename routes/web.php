@@ -11,11 +11,15 @@
   |
  */
 
+Route::get('blank', function () {
+    return view('datatables');
+});
+
 Route::get('/', function () {
     return view('login');
 });
 
-Route::get('/logout', function() {
+Route::get('logout', function() {
     Session::flush();
 
     return redirect('/');

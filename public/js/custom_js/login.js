@@ -68,6 +68,7 @@ $(document).ready(function () {
 
             },
             error: function (jXHR, textStatus, errorThrown) {
+              //  alert(textStatus);
                 swal({
                     title: "Error",
                     text: "Username and Password do not match",
@@ -77,6 +78,7 @@ $(document).ready(function () {
                     closeOnConfirm: true
                 });
             }
+            
         });
 
     });

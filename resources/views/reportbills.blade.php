@@ -8,14 +8,14 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Tenants Bill 
+            Report Bills 
 
         </h1>
         <ol class="breadcrumb">
 
 
             <li class="active">
-                Tenants Bill 
+                Report Bills 
             </li>
         </ol>
     </section>
@@ -27,21 +27,16 @@
         <div class="row">
             <div class="col-lg-12">
 
-                <div class="panel ">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <i class="ti-layout-grid3"></i> Tenants Bill 
-                        </h3>
+                <div class="card ">
 
-                    </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <form id="billsForm">
                             <div class="row">
                                 <input type="hidden" class="form-control form-control-lg input-lg"  name="_token" value="<?php echo csrf_token() ?>" />
 
 
-                                <div class="col-md-12">
-                                    <div class="col-md-4">
+                                <div class="row col-lg-12">
+                                    <div class="col-lg-4">
                                         <div class="form-group ">
                                             <label for="region" class="control-label">Tenant Name:</label>
                                             <select class="form-control select2" name="tenant" id="tenants"  required style="width: 100%">
@@ -50,7 +45,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-lg-8">
 
                                         <div class="form-group">
                                             <label for="region" class="control-label">Service Date:</label>
@@ -66,8 +61,10 @@
 
                                 </div>
                             </div>
+                            <br><br>
                             <div class="row">
-                                <div class="col-md-6 pull-right">
+                                <div class="col-lg-6 "></div>
+                                <div class="col-lg-6 ">
                                     <button type="submit" class="btn btn-primary btn-block">Search</button>
                                 </div>
                             </div>
@@ -81,52 +78,38 @@
         <div class="row">
             <div class="col-lg-12">
 
-                <div class="panel ">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title">
                             <i class="ti-layout-grid3"></i> Tenants Bill 
                         </h3>
 
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTable" id="reportTbl">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Service Date
+                                        </th>
+                                        <th>
+                                            Service Type
+                                        </th>
+                                        <th>
+                                            Service Description
+                                        </th>
 
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card filterable">
-                                    <div class="card-header clearfix  ">
-                                        <div class="card-title pull-left">
-                                        </div>
-                                        <div class="tools float-right"></div>
-                                    </div>
-                                    <div class="card-body">
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-bordered table-hover dataTable" id="reportTbl">
-                                                <thead>
-                                                    <tr>
-                                                        <th>
-                                                            Service Date
-                                                        </th>
-                                                        <th>
-                                                            Service Type
-                                                        </th>
-                                                        <th>
-                                                            Service Description
-                                                        </th>
-
-                                                        <th>Amount</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -206,6 +189,8 @@
                 type: "POST",
                 data: formData,
                 success: function (data) {
+                    $('#loaderModal').modal('hide');
+
                     console.log(data);
                     var total = 0;
                     if (data.length == 0) {
@@ -221,7 +206,6 @@
                         datatable.clear().draw();
 
                     } else {
-                                                $('#loaderModal').modal('hide');
 
                         $.each(data, function (key, value) {
 

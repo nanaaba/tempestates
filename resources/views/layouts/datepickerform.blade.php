@@ -49,10 +49,20 @@
         <div class="preloader">
             <div class="loader_img"><img src="{{asset('img/loader.gif')}}" alt="loading..." height="64" width="64"></div>
         </div>
-        @include('layouts.header')
+        <header class="header">
+            @include('layouts.header2')
+        </header>       
         <div class="wrapper row-offcanvas row-offcanvas-left">
-            @include('layouts.nav')
-
+            <aside class="left-side sidebar-offcanvas">
+                <!-- sidebar: style can be found in sidebar-->
+                <section class="sidebar">
+                    <div id="menu" role="navigation">
+                        @include('layouts.leftmenu')
+                    </div>
+                    <!-- menu -->
+                </section>
+                <!-- /.sidebar -->
+            </aside>
 
 
             @yield('content')
@@ -89,23 +99,6 @@
         <script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.callbacks.js')}}"></script>
         <script src="{{asset('js/custom_js/notifications.js')}}"></script>
         <script src="{{asset('js/jquery.printElement.min.js')}}"></script>
-
-<!--        <script type="text/javascript" src="{{asset('vendors/datatables/js/jquery.dataTables.js')}}"></script>
-        <script type="text/javascript" src="{{asset('vendors/datatables/js/dataTables.bootstrap4.js')}}"></script>
-        <script type="text/javascript" src="{{asset('vendors/datatables/js/dataTables.buttons.js')}}"></script>
-        <script type="text/javascript" src="{{asset('vendors/datatables/js/dataTables.colReorder.js')}}"></script>
-        <script type="text/javascript" src="{{asset('vendors/datatables/js/dataTables.responsive.js')}}"></script>
-        <script type="text/javascript" src="{{asset('vendors/datatables/js/dataTables.rowReorder.js')}}"></script>
-        <script type="text/javascript" src="{{asset('vendors/datatables/js/buttons.colVis.js')}}"></script>
-        <script type="text/javascript" src="{{asset('vendors/datatables/js/buttons.html5.js')}}"></script>
-        <script type="text/javascript" src="{{asset('vendors/datatables/js/buttons.bootstrap.js')}}"></script>
-        <script type="text/javascript" src="{{asset('vendors/datatables/js/buttons.print.js')}}"></script>
-        <script type="text/javascript" src="{{asset('vendors/datatables/js/dataTables.scroller.js')}}"></script>
-        <script src="{{asset('js/custom_js/advanced_datatables.js')}}" type="text/javascript"></script>
-        -->
-
-
-
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" type="text/javascript"></script>
         <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
         <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js" type="text/javascript"></script>

@@ -1,255 +1,256 @@
+@extends('layouts/default') {{-- Page title --}} 
+@section('title') Apartments
+@stop {{-- local styles --}}
+@section('header_styles')
+<link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/dataTables.bootstrap4.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('css/custom_css/datatables_custom.css')}}">
+@stop {{-- Page Header--}}
+@section('page-header')
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Apartments
+    </h1>
+    <ol class="breadcrumb">
 
-@extends('layouts.master')
 
-@section('content')
-
-
-<aside class="right-side">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
+        <li class="active">
             Apartments
-        </h1>
-        <ol class="breadcrumb">
+        </li>
+    </ol>
+</section>
+@stop {{-- Page content --}}
+@section('content') 
 
-
-            <li class="active">
-                Apartments
-            </li>
-        </ol>
-    </section>
-    <!-- Main content -->
-    <section class="content">
-
-        <div class="">
-            <div class="right_aligned" style="margin-bottom: 15px;">
-                <button type="button" class="btn btn-info " data-toggle="modal" data-target="#newModal">
-                    Add Apartment
-                </button>
-            </div>
+    <div class="">
+        <div class="right_aligned" style="margin-bottom: 15px;">
+            <button type="button" class="btn btn-info " data-toggle="modal" data-target="#newModal">
+                Add Apartment
+            </button>
         </div>
+    </div>
 
-        <div class="row">
-            <div class="col-lg-12">
 
-                <div class="panel ">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <i class="ti-layout-grid3"></i> Apartment
-                        </h3>
+   <div class="row">
+        <div class="col-lg-12">
+            <div class="card ">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="ti-layout-grid3"></i> Data Table
+                    </h3>
+                    <span class="float-right">
+                                    <i class="fa fa-fw ti-angle-up clickable"></i>
+                                    <i class="fa fa-fw ti-close removecard"></i>
+                                </span>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="districtTbl"  style="width:100%">
+                         <thead>
+                                <tr>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Type
+                                    </th>
+                                    <th>
+                                        Monthly Charge
+                                    </th>
 
-                    </div>
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover" id="districtTbl">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            Name
-                                        </th>
-                                        <th>
-                                            Type
-                                        </th>
-                                        <th>
-                                            Monthly Charge
-                                        </th>
-
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                        </div>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                         
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+ 
+    <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
 
-        <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-            <div class="modal-dialog" role="document">
-
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">×</button>
-                        <h4 class="modal-title">New Apartment</h4>
-                    </div>
-                    <form id="saveApartmentForm" role="form">
-                        <input type="hidden" class="form-control form-control-lg input-lg" id="token" name="_token" value="<?php echo csrf_token() ?>" />
-
-                        <div class="modal-body">
-
-
-
-
-                            <div class="form-group row col-md-12 ">
-                                <label  class=" control-label">Apartment Name</label>
-
-                                <input type="text" class="form-control" name="name" id="institution_name" >
-
-                            </div>
-                            <div class="form-group row col-md-12 ">
-                                <label  class=" control-label">Estate</label>
-
-                                <select  name="estate" class="form-control select2 estates" style="width:100%">
-                                    <option value="">Choose..</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group row col-md-12 ">
-                                <label  class=" control-label">Apartment Type</label>
-
-                                <select  name="type" class="form-control select2 apartmenttypes" style="width:100%">
-                                    <option value="">Choose..</option>
-
-                                </select>
-                            </div>
-
-                            <div class="form-group row col-md-12 ">
-
-                                <div class="form-group row col-md-3 ">
-                                    <label  class=" control-label">Currency</label>
-
-                                    <select  name="currency" class="form-control select2" style="width:100%">
-                                        <option value="">Choose..</option>
-                                        <option value="USD">USD</option>
-                                        <option value="GHS">GHS</option>
-                                    </select>
-                                </div>
-                                <div class="form-group row col-md-1 "></div>
-
-                                <div class="form-group row col-md-8 ">
-                                    <label  class=" control-label">Monthly Charge</label>
-
-                                    <input type="text" class="form-control" name="monthly_charge"  >
-                                </div>
-                            </div>
-
-
-                            <div class="form-group row col-md-12 ">
-                                <label  class=" control-label">Apartment Facilities</label>
-
-                                <select  name="facilities[]" class="facilities form-control multiselect select2" multiple style="width:100%">
-                                    <option value="">Choose..</option>
-                                </select>
-                            </div>
-
-
-
-
-
-                        </div>
-                        <div class="modal-footer">
-
-                            <input type="submit" name="submit" class="btn btn-info"  value="Save"/>
-
-
-
-
-                        </div>
-                    </form>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">New Apartment</h4>
                 </div>
+                <form id="saveApartmentForm" role="form">
+                    <input type="hidden" class="form-control form-control-lg input-lg" id="token" name="_token" value="<?php echo csrf_token() ?>" />
+
+                    <div class="modal-body">
+
+
+
+
+                        <div class="form-group row col-md-12 ">
+                            <label  class=" control-label">Apartment Name</label>
+
+                            <input type="text" class="form-control" name="name" id="institution_name" >
+
+                        </div>
+                        <div class="form-group row col-md-12 ">
+                            <label  class=" control-label">Estate</label>
+
+                            <select  name="estate" class="form-control select2 estates" style="width:100%">
+                                <option value="">Choose..</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group row col-md-12 ">
+                            <label  class=" control-label">Apartment Type</label>
+
+                            <select  name="type" class="form-control select2 apartmenttypes" style="width:100%">
+                                <option value="">Choose..</option>
+
+                            </select>
+                        </div>
+
+                        <div class="form-group row col-md-12 ">
+
+                            <div class="form-group row col-md-3 ">
+                                <label  class=" control-label">Currency</label>
+
+                                <select  name="currency" class="form-control select2" style="width:100%">
+                                    <option value="">Choose..</option>
+                                    <option value="USD">USD</option>
+                                    <option value="GHS">GHS</option>
+                                </select>
+                            </div>
+                            <div class="form-group row col-md-1 "></div>
+
+                            <div class="form-group row col-md-8 ">
+                                <label  class=" control-label">Monthly Charge</label>
+
+                                <input type="text" class="form-control" name="monthly_charge"  >
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row col-md-12 ">
+                            <label  class=" control-label">Apartment Facilities</label>
+
+                            <select  name="facilities[]" class="facilities form-control multiselect select2" multiple style="width:100%">
+                                <option value="">Choose..</option>
+                            </select>
+                        </div>
+
+
+
+
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <input type="submit" name="submit" class="btn btn-info"  value="Save"/>
+
+
+
+
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
 
 
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-            <div class="modal-dialog" role="document">
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
 
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">×</button>
-                        <h4 class="modal-title"> <span id="aprtname"></span> Apartment Information</h4>
-                    </div>
-                    <form id="updateApartmentForm" role="form">
-                        <input type="hidden" class="form-control form-control-lg input-lg" id="token" name="_token" value="<?php echo csrf_token() ?>" />
-
-                        <div class="modal-body">
-
-
-                            <input type="hidden" id="code" name="code"/>
-
-                            <div class="form-group row col-md-12 ">
-                                <label  class=" control-label">Apartment Name</label>
-
-                                <input type="text" class="form-control" name="name" id="apartment_name" >
-
-                            </div>
-                            <div class="form-group row col-md-12 ">
-                                <label  class=" control-label">Estate</label>
-
-                                <select id="up_estate" name="estate" class="form-control select2 estates" style="width:100%">
-                                    <option value="">Choose..</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group row col-md-12 ">
-                                <label  class=" control-label">Apartment Type</label>
-
-                                <select  name="type" id="up_apartmenttype" class="form-control select2 apartmenttypes" style="width:100%">
-                                    <option value="">Choose..</option>
-
-                                </select>
-                            </div>
-
-                            <div class="form-group row col-md-12 ">
-
-                                <div class="form-group row col-md-3 ">
-                                    <label  class=" control-label">Currency</label>
-
-                                    <select  name="currency" id="up_currency" class="form-control select2" style="width:100%">
-                                        <option value="">Choose..</option>
-                                        <option value="USD">USD</option>
-                                        <option value="GHS">GHS</option>
-                                    </select>
-                                </div>
-                                <div class="form-group row col-md-1 "></div>
-
-                                <div class="form-group row col-md-8 ">
-                                    <label  class=" control-label">Monthly Charge</label>
-
-                                    <input type="text" class="form-control" id="up_monthlycharge" name="monthly_charge"  >
-                                </div>
-                            </div>
-
-
-                            <div class="form-group row col-md-12 ">
-                                <label  class=" control-label">Apartment Facilities</label>
-
-                                <select id="up_facilities" name="facilities[]" class="facilities form-control multiselect select2" multiple style="width:100%">
-                                    <option value="">Choose..</option>
-                                </select>
-                            </div>
-
-
-
-
-
-                        </div>
-                        <div class="modal-footer">
-
-                            <input type="submit" name="submit" class="btn btn-info"  value="Save"/>
-
-
-
-
-                        </div>
-                    </form>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title"> <span id="aprtname"></span> Apartment Information</h4>
                 </div>
+                <form id="updateApartmentForm" role="form">
+                    <input type="hidden" class="form-control form-control-lg input-lg" id="token" name="_token" value="<?php echo csrf_token() ?>" />
+
+                    <div class="modal-body">
+
+
+                        <input type="hidden" id="code" name="code"/>
+
+                        <div class="form-group row col-md-12 ">
+                            <label  class=" control-label">Apartment Name</label>
+
+                            <input type="text" class="form-control" name="name" id="apartment_name" >
+
+                        </div>
+                        <div class="form-group row col-md-12 ">
+                            <label  class=" control-label">Estate</label>
+
+                            <select id="up_estate" name="estate" class="form-control select2 estates" style="width:100%">
+                                <option value="">Choose..</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group row col-md-12 ">
+                            <label  class=" control-label">Apartment Type</label>
+
+                            <select  name="type" id="up_apartmenttype" class="form-control select2 apartmenttypes" style="width:100%">
+                                <option value="">Choose..</option>
+
+                            </select>
+                        </div>
+
+                        <div class="form-group row col-md-12 ">
+
+                            <div class="form-group row col-md-3 ">
+                                <label  class=" control-label">Currency</label>
+
+                                <select  name="currency" id="up_currency" class="form-control select2" style="width:100%">
+                                    <option value="">Choose..</option>
+                                    <option value="USD">USD</option>
+                                    <option value="GHS">GHS</option>
+                                </select>
+                            </div>
+                            <div class="form-group row col-md-1 "></div>
+
+                            <div class="form-group row col-md-8 ">
+                                <label  class=" control-label">Monthly Charge</label>
+
+                                <input type="text" class="form-control" id="up_monthlycharge" name="monthly_charge"  >
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row col-md-12 ">
+                            <label  class=" control-label">Apartment Facilities</label>
+
+                            <select id="up_facilities" name="facilities[]" class="facilities form-control multiselect select2" multiple style="width:100%">
+                                <option value="">Choose..</option>
+                            </select>
+                        </div>
+
+
+
+
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <input type="submit" name="submit" class="btn btn-info"  value="Save"/>
+
+
+
+
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
 
 
-        <div class="background-overlay"></div>
-    </section>
-    <!-- /.content -->
-</aside>
+    <div class="background-overlay"></div>
 
 
-@endsection 
-
-@section('userjs')
+@stop {{-- local scripts --}}
+@section('footer_scripts')
 <script type="text/javascript" src="{{ asset('vendors/datatables/js/jquery.dataTables.js')}}"></script>
 <script type="text/javascript" src="{{ asset('vendors/datatables/js/dataTables.bootstrap.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/custom_js/datatables_custom.js')}}"></script>
@@ -314,15 +315,9 @@ $('#saveApartmentForm').on('submit', function (e) {
 
 var datatable = $('#districtTbl').DataTable({
     responsive: true,
-    language: {
-        paginate:
-                {previous: "&laquo;", next: "&raquo;"},
-        search: "_INPUT_",
-        searchPlaceholder: "Search…"
-    },
     order: [[0, "asc"]]
 });
-
+ 
 getApartments();
 
 function getApartments()
@@ -558,4 +553,5 @@ $('#deleteForm').on('submit', function (e) {
 
 </script>
 
-@endsection
+@stop
+

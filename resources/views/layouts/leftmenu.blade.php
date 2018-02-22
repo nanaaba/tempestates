@@ -204,7 +204,7 @@
                     <span class="mm-text ">Rent Expiring </span>
                 </a>
             </li>
-            <li   class="{{ Request::is('reports/availableapartments') ? 'active' : '' }}">
+<!--            <li   class="{{ Request::is('reports/availableapartments') ? 'active' : '' }}">
                 <a href="{{ url('reports/availableapartments') }}">
                     <i class="menu-icon ti-layout-list-large-image"></i>
                     <span class="mm-text ">Available Apartments</span>
@@ -215,7 +215,7 @@
                     <i class="menu-icon ti-layout-list-large-image"></i>
                     <span class="mm-text ">Cleared Payments</span>
                 </a>
-            </li>
+            </li>-->
         </ul>
     </li>
     <li   class="{{ Request::is('account/users') ? 'active' : '' }}">

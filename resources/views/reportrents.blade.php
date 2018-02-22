@@ -21,69 +21,54 @@
     <section class="content">
 
 
-
-
-
         <div class="row">
             <div class="col-lg-12">
 
-                <div class="panel ">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <i class="ti-layout-grid3"></i> Rent Report 
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="ti-layout-grid3"></i> Rent Report  
                         </h3>
 
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
+                        <table class="table table-striped table-bordered table-hover dataTable" id="reportTbl">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Tenant Name
+                                    </th>
 
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card filterable">
-                                    <div class="card-header clearfix  ">
-                                        <div class="card-title pull-left">
-                                        </div>
-                                        <div class="tools float-right"></div>
-                                    </div>
-                                    <div class="card-body">
-
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-bordered table-hover dataTable" id="reportTbl">
-                                                <thead>
-                                                    <tr>
-                                                        <th>
-                                                            Tenant Name
-                                                        </th>
-
-                                                        <th>
-                                                            Apartment Name
-                                                        </th>
-                                                        <th>
-                                                            Apartment Type
-                                                        </th>
-                                                        <th>
-                                                            Monthly Amount
-                                                        </th>
-                                                        <th>Rent Period</th>
-                                                        <th>Start Date</th>
-                                                        <th>End Date</th>
+                                    <th>
+                                        Apartment Name
+                                    </th>
+                                    <th>
+                                        Apartment Type
+                                    </th>
+                                    <th>
+                                        Monthly Amount
+                                    </th>
+                                    <th>Rent Period</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
 
 
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                                                </tbody>
-                                            </table>
-                                        </div>
+                            </tbody>
+                        </table>
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+
                     </div>
                 </div>
             </div>
         </div>
+
+
+
 
 
 
@@ -159,7 +144,7 @@
                         r[++j] = '<td class="subject">' + value.start_date + ' </td>';
                         r[++j] = '<td class="subject">' + value.end_date + ' </td>';
 
-                       
+
                         rowNode = datatable.row.add(r);
                     });
 

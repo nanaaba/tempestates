@@ -21,19 +21,17 @@
     <!-- Main content -->
     <section class="content">
 
-
-
         <div class="row">
             <div class="col-lg-12">
 
-                <div class="panel ">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <i class="ti-layout-grid3"></i> All Tenants
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="ti-layout-grid3"></i> Tenants 
                         </h3>
 
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="tenantTbl">
                                 <thead>
@@ -62,10 +60,16 @@
                                 </tbody>
                             </table>
                         </div>
+
+
+
                     </div>
                 </div>
             </div>
         </div>
+
+
+
 
         <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
             <div class="modal-dialog" role="document">
@@ -113,9 +117,6 @@
 @endsection 
 
 @section('userjs')
-<script type="text/javascript" src="{{ asset('vendors/datatables/js/jquery.dataTables.js')}}"></script>
-<script type="text/javascript" src="{{ asset('vendors/datatables/js/dataTables.bootstrap.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/custom_js/datatables_custom.js')}}"></script>
 <script src="{{ asset('vendors/toastr/js/toastr.min.js')}}"></script>
 <script src="{{ asset('js/tenant.js')}}"></script>
 

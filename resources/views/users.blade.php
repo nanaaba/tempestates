@@ -37,20 +37,17 @@
                 Add User
             </button>
         </div>
-
-
-        <div class="row">
+ <div class="row">
             <div class="col-lg-12">
 
-                <div class="panel ">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <i class="ti-layout-grid3"></i> Users
-                        </h3>
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="ti-layout-grid3"></i> Users    </h3>
 
                     </div>
-                    <div class="panel-body">
-                        <div class="table-responsive">
+                    <div class="card-body">
+                                        <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="usersTbl">
                                 <thead>
                                     <tr>
@@ -82,10 +79,16 @@
                                 </tbody>
                             </table>
                         </div>
+            
+           
+
                     </div>
                 </div>
             </div>
         </div>
+
+
+
         <div id="userModal" class="modal fade animated" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -194,9 +197,9 @@
 @endsection 
 
 @section('userjs')
-<script type="text/javascript" src="{{ asset('vendors/datatables/js/jquery.dataTables.js')}}"></script>
+<!--<script type="text/javascript" src="{{ asset('vendors/datatables/js/jquery.dataTables.js')}}"></script>
 <script type="text/javascript" src="{{ asset('vendors/datatables/js/dataTables.bootstrap.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/custom_js/datatables_custom.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/custom_js/datatables_custom.js')}}"></script>-->
 
 <script src="{{ asset('js/users.js')}}" type="text/javascript"></script>
 

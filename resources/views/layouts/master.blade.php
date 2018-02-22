@@ -58,7 +58,13 @@
         <link href="{{ asset('vendors/datetime/css/jquery.datetimepicker.css')}}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('vendors/airdatepicker/css/datepicker.min.css')}}" rel="stylesheet"/>
         <link rel="stylesheet" type="text/css" href="{{ asset('css/datepicker.css')}}">
-
+        <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/dataTables.bootstrap4.css')}}"/>
+        <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/buttons.bootstrap.css')}}"/>
+        <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/colReorder.bootstrap.css')}}"/>
+        <!--        <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/dataTables.bootstrap.css')}}"/>-->
+        <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/rowReorder.bootstrap.css')}}"/>
+        <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/scroller.bootstrap.css')}}">
+    
     </head>
     <body class="skin-default">
         <div class="preloader">

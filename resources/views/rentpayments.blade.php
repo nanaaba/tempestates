@@ -26,14 +26,14 @@
         <div class="row">
             <div class="col-lg-12">
 
-                <div class="panel ">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <i class="ti-layout-grid3"></i> Payments Form
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                    Payments Form
                         </h3>
 
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <form id="savePaymentsForm" enctype="multipart/form-data" novalidate>
                             <div class="row">
 
@@ -121,11 +121,12 @@
                                     </div>
 
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6 pull-right">
-                                        <button type="submit" class="btn btn-primary btn-block">Save</button>
-                                    </div>
+                              <div class="row">
+                                <div class="col-lg-6 "></div>
+                                <div class="col-lg-6 ">
+                                    <button type="submit" class="btn btn-primary btn-lg">Save</button>
                                 </div>
+                            </div>
                             </div>
 
                         </form>
@@ -133,18 +134,16 @@
                 </div>
             </div>
 
-
             <div class="row">
                 <div class="col-lg-12">
 
-                    <div class="panel ">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">
-                                <i class="ti-layout-grid3"></i>Tenant Payments
-                            </h3>
+                    <div class="card ">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="ti-layout-grid3"></i>  Payments    </h3>
 
                         </div>
-                        <div class="panel-body">
+                        <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="paymentsTbl">
                                     <thead>
@@ -176,6 +175,7 @@
                     </div>
                 </div>
             </div>
+
 
             <div class="modal fade" id="loaderModal" data-keyboard="false" data-backdrop="static" role="dialog" >
                 <div class="modal-dialog" role="document">
@@ -307,9 +307,10 @@
 @endsection 
 
 @section('userjs')
-<script type="text/javascript" src="{{ asset('vendors/datatables/js/jquery.dataTables.js')}}"></script>
+<!--<script type="text/javascript" src="{{ asset('vendors/datatables/js/jquery.dataTables.js')}}"></script>
 <script type="text/javascript" src="{{ asset('vendors/datatables/js/dataTables.bootstrap.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/custom_js/datatables_custom.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/custom_js/datatables_custom.js')}}"></script>-->
+
 <script src="{{ asset('vendors/toastr/js/toastr.min.js')}}"></script>
 
 <script  type="text/javascript">
@@ -586,9 +587,9 @@ function getPaymentInfo(id) {
             $('#updescription').val(data[0].description);
             $('#upmode').val(data[0].mode).change();
             $('#uppayment_date').val(data[0].payment_date);
-            $('#chqurl').html('<a target="_blank" href ="http://localhost/tempestates/storage/app/'+data[0].cheque_url+'" type="button" class="btn btn-info ">View Cheque </a>');
+            $('#chqurl').html('<a target="_blank" href ="http://localhost/tempestates/storage/app/' + data[0].cheque_url + '" type="button" class="btn btn-info ">View Cheque </a>');
             $('#code').val(id);
-            $('#depurl').html('<a target="_blank" href ="http://localhost/tempestates/storage/app/'+data[0].deposit_url+'" type="button" class="btn btn-info ">View Deposit </a>');
+            $('#depurl').html('<a target="_blank" href ="http://localhost/tempestates/storage/app/' + data[0].deposit_url + '" type="button" class="btn btn-info ">View Deposit </a>');
 
         },
         error: function (jXHR, textStatus, errorThrown) {

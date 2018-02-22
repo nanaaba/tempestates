@@ -212,7 +212,7 @@ class TenantController extends Controller {
 
             $notifications = new NotificationsController();
             $notifications->sendemail($info[0]['email_address'], $serviceinfo[0]['name'] . ' Service Requested', $message);
-            $notifications->sendsms(strip_tags($data['phone_number']), $message);
+            //$notifications->sendsms(strip_tags($info[0]['contactno']), $message);
 
             return '0';
         } else {
@@ -238,6 +238,11 @@ class TenantController extends Controller {
         return $bills;
     }
 
+    public function getAllTenantsBills() {
+
+        return DB::table('tenant_bills_view')->where('active', 0)->get();
+    }
+
     public function getTenants() {
         return DB::table('tenants_view')->get();
     }
@@ -255,7 +260,18 @@ class TenantController extends Controller {
     }
 
     public function getTenantDocuments($id) {
-        return DB::table('tenants_documents')->where('tenant_id', 1)->get();
+        $tenantid = $this->getTenantId($id);
+        return DB::table('tenants_documents')->where('tenant_id', $tenantid)->get();
+    }
+
+    public function getTenantId($code) {
+
+        return DB::table('tenants_view')->where('tenant_code', $code)->pluck('id');
+    }
+
+    public function getBillInfo($id) {
+
+        return DB::table('tenant_bills_view')->where('id', $id)->get();
     }
 
     public function deleteTenantInformation($id) {
@@ -277,14 +293,8 @@ class TenantController extends Controller {
 
 
         $data = $request->all();
-        
-        
-        $email = strip_tags($data['email']);
-        $exist = $this->checkemailexistence($email);
-        if ($exist == 1) {
-            $data = array('success' => 2, 'message' => "Email already exist");
-            return json_encode($data);
-        }
+
+
 
         $new = Tenant::find(strip_tags($data['tenant_id']));
 
@@ -299,6 +309,10 @@ class TenantController extends Controller {
             $scanned_id = $request->file('scanned_id');
             $scanned_file = $scanned_id->store('scanneddocuments');
             $new->scanned_id = $scanned_file;
+        }
+
+        if (!empty($request->hasFile('documents'))) {
+            $this->uploadDocuments($request->file('documents'), $data['tenant_id']);
         }
 
 
@@ -339,11 +353,9 @@ class TenantController extends Controller {
             $saved = $new->save();
 
             if ($saved) {
+                //     $this->saveTenantRent(strip_tags($data['apartment']), $data['tenant_id'], strip_tags($data['rent_period']), strip_tags($data['currency']), strip_tags($data['amount']), strip_tags($data['start_date']), strip_tags($data['end_date']));
 
-                $this->updateTenantRent(strip_tags($data['apartment']), strip_tags($data['tenant_id']), strip_tags($data['rent_period']), strip_tags($data['currency']), strip_tags($data['amount']), '2018-02-01', '2018-10-10');
-                if (!empty($request->hasFile('documents'))) {
-                    $this->uploadDocuments($request->file('documents'), strip_tags($data['tenant_id']));
-                }
+
                 $data = array('success' => 0, 'tenat_id' => '');
 
 
@@ -381,17 +393,62 @@ class TenantController extends Controller {
 
     function checkemailexistence($email) {
 
-        $result = ORM::for_table('tenant_view')->where(array(
-           'email_address'=>$email,
-            'acive'=>0
-        ))
-                ->find_one();
+        $result = DB::table('tenants_view')->where(array(
+                    'email_address' => $email,
+                    'acive' => 0
+                ))->find_one();
 
 
         if (empty($result)) {
             return '0';
         }
         return '1';
+    }
+
+    public function updateBillInformation(Request $request) {
+
+
+        $data = $request->all();
+
+        $new = TenantBills::find(strip_tags($data['code']));
+
+        $new->amount = strip_tags($data['service_amount']);
+        $new->serviced_date = $request['date_serviced'];
+        $new->description = strip_tags($data['service_description']);
+        $new->service_id = strip_tags($data['service_type']);
+        $new->reason = strip_tags($data['reason']);
+
+        $saved = $new->save();
+
+        if ($saved) {
+
+
+            return '0';
+        } else {
+            return '1';
+        }
+    }
+
+    public function deleteBillInformation($id) {
+
+        $update = TenantBills::find($id);
+        $update->active = 1;
+        $update->modified_by = Session::get('id');
+        $update->modified_at = date('Y-m-d H:i:s');
+        $saved = $update->save();
+
+        if (!$saved) {
+            return '1';
+        } else {
+            return '0';
+        }
+    }
+
+    public function getRents() {
+        return DB::table('rent_view')->where('tenant_active', 0)->get();
+    }
+     public function getExpiringRents() {
+        return DB::table('expiring_rent')->where('tenant_active', 0)->get();
     }
 
 }

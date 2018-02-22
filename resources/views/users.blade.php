@@ -119,7 +119,7 @@
 
                                     <option value="">Choose</option>
                                     <option value="Admin">Admin</option> 
-                                    <option value="Normal User">Normal User</option>
+                                    <option value="NormalUser">Normal User</option>
                                 </select>
                                 <span class="help-block"></span>
                             </div>
@@ -166,7 +166,7 @@
 
                                     <option value="">Choose</option>
                                     <option value="Admin">Admin</option> 
-                                    <option value="Normal User">Normal User</option>
+                                    <option value="NormalUser">Normal User</option>
                                 </select>
                                 <span class="help-block"></span>
                             </div>

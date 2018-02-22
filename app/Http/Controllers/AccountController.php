@@ -34,6 +34,8 @@ class AccountController extends Controller {
         $update->role = $data['role'];
         $update->name = $data['name'];
         $update->email = $data['email'];
+        $update->contactno = $data['contactno'];
+
         $saved = $update->save();
         if (!$saved) {
             return '1';
@@ -68,7 +70,7 @@ class AccountController extends Controller {
                 return $response;
             } else {
 
-                $message = 'Hi,'.$data['name'].', have been created as a/an ' . $data['role'] . ' in Rotamac Application.Password generated is '.$newpassword.'. Kindly visit this link 50.62.56.65/Rotamac to change password.';
+                $message = 'Hi,' . $data['name'] . ', have been created as a/an ' . $data['role'] . ' in Rotamac Application.Password generated is ' . $newpassword . '. Kindly visit this link 50.62.56.65/Rotamac to change password.';
                 $notifications = new NotificationsController();
                 $notifications->sendemail($data['email'], 'User Created', $message);
                 $notifications->sendsms($data['contactno'], $message);

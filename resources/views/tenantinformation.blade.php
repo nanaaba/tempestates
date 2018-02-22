@@ -7,8 +7,16 @@
 <aside class="right-side">
     <!-- Content Header (Page header) -->
     <section class="content-header">
+        
+          <?php
+    $info = json_decode($information, true);
+    $documents = json_decode($documents, true);
+    $profilepic = $info[0]['profile_pic'];
+    $scanned_id = $info[0]['scanned_id'];
+   
+    ?>
         <h1>
-            Tenant Information
+            {{$info[0]['title'].' '.$info[0]['name']}} Information
         </h1>
         <ol class="breadcrumb">
             <li>
@@ -20,22 +28,18 @@
                 <a href="#"> Tenants</a>
             </li>
             <li class="active">
-                Tenant Information
+               {{$info[0]['title'].' '.$info[0]['name']}} Information
             </li>
         </ol>
     </section>
-    <?php
-    $info = json_decode($information, true);
-    $documents = json_decode($documents, true);
-    $profilepic = $info[0]['profile_pic'];
-    $scanned_id = $info[0]['scanned_id'];
-    //print_r($info);
-    //print_r($documents);
-    ?>
+  
     <!-- Main content -->
     <section class="content">
 
-
+<?php
+ print_r($info);
+    print_r($documents);
+?>
         <div class="row">
             <div class="col-lg-12">
 
@@ -43,7 +47,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             <i class="ti-layout-tab"></i> 
-                            New Tenant Form
+               {{$info[0]['title'].' '.$info[0]['name']}} Information
                         </h3>
 
                     </div>
@@ -256,7 +260,7 @@
                                                 <label for="dob" class="form-control-label">Phone Number(s)</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="phone_number"   value="{{$info[0]['contactno']}}" type="text" class="form-control"/>
+                                                <input  name="phone_number"   value="{{$info[0]['contactno']}}" type="number" class="form-control"/>
 
                                             </div>
                                         </div>
@@ -458,7 +462,7 @@
                                                 <label  class="form-control-label">Phone No.</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="phoneno"   value="{{$info[0]['nextkin_contact']}}" type="text" class="form-control"/>
+                                                <input  name="phoneno"   value="{{$info[0]['nextkin_contact']}}" type="number" class="form-control"/>
 
                                             </div>
                                         </div>

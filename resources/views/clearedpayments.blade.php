@@ -40,6 +40,10 @@
                             <table class="table table-striped table-bordered table-hover" id="paymentsTbl">
                                 <thead>
                                     <tr>
+
+                                        <th>
+                                            Bank Code
+                                        </th>
                                         <th>
                                             Tenant Name
                                         </th>
@@ -134,13 +138,14 @@ function getPayments()
                     var j = -1;
                     var r = new Array();
                     // represent columns as array
+                    r[++j] = '<td class="subject">' + value.cleared_code + '</td>';
                     r[++j] = '<td class="subject">' + value.title + ' ' + value.name + '</td>';
                     r[++j] = '<td class="subject">' + value.description + '</td>';
                     r[++j] = '<td class="subject">' + value.amount + '</td>';
                     r[++j] = '<td class="subject">' + value.mode + '</td>';
                     r[++j] = '<td class="subject">' + value.payment_date + '</td>';
 
-                 
+
                     rowNode = datatable.row.add(r);
                 });
 

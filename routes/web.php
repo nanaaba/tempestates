@@ -48,6 +48,18 @@ Route::get('banking/rentpayments', 'BankController@showrentpayments');
 Route::get('banking/clearpayments', 'BankController@showclearpayments');
 Route::get('banking/clearedpayments', 'BankController@showclearedpayments');
 Route::get('account/users', 'AccountController@showusers');
+//reports
+Route::get('reports/bills', 'ReportController@showbills');
+Route::get('reports/payments', 'ReportController@showpayments');
+Route::get('reports/rents', 'ReportController@showrents');
+Route::get('reports/expiringrent', 'ReportController@showexpiryrent');
+Route::get('reports/availableapartments', 'ReportController@showavailableapartments');
+Route::get('reports/clearedpayments', 'ReportController@showclearedpayments');
+
+
+
+
+
 
 
 Route::get('/logout', function() {
@@ -104,6 +116,13 @@ Route::post('retreivetenantbills', 'TenantController@retreiveTenantBill');
 Route::delete('tenants/{id}', 'TenantController@deleteTenantInformation');
 Route::get('tenant/{id}', 'TenantController@getTenantDetail');
 Route::get('tenants/{id}', 'TenantController@getTenantInformation');
+Route::get('tenantbills/all', 'TenantController@getAllTenantsBills');
+Route::get('bills/{id}', 'TenantController@getBillInfo');
+Route::put('tenants/updatebill', 'TenantController@updateBillInformation');
+Route::delete('tenants/deletebill/{id}', 'TenantController@deleteBillInformation');
+Route::get('getallrents', 'TenantController@getRents');
+Route::get('getexpiringrents', 'TenantController@getExpiringRents');
+
 
 Route::post('tenants/update', 'TenantController@updateTenantInformation');
 
@@ -129,8 +148,12 @@ Route::delete('banking/{id}', 'BankController@deletebank');
 Route::get('banking/{id}', 'BankController@getBankDetail');
 Route::put('banking/updatebank', 'BankController@updateBank');
 Route::get('banking/payments/all', 'BankController@getRentpayments');
+Route::get('banking/payments/{id}', 'BankController@getPaymentInfo');
+Route::delete('deletepayment/{id}', 'BankController@deletePaymentInfo');
+Route::post('banking/updaterentpayments', 'BankController@updateRentPayment');
+Route::post('banking/paymentswithinperiod', 'BankController@getRentpaymentsPeriod');
 
-
+//reports
 
 
 

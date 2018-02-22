@@ -36,6 +36,8 @@ class mailme extends Mailable {
      * @return $this
      */
     public function build() {
+        
+        
         return $this->from('hello@rotamac.com', 'Rotamac')
                         ->subject($this->event['subject'])
                         ->view('emails.mailme') > with(['message' => $this->event['message']]);

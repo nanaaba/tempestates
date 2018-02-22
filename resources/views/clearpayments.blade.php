@@ -100,7 +100,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="exampleModalLabel">Update </h4>
                     </div>
-                    <form id="paymentsForm" >
+                    <form id="paymentsForm"  enctype="multipart/form-data" >
                         <div class="modal-body">
                             <input type="hidden" class="form-control form-control-lg input-lg"  name="_token" value="<?php echo csrf_token() ?>" />
 
@@ -132,6 +132,10 @@
                                 <input type="date" class="form-control" name="paymentdate"   required>
                             </div>
 
+                            <div class="form-group">
+                                <label for="region" class="control-label">Attached Bank Deposit Slip:</label>
+                                <input type="file" class="form-control" name="depositslip"   required>
+                            </div>
 
 
 
@@ -165,11 +169,10 @@
 $('#paymentsForm').on('submit', function (e) {
     e.preventDefault();
 
-    var paymentform = $(this).serialize();
-//        var ids = $("[name='ids[]']:checked").map(function () {
-//            return $(this).val();
-//        }).get();
-    console.log('paymentsdata' + paymentform);
+
+    var formData = new FormData($("#paymentsForm")[0]);
+
+    console.log('paymentsdata' + formData);
 
     var amount_entered = $('#totalmount').val();
     var amount_tobecleared = $('#clearedamount').val();
@@ -182,12 +185,18 @@ $('#paymentsForm').on('submit', function (e) {
         $.ajax({
             url: "{{url('clearpayments')}}",
             type: "POST",
-            dataType: 'json',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
             success: function (data) {
+                $('#newModal').modal('hide');
                 $('#loaderModal').modal('hide');
-
                 console.log('banks' + data);
-                swal("Success", data, "success");
+                getPayments();
+
+                swal("Success!", 'Payments cleared successfully.This is the cleared code for referencing :' + data, "success");
+
 
             }
 

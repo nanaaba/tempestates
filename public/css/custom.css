@@ -834,7 +834,13 @@ a {
 .badge {
   background-color: #66CC99;
   font-weight: 400;
-  float: right; }
+/*  float: right; */
+
+
+.badge-danger {
+    color: #fff;
+    background-color: #ff6666;
+}
 
 .sub-menu {
   list-style: none;

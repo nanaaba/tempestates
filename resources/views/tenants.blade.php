@@ -289,7 +289,7 @@
                                                 <label for="dob" class="form-control-label">Phone Number(s)</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input  name="phone_number" type="text" class="form-control"/>
+                                                <input  name="phone_number" type="number" class="form-control"/>
 
                                             </div>
                                         </div>

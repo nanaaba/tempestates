@@ -77,7 +77,6 @@ class BankController extends Controller {
 
         $data = $request->all();
 
-
         $mode = $data['mode'];
         $payment_date = date('Y-m-d', strtotime($request['payment_date']));
         $new = new RentPayments();
@@ -85,7 +84,7 @@ class BankController extends Controller {
             if ($request->hasFile('depositurl')) {
                 $scanned_id = $request->file('depositurl');
                 $depositurl = $scanned_id->store('scanneddocuments');
-                $bank = $data['bank'];
+                $bank = explode('-', $data['bank']);
                 $new->bank_id = $bank[0];
                 $new->bank_name = $bank[1];
                 $new->accountno = $bank[2];
@@ -122,9 +121,9 @@ class BankController extends Controller {
                 $notifications = new NotificationsController();
                 $message = 'Hi ' . $info[0]['title'] . ' ' . $info[0]['name'] . ','
                         . 'Please an amount of GHS ' . $data['amount'] . ' payments have been received through '
-                        . $data['mode'] . ' payments on '.$request['payment_date'].'.';
+                        . $data['mode'] . ' payments on ' . $request['payment_date'] . '.';
                 $notifications->sendemail($info[0]['email_address'], 'Payments received', $message);
-                $notifications->sendsms($info[0]['contactno'], $message);
+                //   $notifications->sendsms($info[0]['contactno'], $message);
 
                 return json_encode($dataresponse);
             } else {
@@ -138,7 +137,7 @@ class BankController extends Controller {
     }
 
     public function getRentpayments() {
-        return DB::table('payments_view')
+        return DB::table('payments_view')->where('active', 0)
                         ->get();
     }
 
@@ -148,10 +147,13 @@ class BankController extends Controller {
         $data = $request->all();
         $bank_name = $data['bank'];
         $total_amount = $data['totalmount'];
-        $deposited_by = $data['depositedby'];
-        $payment_date = $data['paymentdate'];
-        $scanned_url = "";
-        $bank_code = $this->clearpayments($bank_name, $total_amount, $deposited_by, $payment_date, $scanned_url);
+        $deposited_by = strip_tags($data['depositedby']);
+        $payment_date = strip_tags($data['paymentdate']);
+        if ($request->hasFile('depositslip')) {
+            $scanned_id = $request->file('depositslip');
+            $depositurl = $scanned_id->store('scanneddocuments');
+        }
+        $bank_code = $this->clearpayments($bank_name, $total_amount, $deposited_by, $payment_date, $depositurl);
 
         $inflowsids = $data['inflows'];
         $this->updatepaymentsascleared($bank_code, $inflowsids);
@@ -163,6 +165,8 @@ class BankController extends Controller {
         $code = $this->unquecodeGenerator(8);
         $bank_code = 'BNK' . $code;
         $createdby = Session::get('userid');
+
+
 
         DB::insert('insert into cleared_payments (bank_code,bank_name,total_amount, deposited_by,payment_date,scanned_url,created_by) values (?, ?,?,?,?,?,?)', ["$bank_code", "$bank_name", "$total_amount", "$deposited_by", "$payment_date", "$scanned_url", $createdby]);
 
@@ -238,6 +242,98 @@ class BankController extends Controller {
             $id .= $chars[mt_rand(0, $clen)];
         }
         return ($id);
+    }
+
+    public function getPaymentInfo($id) {
+        return DB::table('payments_view')->where('id', $id)->get();
+    }
+
+    public function deletePaymentInfo($id) {
+        $update = RentPayments::find($id);
+        $update->active = 1;
+        $update->modified_by = Session::get('id');
+        $update->modified_at = date('Y-m-d H:i:s');
+        $saved = $update->save();
+
+        if (!$saved) {
+            return '1';
+        } else {
+            return '0';
+        }
+    }
+
+    public function updateRentPayment(Request $request) {
+
+
+        $data = $request->all();
+
+        $mode = $data['mode'];
+        $new = RentPayments::find($data['code']);
+        if ($mode == "Bank Deposit") {
+            $bank = explode('-', $data['bank']);
+            $new->bank_id = $bank[0];
+            $new->bank_name = $bank[1];
+            $new->accountno = $bank[2];
+            if (!empty($request->hasFile('depositurl'))) {
+
+                $scanned_id = $request->file('depositurl');
+                $depositurl = $scanned_id->store('scanneddocuments');
+
+                $new->deposit_url = $depositurl;
+            }
+        }
+
+        if ($mode == "Cheque") {
+            if (!empty($request->hasFile('chequeurl'))) {
+
+                $scanned_id = $request->file('chequeurl');
+                $chequeurl = $scanned_id->store('scanneddocuments');
+                $new->cheque_url = $chequeurl;
+            }
+        }
+        $new->amount = $data['amount'];
+        $new->description = strip_tags($data['description']);
+        $new->payment_date = strip_tags($request['payment_date']);
+        $new->mode = strip_tags($data['mode']);
+        $new->reason = strip_tags($data['reason']);
+
+        $new->modified_by = Session::get('id');
+        $new->modified_at = date('Y-m-d H:i:s');
+
+        try {
+            $saved = $new->save();
+
+            if ($saved) {
+
+                $dataresponse = array('success' => 0, 'message' => 'update information successfully');
+
+                return json_encode($dataresponse);
+            } else {
+                $data = array('success' => 1, 'message' => 'error');
+                return json_encode($data);
+            }
+        } catch (\Illuminate\Database\QueryException $e) {
+            $data = array('success' => 2, 'message' => $e->getMessage());
+            return json_encode($data);
+        }
+    }
+    
+    public function getRentpaymentsPeriod(Request $request) {
+        
+          $data = $request->all();
+
+        $daterange = explode("to", strip_tags($data['daterange']));
+        $start_date = $daterange[0];
+        $end_date = $daterange[1];
+        $tenant = strip_tags($data['tenant']);
+
+
+        $result = DB::table('payments_view')
+                ->where('tenant_id', '=', $tenant)
+                ->whereBetween('payment_date', [$start_date, $end_date])
+                ->get();
+
+        return $result;
     }
 
 }

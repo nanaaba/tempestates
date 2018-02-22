@@ -14,11 +14,11 @@
                         <span class="mm-text ">Dashboard </span>
                     </a>
                 </li>
-                
-                   <li class="menu-dropdown {{ Request::is('configuration*') ? 'active' : '' }}">
+
+                <li class="menu-dropdown {{ Request::is('configuration*') ? 'active' : '' }}">
                     <a href="javascript:void(0)">
                         <i class="menu-icon ti-widget"></i>
-                            <span>Configuration</span>
+                        <span>Configuration</span>
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="sub-menu">
@@ -34,13 +34,13 @@
                                 <span class="mm-text ">Rent Periods</span>
                             </a>
                         </li>
-                         <li   class="{{ Request::is('configuration/identification') ? 'active' : '' }}">
+                        <li   class="{{ Request::is('configuration/identification') ? 'active' : '' }}">
                             <a href="{{ url('configuration/identification') }}">
                                 <i class="menu-icon ti-layout-list-large-image"></i>
                                 <span class="mm-text ">Identification Types </span>
                             </a>
                         </li>
-                        
+
                     </ul>
                 </li>
 
@@ -87,19 +87,19 @@
                                 <span class="mm-text "> New Tenant</span>
                             </a>
                         </li>
-                         <li   class="{{ Request::is('tenants/showall') ? 'active' : '' }}">
+                        <li   class="{{ Request::is('tenants/showall') ? 'active' : '' }}">
                             <a href="{{ url('tenants/showall') }}">
                                 <i class="menu-icon ti-layout-list-large-image"></i>
                                 <span class="mm-text "> All Tenants</span>
                             </a>
                         </li>
-                         <li   class="{{ Request::is('tenants/services') ? 'active' : '' }}">
+                        <li   class="{{ Request::is('tenants/services') ? 'active' : '' }}">
                             <a href="{{ url('tenants/services') }}">
                                 <i class="menu-icon ti-layout-list-large-image"></i>
                                 <span class="mm-text "> Requested Services </span>
                             </a>
                         </li>
-                         <li   class="{{ Request::is('tenants/bill') ? 'active' : '' }}">
+                        <li   class="{{ Request::is('tenants/bill') ? 'active' : '' }}">
                             <a href="{{ url('tenants/bill') }}">
                                 <i class="menu-icon ti-layout-list-large-image"></i>
                                 <span class="mm-text ">Tenants  Bill </span>
@@ -108,8 +108,8 @@
                     </ul>
                 </li>
 
-                
-                  <li class="menu-dropdown {{ Request::is('banking*') ? 'active' : '' }}">
+
+                <li class="menu-dropdown {{ Request::is('banking*') ? 'active' : '' }}">
                     <a href="javascript:void(0)">
                         <i class="menu-icon ti-briefcase"></i>
                         <span>Banking</span>
@@ -122,19 +122,19 @@
                                 <span class="mm-text "> Banks</span>
                             </a>
                         </li>
-                         <li   class="{{ Request::is('banking/rentpayments') ? 'active' : '' }}">
+                        <li   class="{{ Request::is('banking/rentpayments') ? 'active' : '' }}">
                             <a href="{{ url('banking/rentpayments') }}">
                                 <i class="menu-icon ti-layout-list-large-image"></i>
                                 <span class="mm-text ">Tenants  Payments</span>
                             </a>
                         </li>
-                         <li   class="{{ Request::is('banking/clearpayments') ? 'active' : '' }}">
+                        <li   class="{{ Request::is('banking/clearpayments') ? 'active' : '' }}">
                             <a href="{{ url('banking/clearpayments') }}">
                                 <i class="menu-icon ti-layout-list-large-image"></i>
                                 <span class="mm-text "> Clear Cash/Cheque Payments </span>
                             </a>
                         </li>
-                         <li   class="{{ Request::is('banking/clearedpayments') ? 'active' : '' }}">
+                        <li   class="{{ Request::is('banking/clearedpayments') ? 'active' : '' }}">
                             <a href="{{ url('banking/clearedpayments') }}">
                                 <i class="menu-icon ti-layout-list-large-image"></i>
                                 <span class="mm-text ">View Cleared Payments </span>
@@ -143,11 +143,64 @@
                     </ul>
                 </li>
 
-                
+
                 <li   class="{{ Request::is('account/users') ? 'active' : '' }}">
                     <a href="{{ url('account/users') }}">
                         <i class="menu-icon ti-face-smile"></i>
                         <span class="mm-text ">Users </span>
+                    </a>
+                </li>
+
+
+                <li class="menu-dropdown {{ Request::is('reports*') ? 'active' : '' }}">
+                    <a href="javascript:void(0)">
+                        <i class="menu-icon ti-package"></i>
+                        <span>Reports</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li   class="{{ Request::is('reports/bills') ? 'active' : '' }}">
+                            <a href="{{ url('reports/bills') }}">
+                                <i class="menu-icon ti-layout-list-large-image"></i>
+                                <span class="mm-text "> Bills</span>
+                            </a>
+                        </li>
+                        <li   class="{{ Request::is('reports/payments') ? 'active' : '' }}">
+                            <a href="{{ url('reports/payments') }}">
+                                <i class="menu-icon ti-layout-list-large-image"></i>
+                                <span class="mm-text ">  Payments</span>
+                            </a>
+                        </li>
+                        <li   class="{{ Request::is('reports/rents') ? 'active' : '' }}">
+                            <a href="{{ url('reports/rents') }}">
+                                <i class="menu-icon ti-layout-list-large-image"></i>
+                                <span class="mm-text "> Rents </span>
+                            </a>
+                        </li>
+                        <li   class="{{ Request::is('reports/expiringrent') ? 'active' : '' }}">
+                            <a href="{{ url('reports/expiringrent') }}">
+                                <i class="menu-icon ti-layout-list-large-image"></i>
+                                <span class="mm-text ">Rent Expiring </span>
+                            </a>
+                        </li>
+                        <li   class="{{ Request::is('reports/availableapartments') ? 'active' : '' }}">
+                            <a href="{{ url('reports/availableapartments') }}">
+                                <i class="menu-icon ti-layout-list-large-image"></i>
+                                <span class="mm-text ">Available Apartments</span>
+                            </a>
+                        </li>
+                         <li   class="{{ Request::is('reports/clearedpayments') ? 'active' : '' }}">
+                            <a href="{{ url('reports/clearedpayments') }}">
+                                <i class="menu-icon ti-layout-list-large-image"></i>
+                                <span class="mm-text ">Cleared Payments</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li   class="{{ Request::is('account/users') ? 'active' : '' }}">
+                    <a href="{{ url('account/users') }}">
+                        <i class="menu-icon ti-pencil-alt"></i>
+                        <span class="mm-text ">Audit Logs </span>
                     </a>
                 </li>
 

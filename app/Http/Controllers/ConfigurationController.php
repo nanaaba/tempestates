@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\DB;
 use App\ApartmentTypes;
 use App\RentPeriod;
 use App\Identicationcards;
-
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -38,8 +37,6 @@ class ConfigurationController extends Controller {
         $idscars = $this->getIdentificationCards();
         return view('identificationcards')->with('idscars', $idscars);
     }
-
-    
 
     public function getApartmentTypes() {
         return ApartmentTypes::all()->toJson();
@@ -118,5 +115,11 @@ class ConfigurationController extends Controller {
         $new->delete();
     }
 
-  
+    public function computeDate($month, $date) {
+
+        
+        $newDate = date('Y-m-d', strtotime("+" . $month . "months", strtotime($date)));
+        return $newDate;
+    }
+
 }

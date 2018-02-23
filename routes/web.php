@@ -126,6 +126,10 @@ Route::put('tenants/updatebill', 'TenantController@updateBillInformation');
 Route::delete('tenants/deletebill/{id}', 'TenantController@deleteBillInformation');
 Route::get('getallrents', 'TenantController@getRents');
 Route::get('getexpiringrents', 'TenantController@getExpiringRents');
+Route::get('tenant/rent/{id}', 'TenantController@getTenantRentInformation');
+Route::post('tenantaccumulatedbill', 'TenantController@getTenantTotalBill');
+
+//
 
 
 Route::post('tenants/update', 'TenantController@updateTenantInformation');
@@ -156,6 +160,7 @@ Route::get('banking/payments/{id}', 'BankController@getPaymentInfo');
 Route::delete('deletepayment/{id}', 'BankController@deletePaymentInfo');
 Route::post('banking/updaterentpayments', 'BankController@updateRentPayment');
 Route::post('banking/paymentswithinperiod', 'BankController@getRentpaymentsPeriod');
+Route::get('computedate/{month}/{date}', 'ConfigurationController@computeDate');
 
 //reports
 Route::get('reports/paymentstrend', 'ReportController@getPaymentsTrend');

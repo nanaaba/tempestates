@@ -29,7 +29,7 @@
                 <div class="card ">
                     <div class="card-header">
                         <h3 class="card-title">
-                    Payments Form
+                            Payments Form
                         </h3>
 
                     </div>
@@ -40,7 +40,7 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group ">
-                                        <input type="hidden" class="form-control form-control-lg input-lg"  name="_token" value="<?php echo csrf_token() ?>" />
+                                        <input type="hidden" class="form-control form-control-lg input-lg" id="token"  name="_token" value="<?php echo csrf_token() ?>" />
 
                                         <label for="region" class="control-label">Tenant Name:</label>
                                         <select class="form-control select2" name="tenant" id="tenants"  required style="width: 100%">
@@ -56,6 +56,21 @@
                                         <label for="region" class="control-label">Apartment Type:</label>
                                         <input type="text" class="form-control" name="apartment_type" id="apartment_type"  readonly>
                                     </div>
+                                    <div class="row form-group">
+
+                                        <div class="col-lg-4">
+                                            <label for="region" class="control-label">Currency :</label>
+                                            <input type="text" class="form-control" name="currency" id="currency"  readonly>
+
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <label for="region" class="control-label">Monthly Amount:</label>
+                                            <input type="text" class="form-control" name="apartment_amount" id="apartment_amount"  >
+
+                                        </div>
+
+                                    </div>
+
 
 
                                     <div class="form-group">
@@ -66,13 +81,122 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-fw ti-calendar"></i>
                                             </div>
-                                            <input type="text" class="form-control float-right"  name="payment_date"   data-language="en" id="paymentdate">
+                                            <input type="text" class="form-control float-right datepick" data-date-format="dd-mm-yyyy"  name="payment_date"   data-language="en" id="paymentdate">
                                         </div>
                                         <!-- /.input group -->
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <div class="col-sm-3">
+                                            <label class="control-label float-right txt_media1">
+                                                Payment Type
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <label class="checkbox-inline icheckbox">
+                                                <input type="checkbox"  name="type[]" value="rent" id="rent"> Rent&nbsp;&nbsp;&nbsp;
+
+                                            </label>
+                                            <label class="checkbox-inline icheckbox">
+                                                <input type="checkbox"  name="type[]" value="bill" id="bill"> Bill
+
+                                            </label>
+
+                                        </div>
+                                    </div>
+
+                                    <div id="rendiv">
+                                        <div class="form-group">
+                                            <label for="region" class="control-label">Rent Amount:</label>
+                                            <input type="text" class="form-control" name="rent_amount" id="rent_amount"  >
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="region" class="control-label">Payment Period:</label>
+
+                                            <select class="select2 form-control" id="rent_periods" name="rent_period">
+                                                <option value=" ">Choose</option>
+
+                                            </select>
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <div class="col-sm-9">
+                                                <label for="my-element">
+                                                    Start Date:
+                                                </label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-fw ti-calendar"></i>
+                                                    </div>
+                                                    <input type="text" class="form-control float-right datepick"  name="start_date" data-date-format="dd-mm-yyyy"  data-language="en" id="start_date">
+                                                </div>
+                                            </div>
+                                            <!-- /.input group -->
+
+                                            <div class="col-sm-3">
+                                                <div class=" form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-info " onclick="computeEndDate()">
+                                                        Compute End Date
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class=" form-group">
+                                            <label for="my-element">
+                                                End Date:
+                                            </label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-fw ti-calendar"></i>
+                                                </div>
+                                                <input type="text" class="form-control float-right"  name="end_date"   data-language="en" id="end_date" readonly>
+                                            </div>
+                                            <!-- /.input group -->
+                                        </div>
+                                    </div>
+                                    <div id="billdiv">
+
+
+                                        <div class="form-group">
+                                            <label for="region" class="control-label">Bill Covered Date:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-fw ti-calendar"></i>
+                                                </div>
+                                                <input type="text" class="form-control" name="bill_date" id="reportrange" placeholder="DD/MM/YYYY-DD/MM/YYYY">
+                                            </div>
+
+
+                                            <div class=" form-group">
+                                                <button type="button" class="btn btn-info " onclick="getBill()">
+                                                    Bill Over Chosen Period
+                                                </button>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="region" class="control-label">Bill Accumulated over chosen period:</label>
+                                                <input type="text" class="form-control" name="bill_amount_tobe_paid" id="bill_amount_tobe_paid"  readonly>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="region" class="control-label">Bill Amount:</label>
+                                                <input type="text" class="form-control" name="bill_amount" id="bill_amount"  >
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
+
+
+
+                                    <div id="surplusdiv">
+                                        <div class="form-group">
+                                            <label for="region" class="control-label">Remaining(Surplus) Amount:</label>
+                                            <input type="text" class="form-control" name="remaining_amount" id="remaining_amount"  >
+                                        </div>
+                                    </div>
 
 
                                     <div class="form-group ">
@@ -85,6 +209,8 @@
 
                                         </select>
                                     </div>
+
+
                                     <div class="form-group">
                                         <label for="region" class="control-label">Amount:</label>
                                         <input type="text" class="form-control" name="amount" id="amount"  >
@@ -121,12 +247,12 @@
                                     </div>
 
                                 </div>
-                              <div class="row">
-                                <div class="col-lg-6 "></div>
-                                <div class="col-lg-6 ">
-                                    <button type="submit" class="btn btn-primary btn-lg">Save</button>
+                                <div class="row">
+                                    <div class="col-lg-6 "></div>
+                                    <div class="col-lg-6 ">
+                                        <button type="submit" class="btn btn-primary btn-lg">Save</button>
+                                    </div>
                                 </div>
-                            </div>
                             </div>
 
                         </form>
@@ -190,112 +316,6 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="exampleModalLabel">Update </h4>
-                        </div>
-                        <div class="modal-body">
-                            <form id="updateForm" novalidate>
-
-                                <input type="hidden" class="form-control form-control-lg input-lg"  name="_token" value="<?php echo csrf_token() ?>" />
-                                <input type="hidden" id="code" name="code"/>
-
-                                <div class="row">
-
-                                    <div class="col-md-12">
-
-                                        <div class="form-group">
-                                            <label for="region" class="control-label">Tenant Name:</label>
-                                            <input type="text" class="form-control" name="tenant_name"  id="uptenant_name"  readonly>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="my-element">
-                                                Payment Date:
-                                            </label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-fw ti-calendar"></i>
-                                                </div>
-                                                <input type="date" class="form-control"  name="payment_date" id="uppayment_date"   data-language="en" >
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-
-                                        <div class="form-group ">
-                                            <label for="region" class="control-label">Mode:</label>
-                                            <select class="form-control select2" name="mode" id='upmode'   required style="width: 100%">
-                                                <option value="">Select --</option>
-                                                <option value="Cash">Cash</option>
-                                                <option value="Cheque">Cheque</option>
-                                                <option value="Bank Deposit">Bank Deposit </option>
-
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="region" class="control-label">Amount:</label>
-                                            <input type="text" class="form-control" name="amount" id="upamount"  >
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="region" class="control-label"> Description:</label>
-                                            <textarea type="text" class="form-control" name="description" id="updescription"  >
-                                            </textarea>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="region" class="control-label"> Reason:</label>
-                                            <textarea type="text" class="form-control" name="reason"   >
-                                            </textarea>
-                                        </div>
-
-                                        <div id='upcheque' style="display: none;">
-                                            <div class="form-group">
-                                                <label for="region" class="control-label">Scanned Cheque:</label>
-                                                <input type="file" class="form-control" name="chequeurl"   >
-
-                                                <span id="chqurl">
-
-                                                </span>
-                                            </div>
-
-
-
-
-                                        </div>
-
-                                        <div id='upbankdepositdiv' style="display: none;">
-                                            <div class="form-group">
-                                                <label for="region" class="control-label">Scanned Deposit:</label>
-                                                <input type="file" class="form-control" name="depositurl"   >
-                                                <span id="depurl"></span>
-                                            </div>
-
-                                            <div class="form-group ">
-                                                <label for="region" class="control-label">Banks:</label>
-                                                <select class="form-control select2" name="bank" id='banks'  required style="width: 100%">
-                                                    <option value="">Select --</option>
-
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 pull-right">
-                                            <button type="submit" class="btn btn-primary btn-block">Save</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
 
             <div class="background-overlay"></div>
@@ -307,402 +327,448 @@
 @endsection 
 
 @section('userjs')
-<!--<script type="text/javascript" src="{{ asset('vendors/datatables/js/jquery.dataTables.js')}}"></script>
-<script type="text/javascript" src="{{ asset('vendors/datatables/js/dataTables.bootstrap.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/custom_js/datatables_custom.js')}}"></script>-->
 
 <script src="{{ asset('vendors/toastr/js/toastr.min.js')}}"></script>
 
 <script  type="text/javascript">
+                                                    function computeEndDate() {
 
-$('#paymentdate').datepicker({
-    format: 'dd-mm-yyyy'
-});
+                                                        var startdate = $('#start_date').val();
+                                                        var periods = $('#rent_periods').val();
+                                                        if (startdate == "" && periods == "") {
+                                                            alert('startdate and rent periods should be empty');
+                                                        } else {
+                                                            console.log('here');
 
-var datatable = $('#paymentsTbl').DataTable({
-    responsive: true,
-    language: {
-        paginate:
-                {previous: "&laquo;", next: "&raquo;"},
-        search: "_INPUT_",
-        searchPlaceholder: "Search…"
-    },
-    order: [[0, "asc"]]
-});
+                                                            $.ajax({
+                                                                url: "../computedate/" + periods + "/" + startdate,
+                                                                type: "GET",
+                                                                success: function (data) {
+                                                                    console.log('dj' + data);
+                                                                    $('#end_date').val(data);
+                                                                }
+                                                            });
+                                                        }
 
+                                                    }
+                                                    $('.datepick').datepicker({
+                                                        format: 'dd-mm-yyyy'
+                                                    });
+//Date range as a button
+                                                    $('#reportrange').daterangepicker({
+                                                        autoUpdateInput: false,
+                                                        locale: {
+                                                            cancelLabel: 'Clear'
+                                                        },
+                                                        ranges: {
+                                                            'Today': [moment(), moment()],
+                                                            'Yesterday': [moment().subtract('days', 1), moment()],
+                                                            'Last 7 Days': [moment().subtract('days', 6), moment()],
+                                                            'Last 30 Days': [moment().subtract('days', 29), moment()],
+                                                            'This Month': [moment().startOf('month'), moment().endOf('month')],
+                                                            'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+                                                        },
+                                                        drops: "up"
+                                                    },
+                                                            function (start, end) {
+                                                                $('#reportrange').find('span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                                                            });
+                                                    $('#reportrange').on('show.daterangepicker', function (ev, picker) {
+                                                        $(this).val("");
+                                                    }).on('apply.daterangepicker', function (ev, picker) {
+                                                        $(this).val(picker.startDate.format('DD-MM-YYYY') + ' to ' + picker.endDate.format('DD-MM-YYYY'));
+                                                    }).on('cancel.daterangepicker', function (ev, picker) {
+                                                        $(this).val('');
+                                                    });
+                                                    var datatable = $('#paymentsTbl').DataTable({
+                                                        responsive: true,
+                                                        language: {
+                                                            paginate:
+                                                                    {previous: "&laquo;", next: "&raquo;"},
+                                                            search: "_INPUT_",
+                                                            searchPlaceholder: "Search…"
+                                                        },
+                                                        order: [[0, "asc"]]
+                                                    });
+                                                    getPayments();
+                                                    function getPayments()
+                                                    {
 
+                                                        $.ajax({
+                                                            url: 'payments/all',
+                                                            type: "GET",
+                                                            dataType: "json",
+                                                            success: function (data) {
 
-getPayments();
-function getPayments()
-{
+                                                                console.log(data);
+                                                                datatable.clear().draw();
+                                                                if (data.length == 0) {
+                                                                    console.log("NO DATA!");
+                                                                } else {
+                                                                    $.each(data, function (key, value) {
 
-    $.ajax({
-        url: 'payments/all',
-        type: "GET",
-        dataType: "json",
-        success: function (data) {
+                                                                        var url;
+                                                                        if (value.mode == "Cheque") {
+                                                                            url = value.cheque_url;
+                                                                        } else if (value.mode == "Deposit") {
+                                                                            url = value.deposit_url;
+                                                                        }
 
-            console.log(data);
-            datatable.clear().draw();
-
-
-            if (data.length == 0) {
-                console.log("NO DATA!");
-            } else {
-                $.each(data, function (key, value) {
-
-                    var url;
-                    if (value.mode == "Cheque") {
-                        url = value.cheque_url;
-                    } else if (value.mode == "Deposit") {
-                        url = value.deposit_url;
-
-                    }
-
-                    var j = -1;
-                    var r = new Array();
-                    // represent columns as array
-                    r[++j] = '<td class="subject">' + value.title + ' ' + value.name + '</td>';
-                    r[++j] = '<td class="subject">' + value.description + '</td>';
-                    r[++j] = '<td class="subject">' + value.amount + '</td>';
-                    r[++j] = '<td class="subject">' + value.mode + '</td>';
-                    r[++j] = '<td class="subject">' + value.payment_date + '</td>';
-
-                    r[++j] = '<td><button onclick="editType(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-info btn-sm editBtn" type="button">Edit</button>\n\
+                                                                        var j = -1;
+                                                                        var r = new Array();
+                                                                        // represent columns as array
+                                                                        r[++j] = '<td class="subject">' + value.title + ' ' + value.name + '</td>';
+                                                                        r[++j] = '<td class="subject">' + value.description + '</td>';
+                                                                        r[++j] = '<td class="subject">' + value.amount + '</td>';
+                                                                        r[++j] = '<td class="subject">' + value.mode + '</td>';
+                                                                        r[++j] = '<td class="subject">' + value.payment_date + '</td>';
+                                                                        r[++j] = '<td><button onclick="editType(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-info btn-sm editBtn" type="button">Edit</button>\n\
                               <button onclick="deleteType(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-danger btn-sm deleteBtn" type="button">Delete</button></td>';
+                                                                        rowNode = datatable.row.add(r);
+                                                                    });
+                                                                    rowNode.draw().node();
+                                                                }
 
-                    rowNode = datatable.row.add(r);
-                });
+                                                            },
+                                                            error: function (jXHR, textStatus, errorThrown) {
+                                                                alert(errorThrown);
+                                                            }
+                                                        });
+                                                    }
 
-                rowNode.draw().node();
-            }
-
-        },
-        error: function (jXHR, textStatus, errorThrown) {
-            alert(errorThrown);
-        }
-    });
-}
-
-getServices();
-getTenants();
-
-
-
-
-$('#savePaymentsForm').on('submit', function (e) {
-    e.preventDefault();
-    // var validator = $("#saveRegionForm").validate();
+                                                    getServices();
+                                                    getTenants();
+                                                    $('#savePaymentsForm').on('submit', function (e) {
+                                                        e.preventDefault();
+                                                        // var validator = $("#saveRegionForm").validate();
 //    var formData = $(this).serialize();
-    var formData = new FormData($("#savePaymentsForm")[0]);
-    console.log('data' + formData);
-    $('#loaderModal').modal('show');
-
-    $('input:submit').attr("disabled", true);
-    $.ajax({
-        url: "{{url('banking/saverentpayments')}}",
-        type: "POST",
-        data: formData,
-        dataType: "json",
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function (data) {
-            console.log(data);
-            $('#newModal').modal('hide');
-            $('input:submit').removeAttr("disabled");
-            $('#loaderModal').modal('hide');
-
-            document.getElementById("savePaymentsForm").reset();
-            if (data.success == 0) {
-                swal("Success!", data.message, "success");
-                getPayments();
-            } else if (data.success == 1) {
-                swal("Error!", data.message, "error");
-            } else {
-                swal("Error!", data.message, "error");
-
-            }
-        },
-        error: function (jXHR, textStatus, errorThrown) {
-            $('input:submit').removeAttr("disabled");
-            swal("Error!", "Contact System Administrator ", "error");
-        }
-    });
-
-
-
-
-});
-
-
-$('#mode').change(function () {
-    var mode = $(this).val();
-
-    if (mode == "Cheque") {
-        console.log(mode);
-        $('#cheque').show();
-        $('#bankdepositdiv').hide();
-    } else if (mode == "Cash") {
-        console.log(mode);
-        $('#cheque').hide();
-        $('#bankdepositdiv').hide();
-    } else {
-        console.log('jhjhjj:' + mode);
-        $('#bankdepositdiv').show();
-        $('#cheque').hide();
-    }
-});
-
-$('#tenants').change(function () {
-    var tenant_id = $(this).val();
-    getTenantInfo(tenant_id);
-});
-
-function getServiceInfo(id) {
+                                                        var formData = new FormData($("#savePaymentsForm")[0]);
+                                                        console.log('data' + formData);
+                                                        $('#loaderModal').modal('show');
+                                                        $('input:submit').attr("disabled", true);
+                                                        $.ajax({
+                                                            url: "{{url('banking/saverentpayments')}}",
+                                                            type: "POST",
+                                                            data: formData,
+                                                            dataType: "json",
+                                                            cache: false,
+                                                            contentType: false,
+                                                            processData: false,
+                                                            success: function (data) {
+                                                                console.log(data);
+                                                                $('#newModal').modal('hide');
+                                                                $('input:submit').removeAttr("disabled");
+                                                                $('#loaderModal').modal('hide');
+                                                                document.getElementById("savePaymentsForm").reset();
+                                                                if (data.success == 0) {
+                                                                    swal("Success!", data.message, "success");
+                                                                    getPayments();
+                                                                } else if (data.success == 1) {
+                                                                    swal("Error!", data.message, "error");
+                                                                } else {
+                                                                    swal("Error!", data.message, "error");
+                                                                }
+                                                            },
+                                                            error: function (jXHR, textStatus, errorThrown) {
+                                                                $('input:submit').removeAttr("disabled");
+                                                                swal("Error!", "Contact System Administrator ", "error");
+                                                            }
+                                                        });
+                                                    });
+                                                    $('#mode').change(function () {
+                                                        var mode = $(this).val();
+                                                        if (mode == "Cheque") {
+                                                            console.log(mode);
+                                                            $('#cheque').show();
+                                                            $('#bankdepositdiv').hide();
+                                                        } else if (mode == "Cash") {
+                                                            console.log(mode);
+                                                            $('#cheque').hide();
+                                                            $('#bankdepositdiv').hide();
+                                                        } else {
+                                                            console.log('jhjhjj:' + mode);
+                                                            $('#bankdepositdiv').show();
+                                                            $('#cheque').hide();
+                                                        }
+                                                    });
+                                                    $('#tenants').change(function () {
+                                                        var tenant_id = $(this).val();
+                                                        getTenantInfo(tenant_id);
+                                                    });
+                                                    function getServiceInfo(id) {
 
 
-    $.ajax({
-        url: "../services/" + id,
-        type: "GET",
-        dataType: 'json',
-        success: function (data) {
-            $('#service_description').val(data[0].description);
-            $('#service_amount').val(data[0].amount);
-
-        }
+                                                        $.ajax({
+                                                            url: "../services/" + id,
+                                                            type: "GET",
+                                                            dataType: 'json',
+                                                            success: function (data) {
+                                                                $('#service_description').val(data[0].description);
+                                                                $('#service_amount').val(data[0].amount);
+                                                            }
 //up_facilities
-    });
-}
+                                                        });
+                                                    }
 
-function getTenantInfo(id) {
+                                                    function getTenantInfo(id) {
 
 
-    $.ajax({
-        url: "../tenants/" + id,
-        type: "GET",
-        dataType: 'json',
-        success: function (data) {
-            $('#apartment_name').val(data[0].apartment_name);
-            $('#apartment_type').val(data[0].apartment_type);
-
-        }
+                                                        $.ajax({
+                                                            url: "../tenant/rent/" + id,
+                                                            type: "GET",
+                                                            dataType: 'json',
+                                                            success: function (data) {
+                                                                $('#apartment_name').val(data[0].apartment_name);
+                                                                $('#apartment_type').val(data[0].apartment_type);
+                                                                $('#currency').val(data[0].currency);
+                                                                $('#apartment_amount').val(data[0].amount);
+                                                            }
 //up_facilities
-    });
-}
+                                                        });
+                                                    }
 
 
 
-function getServices() {
+                                                    function getServices() {
 
 
-    $.ajax({
-        url: "{{url('services/all')}}",
-        type: "GET",
-        dataType: 'json',
-        success: function (data) {
+                                                        $.ajax({
+                                                            url: "{{url('services/all')}}",
+                                                            type: "GET",
+                                                            dataType: 'json',
+                                                            success: function (data) {
 
-            $.each(data, function (i, item) {
+                                                                $.each(data, function (i, item) {
 
-                $('#services').append($('<option>', {
-                    value: item.id,
-                    text: item.name
-                }));
-            });
-        }
+                                                                    $('#services').append($('<option>', {
+                                                                        value: item.id,
+                                                                        text: item.name
+                                                                    }));
+                                                                });
+                                                            }
 
-    });
-}
-getBanks();
-function getBanks() {
-
-
-    $.ajax({
-        url: "{{url('banks/all')}}",
-        type: "GET",
-        dataType: 'json',
-        success: function (data) {
-
-            $.each(data, function (i, item) {
-
-                $('#banks').append($('<option>', {
-                    value: item.id + '-' + item.bank_name + '-' + item.account_no,
-                    text: item.bank_name + '-' + item.account_no
-                }));
-            });
-        }
-
-    });
-}
-
-function getTenants() {
+                                                        });
+                                                    }
+                                                    getBanks();
+                                                    function getBanks() {
 
 
-    $.ajax({
-        url: "{{url('tenants/all')}}",
-        type: "GET",
-        dataType: 'json',
-        success: function (data) {
+                                                        $.ajax({
+                                                            url: "{{url('banks/all')}}",
+                                                            type: "GET",
+                                                            dataType: 'json',
+                                                            success: function (data) {
 
-            $.each(data, function (i, item) {
+                                                                $.each(data, function (i, item) {
 
-                $('#tenants').append($('<option>', {
-                    value: item.id,
-                    text: item.name
-                }));
-            });
-        }
+                                                                    $('#banks').append($('<option>', {
+                                                                        value: item.id + '-' + item.bank_name + '-' + item.account_no,
+                                                                        text: item.bank_name + '-' + item.account_no
+                                                                    }));
+                                                                });
+                                                            }
 
-    });
-}
+                                                        });
+                                                    }
+
+                                                    function getTenants() {
 
 
+                                                        $.ajax({
+                                                            url: "{{url('tenants/all')}}",
+                                                            type: "GET",
+                                                            dataType: 'json',
+                                                            success: function (data) {
 
+                                                                $.each(data, function (i, item) {
+
+                                                                    $('#tenants').append($('<option>', {
+                                                                        value: item.id,
+                                                                        text: item.name
+                                                                    }));
+                                                                });
+                                                            }
+
+                                                        });
+                                                    }
 
 
 
-function editType(code) {
-    console.log('goood');
-    $('#code').val(code);
-    $('#loaderModal').modal('show');
-
-    getPaymentInfo(code);
-    $('#loaderModal').modal('hide');
-
-    $('#editModal').modal('show');
-
-}
-
-function getPaymentInfo(id) {
-
-
-    $.ajax({
-        url: '../banking/payments/' + id,
-        type: "GET",
-        dataType: "json",
-        success: function (data) {
-            console.log(data[0].name);
-            $('#uptenant_name').val(data[0].name);
-            $('#upamount').val(data[0].amount);
-            $('#updescription').val(data[0].description);
-            $('#upmode').val(data[0].mode).change();
-            $('#uppayment_date').val(data[0].payment_date);
-            $('#chqurl').html('<a target="_blank" href ="http://localhost/tempestates/storage/app/' + data[0].cheque_url + '" type="button" class="btn btn-info ">View Cheque </a>');
-            $('#code').val(id);
-            $('#depurl').html('<a target="_blank" href ="http://localhost/tempestates/storage/app/' + data[0].deposit_url + '" type="button" class="btn btn-info ">View Deposit </a>');
-
-        },
-        error: function (jXHR, textStatus, errorThrown) {
-            console.log(errorThrown);
-        }
-    });
-
-}
 
 
 
-$('#updateForm').on('submit', function (e) {
-    e.preventDefault();
-    $('input:submit').attr("disabled", true);
-    var formData = new FormData($("#updateForm")[0]);
-    console.log('data' + formData);
-    $('#loaderModal').modal('show');
+                                                    function editType(code) {
+                                                        console.log('goood');
+                                                        $('#code').val(code);
+                                                        $('#loaderModal').modal('show');
+                                                        getPaymentInfo(code);
+                                                        $('#loaderModal').modal('hide');
+                                                        $('#editModal').modal('show');
+                                                    }
 
-    $('input:submit').attr("disabled", true);
-    $.ajax({
-        url: "{{url('banking/updaterentpayments')}}",
-        type: "POST",
-        data: formData,
-        dataType: "json",
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function (data) {
-            console.log(data);
-            $('#editModal').modal('hide');
-            $('input:submit').removeAttr("disabled");
-            $('#loaderModal').modal('hide');
-
-            document.getElementById("updateForm").reset();
-            if (data.success == 0) {
-                swal("Success!", data.message, "success");
-                getPayments();
-            } else if (data.success == 1) {
-                swal("Error!", data.message, "error");
-            } else {
-                swal("Error!", data.message, "error");
-
-            }
-        },
-        error: function (jXHR, textStatus, errorThrown) {
-            $('input:submit').removeAttr("disabled");
-            swal("Error!", "Contact System Administrator ", "error");
-        }
-    });
-
-});
-
-function deleteType(code) {
-    console.log(code);
-    $('#code').val(code);
-    // $('#holdername').html(title);
-    $('#confirmModal').modal('show');
-}
-
-$('#deleteForm').on('submit', function (e) {
-    e.preventDefault();
-    $('input:submit').attr("disabled", true);
-    var code = $('#code').val();
-    var token = $('#token').val();
-    $('#confirmModal').modal('hide');
-    $('#loaderModal').modal('show');
-
-    $.ajax({
-        url: '../deletepayment/' + code,
-        type: "DELETE",
-        data: {_token: token},
-        success: function (data) {
-            console.log(data);
-            // $("#loader").hide();
-            $('input:submit').attr("disabled", false);
-            $('#loaderModal').modal('hide');
-
-            document.getElementById("deleteForm").reset();
-            if (data == 0) {
-                swal("Success!", "Deleted Successfully", "success");
-                getPayments();
-            } else {
-                swal("Error!", "Couldnt delete", "error");
-            }
-        },
-        error: function (jXHR, textStatus, errorThrown) {
-            $('#loaderModal').modal('hide');
-
-            alert(errorThrown);
-        }
-    });
-
-});
+                                                    function getPaymentInfo(id) {
 
 
-$('#upmode').change(function () {
-    var mode = $(this).val();
+                                                        $.ajax({
+                                                            url: '../banking/payments/' + id,
+                                                            type: "GET",
+                                                            dataType: "json",
+                                                            success: function (data) {
+                                                                console.log(data[0].name);
+                                                                $('#uptenant_name').val(data[0].name);
+                                                                $('#upamount').val(data[0].amount);
+                                                                $('#updescription').val(data[0].description);
+                                                                $('#upmode').val(data[0].mode).change();
+                                                                $('#uppayment_date').val(data[0].payment_date);
+                                                                $('#chqurl').html('<a target="_blank" href ="http://localhost/tempestates/storage/app/' + data[0].cheque_url + '" type="button" class="btn btn-info ">View Cheque </a>');
+                                                                $('#code').val(id);
+                                                                $('#depurl').html('<a target="_blank" href ="http://localhost/tempestates/storage/app/' + data[0].deposit_url + '" type="button" class="btn btn-info ">View Deposit </a>');
+                                                            },
+                                                            error: function (jXHR, textStatus, errorThrown) {
+                                                                console.log(errorThrown);
+                                                            }
+                                                        });
+                                                    }
 
-    if (mode == "Cheque") {
-        console.log(mode);
-        $('#upcheque').show();
-        $('#upbankdepositdiv').hide();
-    } else if (mode == "Cash") {
-        console.log(mode);
-        $('#upcheque').hide();
-        $('#upbankdepositdiv').hide();
-    } else {
-        console.log('jhjhjj:' + mode);
-        $('#upbankdepositdiv').show();
-        $('#upcheque').hide();
-    }
-});
 
+
+                                                    $('#updateForm').on('submit', function (e) {
+                                                        e.preventDefault();
+                                                        $('input:submit').attr("disabled", true);
+                                                        var formData = new FormData($("#updateForm")[0]);
+                                                        console.log('data' + formData);
+                                                        $('#loaderModal').modal('show');
+                                                        $('input:submit').attr("disabled", true);
+                                                        $.ajax({
+                                                            url: "{{url('banking/updaterentpayments')}}",
+                                                            type: "POST",
+                                                            data: formData,
+                                                            dataType: "json",
+                                                            cache: false,
+                                                            contentType: false,
+                                                            processData: false,
+                                                            success: function (data) {
+                                                                console.log(data);
+                                                                $('#editModal').modal('hide');
+                                                                $('input:submit').removeAttr("disabled");
+                                                                $('#loaderModal').modal('hide');
+                                                                document.getElementById("updateForm").reset();
+                                                                if (data.success == 0) {
+                                                                    swal("Success!", data.message, "success");
+                                                                    getPayments();
+                                                                } else if (data.success == 1) {
+                                                                    swal("Error!", data.message, "error");
+                                                                } else {
+                                                                    swal("Error!", data.message, "error");
+                                                                }
+                                                            },
+                                                            error: function (jXHR, textStatus, errorThrown) {
+                                                                $('input:submit').removeAttr("disabled");
+                                                                swal("Error!", "Contact System Administrator ", "error");
+                                                            }
+                                                        });
+                                                    });
+                                                    function deleteType(code) {
+                                                        console.log(code);
+                                                        $('#code').val(code);
+                                                        // $('#holdername').html(title);
+                                                        $('#confirmModal').modal('show');
+                                                    }
+
+                                                    $('#deleteForm').on('submit', function (e) {
+                                                        e.preventDefault();
+                                                        $('input:submit').attr("disabled", true);
+                                                        var code = $('#code').val();
+                                                        var token = $('#token').val();
+                                                        $('#confirmModal').modal('hide');
+                                                        $('#loaderModal').modal('show');
+                                                        $.ajax({
+                                                            url: '../deletepayment/' + code,
+                                                            type: "DELETE",
+                                                            data: {_token: token},
+                                                            success: function (data) {
+                                                                console.log(data);
+                                                                // $("#loader").hide();
+                                                                $('input:submit').attr("disabled", false);
+                                                                $('#loaderModal').modal('hide');
+                                                                document.getElementById("deleteForm").reset();
+                                                                if (data == 0) {
+                                                                    swal("Success!", "Deleted Successfully", "success");
+                                                                    getPayments();
+                                                                } else {
+                                                                    swal("Error!", "Couldnt delete", "error");
+                                                                }
+                                                            },
+                                                            error: function (jXHR, textStatus, errorThrown) {
+                                                                $('#loaderModal').modal('hide');
+                                                                alert(errorThrown);
+                                                            }
+                                                        });
+                                                    });
+                                                    $('#upmode').change(function () {
+                                                        var mode = $(this).val();
+                                                        if (mode == "Cheque") {
+                                                            console.log(mode);
+                                                            $('#upcheque').show();
+                                                            $('#upbankdepositdiv').hide();
+                                                        } else if (mode == "Cash") {
+                                                            console.log(mode);
+                                                            $('#upcheque').hide();
+                                                            $('#upbankdepositdiv').hide();
+                                                        } else {
+                                                            console.log('jhjhjj:' + mode);
+                                                            $('#upbankdepositdiv').show();
+                                                            $('#upcheque').hide();
+                                                        }
+                                                    });
+                                                    getRentPeriods();
+                                                    function getRentPeriods() {
+
+
+                                                        $.ajax({
+                                                            url: "{{url('configuration/getrentperiods')}}",
+                                                            type: "GET",
+                                                            dataType: 'json',
+                                                            success: function (data) {
+
+                                                                $.each(data, function (i, item) {
+
+                                                                    $('#rent_periods').append($('<option>', {
+                                                                        value: item.name,
+                                                                        text: item.name + " months"
+                                                                    }));
+                                                                });
+                                                            }
+
+                                                        });
+                                                    }
+
+
+                                                    function getBill() {
+
+                                                        var token = $('#token').val();
+                                                        var tenant = $('#tenants').val();
+                                                        var daterange = $('#reportrange').val();
+
+                                                        $.ajax({
+                                                            url: '{{url("tenantaccumulatedbill")}}',
+                                                            type: "POST",
+                                                            data: {_token: token, daterange: daterange, tenant: tenant},
+                                                            dataType: "json",
+                                                            success: function (data) {
+                                                                console.log(data);
+
+                                                                $('#bill_amount_tobe_paid').val(data[0].total_amount);
+                                                            },
+                                                            error: function (jXHR, textStatus, errorThrown) {
+                                                                $('#loaderModal').modal('hide');
+
+                                                                alert(errorThrown);
+                                                            }
+                                                        });
+
+                                                    }
+                                                    //
 </script>
 
 @endsection

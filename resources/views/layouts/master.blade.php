@@ -12,8 +12,8 @@
         <link type="text/css" rel="stylesheet" href="{{ asset('vendors/iCheck/css/all.css')}}"/>
         <!-- end of global css -->
         <!--page level css -->
-        
-        
+
+
         <link rel="stylesheet" href="{{ asset('vendors/swiper/css/swiper.min.css')}}">
         <link href="{{ asset('vendors/nvd3/css/nv.d3.min.css')}}" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="{{asset('vendors/lcswitch/css/lc_switch.css')}}">
@@ -55,18 +55,27 @@
         <link href="{{asset('css/advbuttons.css')}}" rel="stylesheet">
 
 
-        <link rel="stylesheet" type="text/css" href="{{asset('css/custom_css/invoice.css')}}">
-
-        <link href="{{ asset('vendors/datetime/css/jquery.datetimepicker.css')}}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('vendors/airdatepicker/css/datepicker.min.css')}}" rel="stylesheet"/>
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/datepicker.css')}}">
+       
         <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/dataTables.bootstrap4.css')}}"/>
         <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/buttons.bootstrap.css')}}"/>
         <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/colReorder.bootstrap.css')}}"/>
-        <!--        <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/dataTables.bootstrap.css')}}"/>-->
         <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/rowReorder.bootstrap.css')}}"/>
         <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/scroller.bootstrap.css')}}">
         <link href="{{asset('css/custom_css/chartjs-charts.css')}}" rel="stylesheet" type="text/css">
+
+
+
+        <link href="{{asset('vendors/daterangepicker/css/daterangepicker.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('vendors/datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="{{asset('vendors/datedropper/datedropper.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('vendors/timedropper/css/timedropper.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('vendors/jquerydaterangepicker/css/daterangepicker.min.css')}}">
+        <!--clock face css-->
+        <link rel="stylesheet" type="text/css" href="{{asset('vendors/clockpicker/css/bootstrap-clockpicker.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('css/datepicker.css')}}">
+        
+        
     </head>
     <body class="skin-default">
         <div class="preloader">

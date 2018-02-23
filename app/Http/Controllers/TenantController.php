@@ -447,8 +447,27 @@ class TenantController extends Controller {
     public function getRents() {
         return DB::table('rent_view')->where('tenant_active', 0)->get();
     }
-     public function getExpiringRents() {
+
+    public function getExpiringRents() {
         return DB::table('expiring_rent')->where('tenant_active', 0)->get();
+    }
+
+    public function getTenantRentInformation($id) {
+
+        return DB::table('rent_view')->where('tenant_id', $id)->get();
+    }
+
+    public function getTenantTotalBill(Request $request) {
+
+        $data = $request->all();
+
+        $var = explode('to', $data['daterange']);
+        $startdate = date('Y-m-d', strtotime($var[0]));
+        $enddate = date('Y-m-d', strtotime($var[1]));
+           $tenant = $data['tenant'];
+
+        $results = DB::select('CALL tenantTotalBill(?,?,?)', array($tenant, $startdate, $enddate));
+        return $results;
     }
 
 }

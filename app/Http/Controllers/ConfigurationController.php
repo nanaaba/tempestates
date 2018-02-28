@@ -117,9 +117,11 @@ class ConfigurationController extends Controller {
 
     public function computeDate($month, $date) {
 
-        
+
         $newDate = date('Y-m-d', strtotime("+" . $month . "months", strtotime($date)));
         return $newDate;
     }
+
+
 
 }

@@ -161,6 +161,7 @@ Route::delete('deletepayment/{id}', 'BankController@deletePaymentInfo');
 Route::post('banking/updaterentpayments', 'BankController@updateRentPayment');
 Route::post('banking/paymentswithinperiod', 'BankController@getRentpaymentsPeriod');
 Route::get('computedate/{month}/{date}', 'ConfigurationController@computeDate');
+Route::get('validateenddate/{tenant_id}/{date}', 'ConfigurationController@validaterentDate');
 
 //reports
 Route::get('reports/paymentstrend', 'ReportController@getPaymentsTrend');

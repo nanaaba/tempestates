@@ -30,8 +30,9 @@
 
         <link rel="stylesheet" type="text/css" href="{{asset('css/custom_css/datatables_custom.css')}}">
         <!--end of page level css-->
-        <link rel="stylesheet" type="text/css" href="{{asset('vendors/sweetalert2/css/sweetalert2.min.css')}}"/>
+<!--        <link rel="stylesheet" type="text/css" href="{{asset('vendors/sweetalert2/css/sweetalert2.min.css')}}"/>
         <link rel="stylesheet" type="text/css" href="{{asset('css/custom_css/sweet_alert2.css')}}">
+      -->
         <!--        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css')}}">-->
 
         <link rel="stylesheet" type="text/css" href="{{asset('css/form_layouts.css')}}">

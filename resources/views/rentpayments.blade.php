@@ -65,7 +65,7 @@
                                         </div>
                                         <div class="col-lg-8">
                                             <label for="region" class="control-label">Monthly Amount:</label>
-                                            <input type="text" class="form-control" name="apartment_amount" id="apartment_amount"  >
+                                            <input type="text" class="form-control" name="apartment_amount" id="apartment_amount" required >
 
                                         </div>
 
@@ -85,120 +85,6 @@
                                         </div>
                                         <!-- /.input group -->
                                     </div>
-
-                                    <div class="row form-group">
-                                        <div class="col-sm-3">
-                                            <label class="control-label float-right txt_media1">
-                                                Payment Type
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-9">
-                                            <label class="checkbox-inline icheckbox">
-                                                <input type="checkbox"  name="type[]" value="rent" id="rent"> Rent&nbsp;&nbsp;&nbsp;
-
-                                            </label>
-                                            <label class="checkbox-inline icheckbox">
-                                                <input type="checkbox"  name="type[]" value="bill" id="bill"> Bill
-
-                                            </label>
-
-                                        </div>
-                                    </div>
-
-                                    <div id="rendiv">
-                                        <div class="form-group">
-                                            <label for="region" class="control-label">Rent Amount:</label>
-                                            <input type="text" class="form-control" name="rent_amount" id="rent_amount"  >
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="region" class="control-label">Payment Period:</label>
-
-                                            <select class="select2 form-control" id="rent_periods" name="rent_period">
-                                                <option value=" ">Choose</option>
-
-                                            </select>
-                                        </div>
-
-                                        <div class="row form-group">
-                                            <div class="col-sm-9">
-                                                <label for="my-element">
-                                                    Start Date:
-                                                </label>
-                                                <div class="input-group">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-fw ti-calendar"></i>
-                                                    </div>
-                                                    <input type="text" class="form-control float-right datepick"  name="start_date" data-date-format="dd-mm-yyyy"  data-language="en" id="start_date">
-                                                </div>
-                                            </div>
-                                            <!-- /.input group -->
-
-                                            <div class="col-sm-3">
-                                                <div class=" form-group">
-                                                    <br>
-                                                    <button type="button" class="btn btn-info " onclick="computeEndDate()">
-                                                        Compute End Date
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class=" form-group">
-                                            <label for="my-element">
-                                                End Date:
-                                            </label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-fw ti-calendar"></i>
-                                                </div>
-                                                <input type="text" class="form-control float-right"  name="end_date"   data-language="en" id="end_date" readonly>
-                                            </div>
-                                            <!-- /.input group -->
-                                        </div>
-                                    </div>
-                                    <div id="billdiv">
-
-
-                                        <div class="form-group">
-                                            <label for="region" class="control-label">Bill Covered Date:</label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-fw ti-calendar"></i>
-                                                </div>
-                                                <input type="text" class="form-control" name="bill_date" id="reportrange" placeholder="DD/MM/YYYY-DD/MM/YYYY">
-                                            </div>
-
-
-                                            <div class=" form-group">
-                                                <button type="button" class="btn btn-info " onclick="getBill()">
-                                                    Bill Over Chosen Period
-                                                </button>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="region" class="control-label">Bill Accumulated over chosen period:</label>
-                                                <input type="text" class="form-control" name="bill_amount_tobe_paid" id="bill_amount_tobe_paid"  readonly>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="region" class="control-label">Bill Amount:</label>
-                                                <input type="text" class="form-control" name="bill_amount" id="bill_amount"  >
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-
-
-
-                                    <div id="surplusdiv">
-                                        <div class="form-group">
-                                            <label for="region" class="control-label">Remaining(Surplus) Amount:</label>
-                                            <input type="text" class="form-control" name="remaining_amount" id="remaining_amount"  >
-                                        </div>
-                                    </div>
-
-
                                     <div class="form-group ">
                                         <label for="region" class="control-label">Mode:</label>
                                         <select class="form-control select2" name="mode" id='mode'   required style="width: 100%">
@@ -212,12 +98,12 @@
 
 
                                     <div class="form-group">
-                                        <label for="region" class="control-label">Amount:</label>
-                                        <input type="text" class="form-control" name="amount" id="amount"  >
+                                        <label for="region" class="control-label">Total Amount:</label>
+                                        <input type="text" class="form-control" name="totalamount" id="totalamount"  >
                                     </div>
                                     <div class="form-group">
                                         <label for="region" class="control-label"> Description:</label>
-                                        <textarea type="text" class="form-control" name="description" id="service_description"  >
+                                        <textarea type="text" class="form-control" name="description" required  >
                                         </textarea>
                                     </div>
 
@@ -246,6 +132,127 @@
                                         </div>
                                     </div>
 
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="row form-group">
+                                        <div class="col-sm-4">
+                                            <label class="control-label float-right txt_media1">
+                                                Payment Type :
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <label class="checkbox-inline icheckbox">
+                                                <input type="checkbox"  name="paymenttype[]" value="rent" id="rent"> Rent&nbsp;&nbsp;&nbsp;
+
+                                            </label>
+                                            <label class="checkbox-inline icheckbox">
+                                                <input type="checkbox"  name="paymenttype[]" value="bill" id="bill"> Bill
+
+                                            </label>
+
+                                        </div>
+                                    </div>
+
+                                    <div id="rendiv"  style="display: none">
+
+                                        <div class="form-group">
+                                            <label for="region" class="control-label">Payment Period:</label>
+
+                                            <select class="select2 form-control" id="rent_periods" name="rent_period">
+                                                <option value=" ">Choose</option>
+
+                                            </select>
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <div class="col-sm-9">
+                                                <label for="my-element">
+                                                    Start Date:
+                                                </label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-fw ti-calendar"></i>
+                                                    </div>
+                                                    <input type="text" class="form-control float-right datepick"  name="start_date" data-date-format="yyyy-mm-dd"  data-language="en" id="start_date">
+                                                </div>
+                                            </div>
+                                            <!-- /.input group -->
+
+                                            <div class="col-sm-3">
+                                                <div class=" form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-info " onclick="computeEndDate()">
+                                                        Compute End Date
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class=" form-group">
+                                            <label for="my-element">
+                                                End Date:
+                                            </label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-fw ti-calendar"></i>
+                                                </div>
+                                                <input type="text" class="form-control float-right"  name="end_date"   data-language="en" id="end_date" readonly>
+                                            </div>
+                                            <!-- /.input group -->
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="region" class="control-label">Expecting Rent Amount:</label>
+                                            <input type="text" class="form-control" name="expectingrent_amount" id="expectingrent_amount" disabled >
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="region" class="control-label">Rent Amount:</label>
+                                            <input type="text" class="form-control" name="rent_amount" id="rent_amount"  >
+                                        </div>
+                                    </div>
+                                    <div id="billdiv" style="display: none">
+
+
+                                        <div class="form-group">
+                                            <label for="region" class="control-label">Bill Covered Date:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-fw ti-calendar"></i>
+                                                </div>
+                                                <input type="text" class="form-control" name="bill_date" id="reportrange" placeholder="DD/MM/YYYY-DD/MM/YYYY">
+                                            </div>
+
+
+                                            <div class=" form-group">
+                                                <button type="button" class="btn btn-info " onclick="getBill()">
+                                                    Get Bill 
+                                                </button>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="region" class="control-label">Bill Accumulated over chosen period:</label>
+                                                <input type="text" class="form-control" name="bill_amount_tobe_paid" id="bill_amount_tobe_paid"  readonly>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="region" class="control-label">Bill Amount:</label>
+                                                <input type="text" class="form-control" name="bill_amount" id="bill_amount"  >
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div id="surplusdiv"  style="display: none">
+                                        <div class="form-group">
+                                            <label for="region" class="control-label">Remaining(Surplus) Amount:</label>
+                                            <input type="text" class="form-control" name="remaining_amount" id="remaining_amount"  >
+                                        </div>
+                                    </div>
+
+
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6 "></div>
@@ -260,65 +267,68 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-lg-12">
+        </div>
 
-                    <div class="card ">
-                        <div class="card-header">
-                            <h3 class="card-title">
-                                <i class="ti-layout-grid3"></i>  Payments    </h3>
+        <div class="row">
+            <div class="col-lg-12">
 
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover" id="paymentsTbl">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                Tenant Name
-                                            </th>
-                                            <th>
-                                                Payment Description
-                                            </th> <th>
-                                                Amount
-                                            </th>
-                                            <th>
-                                                Payment Mode
-                                            </th>
-                                            <th>
-                                                Payment Date
-                                            </th>
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="ti-layout-grid3"></i>  Payments    </h3>
 
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover" id="paymentsTbl">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Tenant Name
+                                        </th>
+                                        <th>
+                                            Payment Description
+                                        </th> <th>
+                                            Amount
+                                        </th>
+                                        <th>
+                                            Payment Mode
+                                        </th>
+                                        <th>
+                                            Payment Date
+                                        </th>
 
-                                    </tbody>
-                                </table>
-                            </div>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
 
-            <div class="modal fade" id="loaderModal" data-keyboard="false" data-backdrop="static" role="dialog" >
-                <div class="modal-dialog" role="document">
+        <div class="modal fade" id="loaderModal" data-keyboard="false" data-backdrop="static" role="dialog" >
+            <div class="modal-dialog" role="document">
 
 
-                    <div  id="loader" style="margin-top:30% ">
-                        <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-                        <span class="loader-text">Wait...</span>
-                    </div>
-
-
+                <div  id="loader" style="margin-top:30% ">
+                    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+                    <span class="loader-text">Wait...</span>
                 </div>
+
+
             </div>
+        </div>
 
 
 
-            <div class="background-overlay"></div>
+        <div class="background-overlay"></div>
     </section>
     <!-- /.content -->
 </aside>
@@ -330,22 +340,140 @@
 
 <script src="{{ asset('vendors/toastr/js/toastr.min.js')}}"></script>
 
-<script  type="text/javascript">
+<script type="text/javascript">
+
+                                                    var datatable = $('#paymentsTbl').DataTable({
+                                                        responsive: true,
+                                                        language: {
+                                                            paginate:
+                                                                    {previous: "&laquo;", next: "&raquo;"},
+                                                            search: "_INPUT_",
+                                                            searchPlaceholder: "Search…"
+                                                        },
+                                                        order: [[0, "asc"]]
+                                                    });
+                                                    /* 
+                                                     * To change this license header, choose License Headers in Project Properties.
+                                                     * To change this template file, choose Tools | Templates
+                                                     * and open the template in the editor.
+                                                     */
+
+
+                                                    $('#savePaymentsForm').on('submit', function (e) {
+                                                        e.preventDefault();
+
+                                                        var formData = new FormData($("#savePaymentsForm")[0]);
+                                                        console.log('data' + formData);
+                                                        //  $('#loaderModal').modal('show');
+                                                        $('input:submit').attr("disabled", true);
+                                                        var totalamount = $('#totalamount').val();
+                                                        var expectingrent_amount = $('#expectingrent_amount').val();
+                                                        var rent_amount = $('#rent_amount').val();
+                                                        var bill_amount_tobe_paid = $('#bill_amount_tobe_paid').val();
+                                                        var bill_amount = $('#bill_amount').val();
+                                                        var amountpaid = 0;
+
+                                                        //check if bill or rent is checked
+
+                                                        var ifbillchecked = $('#bill').is(':checked');
+                                                        if (ifbillchecked == true) {
+                                                            if ((bill_amount < bill_amount_tobe_paid) || (bill_amount > bill_amount_tobe_paid)) {
+                                                                alert('Bill amount must be the same as accumulated bill over  period');
+                                                                return;
+
+                                                            }
+                                                            amountpaid = parseFloat(amountpaid) + parseFloat(bill_amount);
+                                                        }
+
+                                                        var ifrentchecked = $('#rent').is(':checked');
+                                                        if (ifrentchecked == true) {
+                                                            if ((rent_amount < expectingrent_amount) || (rent_amount > expectingrent_amount)) {
+                                                                alert('Rent amount must be the same as expected rent amount');
+                                                                return;
+
+                                                            }
+                                                            amountpaid = parseFloat(amountpaid) + parseFloat(rent_amount);
+
+                                                        }
+
+                                                        if (totalamount < amountpaid) {
+                                                            alert(' total amount paid must equal total amount inputted ');
+                                                            return;
+                                                        }
+
+                                                        var surplus = totalamount - amountpaid;
+                                                        $('#remaining_amount').val(surplus);
+                                                        swal({
+                                                            title: "Continue Payment?",
+                                                            text: "Total amount is " + totalamount + ". Rent amount paid is  " + rent_amount + ". Bill amount is  " + bill_amount + ". Your balance is " + surplus,
+                                                            icon: "warning",
+                                                            button: {
+                                                                text: "PAY",
+                                                                closeModal: false,
+                                                            },
+
+                                                        })
+                                                                .then((willDelete) => {
+                                                                    if (willDelete) {
+
+
+                                                                        $.ajax({
+                                                                            url: "{{url('banking/saverentpayments')}}",
+                                                                            type: "POST",
+                                                                            data: formData,
+                                                                            dataType: "json",
+                                                                            cache: false,
+                                                                            contentType: false,
+                                                                            processData: false,
+                                                                            success: function (data) {
+                                                                                console.log(data);
+                                                                                $('#newModal').modal('hide');
+                                                                                $('input:submit').removeAttr("disabled");
+                                                                                $('#loaderModal').modal('hide');
+                                                                               // document.getElementById("savePaymentsForm").reset();
+                                                                                if (data.success == 0) {
+                                                                                    swal("Success!", data.message, "success");
+                                                                                    getPayments();
+                                                                                } else if (data.success == 1) {
+                                                                                    swal("Error!", data.message, "error");
+                                                                                } else {
+                                                                                    swal("Error!", data.message, "error");
+                                                                                }
+                                                                            },
+                                                                            error: function (jXHR, textStatus, errorThrown) {
+                                                                                $('input:submit').removeAttr("disabled");
+                                                                                swal("Error!", "Contact System Administrator ", "error");
+                                                                            }
+                                                                        });
+
+                                                                    } else {
+                                                                        swal("!!! You cancelled payments!", {
+                                                                            icon: "info",
+                                                                        });
+                                                                    }
+                                                                });
+
+                                                    });
+
+
                                                     function computeEndDate() {
 
                                                         var startdate = $('#start_date').val();
                                                         var periods = $('#rent_periods').val();
+                                                        var apartment_amount = $('#apartment_amount').val();
+                                                        var expected_rent = periods * apartment_amount;
+//                                                        /apartment_amount
                                                         if (startdate == "" && periods == "") {
                                                             alert('startdate and rent periods should be empty');
                                                         } else {
                                                             console.log('here');
-
                                                             $.ajax({
                                                                 url: "../computedate/" + periods + "/" + startdate,
                                                                 type: "GET",
                                                                 success: function (data) {
                                                                     console.log('dj' + data);
                                                                     $('#end_date').val(data);
+                                                                    $('#expectingrent_amount').val(expected_rent);
                                                                 }
                                                             });
                                                         }
@@ -380,16 +508,7 @@
                                                     }).on('cancel.daterangepicker', function (ev, picker) {
                                                         $(this).val('');
                                                     });
-                                                    var datatable = $('#paymentsTbl').DataTable({
-                                                        responsive: true,
-                                                        language: {
-                                                            paginate:
-                                                                    {previous: "&laquo;", next: "&raquo;"},
-                                                            search: "_INPUT_",
-                                                            searchPlaceholder: "Search…"
-                                                        },
-                                                        order: [[0, "asc"]]
-                                                    });
+
                                                     getPayments();
                                                     function getPayments()
                                                     {
@@ -438,43 +557,6 @@
 
                                                     getServices();
                                                     getTenants();
-                                                    $('#savePaymentsForm').on('submit', function (e) {
-                                                        e.preventDefault();
-                                                        // var validator = $("#saveRegionForm").validate();
-//    var formData = $(this).serialize();
-                                                        var formData = new FormData($("#savePaymentsForm")[0]);
-                                                        console.log('data' + formData);
-                                                        $('#loaderModal').modal('show');
-                                                        $('input:submit').attr("disabled", true);
-                                                        $.ajax({
-                                                            url: "{{url('banking/saverentpayments')}}",
-                                                            type: "POST",
-                                                            data: formData,
-                                                            dataType: "json",
-                                                            cache: false,
-                                                            contentType: false,
-                                                            processData: false,
-                                                            success: function (data) {
-                                                                console.log(data);
-                                                                $('#newModal').modal('hide');
-                                                                $('input:submit').removeAttr("disabled");
-                                                                $('#loaderModal').modal('hide');
-                                                                document.getElementById("savePaymentsForm").reset();
-                                                                if (data.success == 0) {
-                                                                    swal("Success!", data.message, "success");
-                                                                    getPayments();
-                                                                } else if (data.success == 1) {
-                                                                    swal("Error!", data.message, "error");
-                                                                } else {
-                                                                    swal("Error!", data.message, "error");
-                                                                }
-                                                            },
-                                                            error: function (jXHR, textStatus, errorThrown) {
-                                                                $('input:submit').removeAttr("disabled");
-                                                                swal("Error!", "Contact System Administrator ", "error");
-                                                            }
-                                                        });
-                                                    });
                                                     $('#mode').change(function () {
                                                         var mode = $(this).val();
                                                         if (mode == "Cheque") {
@@ -749,7 +831,6 @@
                                                         var token = $('#token').val();
                                                         var tenant = $('#tenants').val();
                                                         var daterange = $('#reportrange').val();
-
                                                         $.ajax({
                                                             url: '{{url("tenantaccumulatedbill")}}',
                                                             type: "POST",
@@ -757,18 +838,46 @@
                                                             dataType: "json",
                                                             success: function (data) {
                                                                 console.log(data);
-
-                                                                $('#bill_amount_tobe_paid').val(data[0].total_amount);
+                                                                var amount =0;
+                                                                if(data[0].total_amount == null){
+                                                                    amount = 0;
+                                                                }else{
+                                                                     amount = data[0].total_amount;
+                                                                }
+                                                                $('#bill_amount_tobe_paid').val(amount);
                                                             },
                                                             error: function (jXHR, textStatus, errorThrown) {
                                                                 $('#loaderModal').modal('hide');
-
                                                                 alert(errorThrown);
                                                             }
                                                         });
 
                                                     }
-                                                    //
-</script>
+//
 
+                                                    $('#rent').click(function () {
+                                                        var ifchecked = $('#rent').is(':checked');
+                                                        if (ifchecked == true) {
+                                                            $('#rendiv').show();
+                                                        } else {
+                                                            $('#rendiv').hide();
+                                                        }
+                                                    });
+
+                                                    $('#bill').click(function () {
+                                                        var ifchecked = $('#bill').is(':checked');
+                                                        if (ifchecked == true) {
+                                                            $('#billdiv').show();
+                                                        } else {
+                                                            $('#billdiv').hide();
+                                                        }
+                                                    });
+
+                                                    $('#rent_periods').change(function () {
+                                                        $('#end_date').val('');
+                                                        $('#expectingrent_amount').val('');
+                                                    });
+
+
+</script>
 @endsection

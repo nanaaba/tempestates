@@ -39,11 +39,11 @@
 <script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.history.js')}}"></script>
 <script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.callbacks.js')}}"></script>
 <script src="{{asset('js/custom_js/notifications.js')}}"></script>
-<script type="text/javascript" src="{{ asset('vendors/sweetalert2/js/sweetalert2.min.js')}}"></script>
+<!--<script type="text/javascript" src="{{ asset('vendors/sweetalert2/js/sweetalert2.min.js')}}"></script>-->
 <script type="text/javascript" src="{{ asset('vendors/bootstrapwizard/js/jquery.bootstrap.wizard.js')}}"></script>
 <script type="text/javascript" src="{{ asset('vendors/bootstrapvalidator/js/bootstrapValidator.min.js')}}"></script>
 
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <!-- end o<!-- bootstrap time picker -->
 <script type="text/javascript" src="{{asset('js/custom_js/invoice.js')}}"></script>

@@ -72,11 +72,30 @@ class BankController extends Controller {
     }
 
     public function saveRentPayment(Request $request) {
-
-
-
+       
+        
         $data = $request->all();
 
+        
+        $payment_type = $data['paymenttype'];
+        if (in_array('rent', $payment_type)) {
+            $rent_state = $this->validaterentDate($data['tenant'], $data['start_date']);
+            if ($rent_state > 0) {
+                $dataresponse = array('success' => 2, 'message' => 'Rent payments has already been paid between ' . $data['start_date'] . ' to ' . $data['end_date']);
+                return json_encode($dataresponse);
+            }
+        }
+        if (in_array('bill', $payment_type)) {
+
+            $bill_date = explode('to', strip_tags($data['bill_date']));
+            $bill_start_date = date('Y-m-d', strtotime($bill_date[0]));
+
+            $bill_state = $this->validateBillDate($bill_start_date, $data['tenant']);
+            if ($bill_state > 0) {
+                $dataresponse = array('success' => 2, 'message' => 'Bill Payments has already been done for ' . $data['bill_date']);
+                return json_encode($dataresponse);
+            }
+        }
         $mode = $data['mode'];
         $payment_date = date('Y-m-d', strtotime($request['payment_date']));
         $new = new RentPayments();
@@ -100,10 +119,11 @@ class BankController extends Controller {
             }
         }
         $new->tenant_id = $data['tenant'];
-        $new->amount = $data['amount'];
+        $new->amount = $data['totalamount'];
         $new->description = strip_tags($data['description']);
         $new->payment_date = strip_tags($payment_date);
         $new->mode = strip_tags($data['mode']);
+        $new->currency = strip_tags($data['currency']);
         $new->created_by = Session::get('id');
         $new->created_at = date('Y-m-d H:i:s');
 
@@ -111,6 +131,8 @@ class BankController extends Controller {
             $saved = $new->save();
 
             if ($saved) {
+                $payment_id = $new->id;
+                $this->savePaymentDetails($payment_id, $data);
 
                 $dataresponse = array('success' => 0, 'message' => 'success');
 
@@ -120,7 +142,7 @@ class BankController extends Controller {
 
                 $notifications = new NotificationsController();
                 $message = 'Hi ' . $info[0]['title'] . ' ' . $info[0]['name'] . ','
-                        . 'Please an amount of GHS ' . $data['amount'] . ' payments have been received through '
+                        . 'Please an amount of GHS ' . $data['totalamount'] . ' payments have been received through '
                         . $data['mode'] . ' payments on ' . $request['payment_date'] . '.';
                 $notifications->sendemail($info[0]['email_address'], 'Payment Notification', $message);
                 //   $notifications->sendsms($info[0]['contactno'], $message);
@@ -134,6 +156,45 @@ class BankController extends Controller {
             $data = array('success' => 2, 'message' => $e->getMessage());
             return json_encode($data);
         }
+    }
+
+    public function savePaymentDetails($payment_id, $data) {
+
+        $tenant_id = $data['tenant'];
+        $payment_type = $data['paymenttype'];
+        $rent_amount = $data['rent_amount'];
+        $rent_period = $data['rent_period'];
+        $rent_start_date = $data['start_date'];
+        $rent_end_date = $data['end_date'];
+
+        $currency = $data['currency'];
+        $bill_amount = $data['bill_amount'];
+        $balance = $data['remaining_amount'];
+
+        if (in_array('rent', $payment_type)) {
+            DB::insert('insert into payments (payment_id,tenant_id,currency,payment_type, rent_amount,rent_period,rent_start_date,rent_end_date)'
+                    . ' values (?, ?,?,?,?,?,?,?)', ["$payment_id", "$tenant_id", "$currency", "rent", "$rent_amount", "$rent_period", "$rent_start_date", $rent_end_date]);
+        }
+        if (in_array('bill', $payment_type)) {
+            $bill_date = explode('to', strip_tags($data['bill_date']));
+            $bill_end_date = date('Y-m-d', strtotime($bill_date[1]));
+            $bill_start_date = date('Y-m-d', strtotime($bill_date[0]));
+            DB::insert('insert into payments (payment_id,tenant_id,currency,payment_type,bill_start_date,bill_end_date,bill_amount)'
+                    . ' values (?,?,?,?,?,?,?)', ["$payment_id", "$tenant_id", "$currency", "bill", "$bill_start_date", "$bill_end_date", "$bill_amount"]);
+        }
+
+        if ($balance > 0) {
+            $this->savePaymentSurplus($payment_id, $data);
+        }
+    }
+
+    public function savePaymentSurplus($paymentid, $data) {
+        $balance = $data['remaining_amount'];
+        $currency = $data['currency'];
+        $tenant_id = $data['tenant'];
+
+        DB::insert('insert into payments_surplus (payment_id,tenant_id,amount,currency)'
+                . ' values (?,?,?,?)', ["$paymentid", "$tenant_id", "$balance", "$currency"]);
     }
 
     public function getRentpayments() {
@@ -317,10 +378,10 @@ class BankController extends Controller {
             return json_encode($data);
         }
     }
-    
+
     public function getRentpaymentsPeriod(Request $request) {
-        
-          $data = $request->all();
+
+        $data = $request->all();
 
         $daterange = explode("to", strip_tags($data['daterange']));
         $start_date = $daterange[0];
@@ -334,6 +395,21 @@ class BankController extends Controller {
                 ->get();
 
         return $result;
+    }
+
+    public function validaterentDate($tenant_id, $date) {
+
+        $result = DB::select('select count(id)as total from payments where payment_type="rent" and tenant_id=' . $tenant_id . ' and "' . $date . '"   BETWEEN rent_start_date AND rent_end_date');
+        $resultArray = json_decode(json_encode($result), true);
+        return $resultArray[0]['total'];
+    }
+
+    public function validateBillDate($date, $tenant_id) {
+
+
+        $result = DB::select('select count(id)as total from payments where payment_type="bill" and tenant_id=' . $tenant_id . ' and "' . $date . '"   BETWEEN bill_start_date AND bill_end_date');
+        $resultArray = json_decode(json_encode($result), true);
+        return $resultArray[0]['total'];
     }
 
 }

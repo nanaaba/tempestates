@@ -204,18 +204,27 @@
                     <span class="mm-text ">Rent Expiring </span>
                 </a>
             </li>
-<!--            <li   class="{{ Request::is('reports/availableapartments') ? 'active' : '' }}">
-                <a href="{{ url('reports/availableapartments') }}">
+
+            <li   class="{{ Request::is('reports/tenantsowing') ? 'active' : '' }}">
+                <a href="{{ url('reports/tenantsowing') }}">
                     <i class="menu-icon ti-layout-list-large-image"></i>
-                    <span class="mm-text ">Available Apartments</span>
+                    <span class="mm-text ">Owing Tenants  </span>
                 </a>
             </li>
-            <li   class="{{ Request::is('reports/clearedpayments') ? 'active' : '' }}">
-                <a href="{{ url('reports/clearedpayments') }}">
-                    <i class="menu-icon ti-layout-list-large-image"></i>
-                    <span class="mm-text ">Cleared Payments</span>
-                </a>
-            </li>-->
+            
+            
+            <!--            <li   class="{{ Request::is('reports/availableapartments') ? 'active' : '' }}">
+                            <a href="{{ url('reports/availableapartments') }}">
+                                <i class="menu-icon ti-layout-list-large-image"></i>
+                                <span class="mm-text ">Available Apartments</span>
+                            </a>
+                        </li>
+                        <li   class="{{ Request::is('reports/clearedpayments') ? 'active' : '' }}">
+                            <a href="{{ url('reports/clearedpayments') }}">
+                                <i class="menu-icon ti-layout-list-large-image"></i>
+                                <span class="mm-text ">Cleared Payments</span>
+                            </a>
+                        </li>-->
         </ul>
     </li>
     <li   class="{{ Request::is('account/users') ? 'active' : '' }}">

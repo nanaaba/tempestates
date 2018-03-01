@@ -72,11 +72,11 @@ class BankController extends Controller {
     }
 
     public function saveRentPayment(Request $request) {
-       
-        
+
+
         $data = $request->all();
 
-        
+
         $payment_type = $data['paymenttype'];
         if (in_array('rent', $payment_type)) {
             $rent_state = $this->validaterentDate($data['tenant'], $data['start_date']);
@@ -90,7 +90,7 @@ class BankController extends Controller {
             $bill_date = explode('to', strip_tags($data['bill_date']));
             $bill_start_date = date('Y-m-d', strtotime($bill_date[0]));
 
-            $bill_state = $this->validateBillDate($bill_start_date, $data['tenant']);
+            $bill_state = $this->validateBillDate($data['tenant'], $bill_start_date);
             if ($bill_state > 0) {
                 $dataresponse = array('success' => 2, 'message' => 'Bill Payments has already been done for ' . $data['bill_date']);
                 return json_encode($dataresponse);
@@ -399,13 +399,18 @@ class BankController extends Controller {
 
     public function validaterentDate($tenant_id, $date) {
 
+
+        $date = date('Y-m-d', strtotime($date));
+
+
         $result = DB::select('select count(id)as total from payments where payment_type="rent" and tenant_id=' . $tenant_id . ' and "' . $date . '"   BETWEEN rent_start_date AND rent_end_date');
         $resultArray = json_decode(json_encode($result), true);
         return $resultArray[0]['total'];
     }
 
-    public function validateBillDate($date, $tenant_id) {
+    public function validateBillDate($tenant_id, $date) {
 
+        $date = date('Y-m-d', strtotime($date));
 
         $result = DB::select('select count(id)as total from payments where payment_type="bill" and tenant_id=' . $tenant_id . ' and "' . $date . '"   BETWEEN bill_start_date AND bill_end_date');
         $resultArray = json_decode(json_encode($result), true);

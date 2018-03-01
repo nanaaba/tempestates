@@ -339,8 +339,9 @@
 @section('userjs')
 
 <script src="{{ asset('vendors/toastr/js/toastr.min.js')}}"></script>
-
 <script type="text/javascript">
+
+
 
                                                     var datatable = $('#paymentsTbl').DataTable({
                                                         responsive: true,
@@ -430,7 +431,7 @@
                                                                                 $('#newModal').modal('hide');
                                                                                 $('input:submit').removeAttr("disabled");
                                                                                 $('#loaderModal').modal('hide');
-                                                                               // document.getElementById("savePaymentsForm").reset();
+                                                                                // document.getElementById("savePaymentsForm").reset();
                                                                                 if (data.success == 0) {
                                                                                     swal("Success!", data.message, "success");
                                                                                     getPayments();
@@ -462,20 +463,32 @@
                                                         var periods = $('#rent_periods').val();
                                                         var apartment_amount = $('#apartment_amount').val();
                                                         var expected_rent = periods * apartment_amount;
-//                                                        /apartment_amount
+                                                        var tenant = $('#tenants').val();
+
+
                                                         if (startdate == "" && periods == "") {
                                                             alert('startdate and rent periods should be empty');
                                                         } else {
-                                                            console.log('here');
-                                                            $.ajax({
-                                                                url: "../computedate/" + periods + "/" + startdate,
-                                                                type: "GET",
-                                                                success: function (data) {
-                                                                    console.log('dj' + data);
-                                                                    $('#end_date').val(data);
-                                                                    $('#expectingrent_amount').val(expected_rent);
+
+                                                            $.when(validateRent(startdate, tenant)).done(function (response) {
+
+                                                                if (response == 1) {
+                                                                    swal("Info!", "Rent payments has already been paid for the selected date", "info");
+
+                                                                } else {
+                                                                    $.ajax({
+                                                                        url: "../computedate/" + periods + "/" + startdate,
+                                                                        type: "GET",
+                                                                        success: function (data) {
+                                                                            console.log('dj' + data);
+                                                                            $('#end_date').val(data);
+                                                                            $('#expectingrent_amount').val(expected_rent);
+                                                                        }
+                                                                    });
                                                                 }
                                                             });
+//        console.log('here');
+//
                                                         }
 
                                                     }
@@ -831,27 +844,35 @@
                                                         var token = $('#token').val();
                                                         var tenant = $('#tenants').val();
                                                         var daterange = $('#reportrange').val();
-                                                        $.ajax({
-                                                            url: '{{url("tenantaccumulatedbill")}}',
-                                                            type: "POST",
-                                                            data: {_token: token, daterange: daterange, tenant: tenant},
-                                                            dataType: "json",
-                                                            success: function (data) {
-                                                                console.log(data);
-                                                                var amount =0;
-                                                                if(data[0].total_amount == null){
-                                                                    amount = 0;
-                                                                }else{
-                                                                     amount = data[0].total_amount;
-                                                                }
-                                                                $('#bill_amount_tobe_paid').val(amount);
-                                                            },
-                                                            error: function (jXHR, textStatus, errorThrown) {
-                                                                $('#loaderModal').modal('hide');
-                                                                alert(errorThrown);
-                                                            }
-                                                        });
+                                                        var arr = daterange.split('to');
+                                                        $.when(validateBill(arr[0], tenant)).done(function (response) {
 
+                                                            if (response == 1) {
+                                                                swal("Info!", "Bill payments has already been paid for this period", "info");
+                                                            } else {
+                                                                $.ajax({
+                                                                    url: '{{url("tenantaccumulatedbill")}}',
+                                                                    type: "POST",
+                                                                    data: {_token: token, daterange: daterange, tenant: tenant},
+                                                                    dataType: "json",
+                                                                    success: function (data) {
+                                                                        console.log(data);
+                                                                        var amount = 0;
+                                                                        if (data[0].total_amount == null) {
+                                                                            amount = 0;
+                                                                        } else {
+                                                                            amount = data[0].total_amount;
+                                                                        }
+                                                                        $('#bill_amount_tobe_paid').val(amount);
+                                                                    },
+                                                                    error: function (jXHR, textStatus, errorThrown) {
+                                                                        $('#loaderModal').modal('hide');
+                                                                        alert(errorThrown);
+                                                                    }
+                                                                });
+                                                            }
+
+                                                        });
                                                     }
 //
 
@@ -863,7 +884,6 @@
                                                             $('#rendiv').hide();
                                                         }
                                                     });
-
                                                     $('#bill').click(function () {
                                                         var ifchecked = $('#bill').is(':checked');
                                                         if (ifchecked == true) {
@@ -872,12 +892,27 @@
                                                             $('#billdiv').hide();
                                                         }
                                                     });
-
                                                     $('#rent_periods').change(function () {
                                                         $('#end_date').val('');
                                                         $('#expectingrent_amount').val('');
                                                     });
+                                                    function validateRent(date, tenant_id) {
 
+                                                        return $.ajax({
+                                                            url: "../validaterent/" + tenant_id + "/" + date,
+                                                            type: "GET"
+
+                                                        });
+                                                    }
+
+
+                                                    function validateBill(date, tenant_id) {
+                                                        return $.ajax({
+                                                            url: "../validatebill/" + tenant_id + "/" + date,
+                                                            type: "GET"
+
+                                                        });
+                                                    }
 
 </script>
 @endsection

@@ -59,6 +59,7 @@ Route::get('reports/rents', 'ReportController@showrents');
 Route::get('reports/expiringrent', 'ReportController@showexpiryrent');
 Route::get('reports/availableapartments', 'ReportController@showavailableapartments');
 Route::get('reports/clearedpayments', 'ReportController@showclearedpayments');
+Route::get('reports/tenantsowing', 'ReportController@showtenantsowing');
 
 
 
@@ -161,11 +162,13 @@ Route::delete('deletepayment/{id}', 'BankController@deletePaymentInfo');
 Route::post('banking/updaterentpayments', 'BankController@updateRentPayment');
 Route::post('banking/paymentswithinperiod', 'BankController@getRentpaymentsPeriod');
 Route::get('computedate/{month}/{date}', 'ConfigurationController@computeDate');
-Route::get('validateenddate/{tenant_id}/{date}', 'ConfigurationController@validaterentDate');
+Route::get('validaterent/{tenant_id}/{date}', 'BankController@validaterentDate');
+Route::get('validatebill/{tenant_id}/{date}', 'BankController@validateBillDate');
 
 //reports
 Route::get('reports/paymentstrend', 'ReportController@getPaymentsTrend');
-
+Route::get('reports/rentowingtenant', 'ReportController@getRentOwingTenants');
+Route::get('reports/billowingtenant', 'ReportController@getBillOwingTenants');
 
 
 });

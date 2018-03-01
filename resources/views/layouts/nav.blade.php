@@ -183,6 +183,13 @@
                                 <span class="mm-text ">Rent Expiring </span>
                             </a>
                         </li>
+                        
+                              <li   class="{{ Request::is('reports/expiringrent') ? 'active' : '' }}">
+                            <a href="{{ url('reports/expiringrent') }}">
+                                <i class="menu-icon ti-layout-list-large-image"></i>
+                                <span class="mm-text ">Rent Expiring </span>
+                            </a>
+                        </li>
                         <li   class="{{ Request::is('reports/availableapartments') ? 'active' : '' }}">
                             <a href="{{ url('reports/availableapartments') }}">
                                 <i class="menu-icon ti-layout-list-large-image"></i>

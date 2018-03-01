@@ -46,9 +46,21 @@ class ReportController extends Controller {
         return view('reportclearedpayments');
     }
 
-    
+    public function showtenantsowing() {
+        return view('reporttenantsowing');
+    }
+
     public function getPaymentsTrend() {
         $currentyear = date("Y");
-        return DB::table('cummulative_payments')->where('year',$currentyear)->get();
+        return DB::table('cummulative_payments')->where('year', $currentyear)->get();
     }
+
+    public function getRentOwingTenants() {
+        return DB::table('rentowingtenants')->get();
+    }
+    
+     public function getBillOwingTenants() {
+        return DB::table('billowingtenant')->get();
+    }
+
 }

@@ -75,20 +75,20 @@ $('input[type="number"]').on('keydown', function (e) {
 - 1 !== $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) || (/65|67|86|88/.test(e.keyCode) && (e.ctrlKey === true || e.metaKey === true)) && (!0 === e.ctrlKey || !0 === e.metaKey) || 35 <= e.keyCode && 40 >= e.keyCode || (e.shiftKey || 48 > e.keyCode || 57 < e.keyCode) && (96 > e.keyCode || 105 < e.keyCode) && e.preventDefault()
 });
 });
-$("input[type='number'").keyup(function () {
-var maxChars = 12;
-if ($(this).val().length > maxChars) {
-$(this).val($(this).val().substr(0, maxChars));
-//Take action, alert or whatever suits
-alert("This field can take a maximum of 12 characters");
-}
-
-
-if ($(this).val().length < maxChars) {
-
-alert("This field can take a minimum of 12 characters");
-}
-});
+//$("input[type='number'").keyup(function () {
+//var maxChars = 12;
+//if ($(this).val().length > maxChars) {
+//$(this).val($(this).val().substr(0, maxChars));
+////Take action, alert or whatever suits
+//alert("This field can take a maximum of 12 characters");
+//}
+//
+//
+//if ($(this).val().length < maxChars) {
+//
+//alert("This field can take a minimum of 12 characters");
+//}
+//});
 //$("input[type='number'").focusout(function () {
 //    var maxChars = 12;
 //

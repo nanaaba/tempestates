@@ -37,6 +37,7 @@ class FacilityController extends Controller {
 
 
         $update = Facility::find($id);
+        $name = $update->name;
         $update->active = 1;
         $update->modified_by = Session::get('id');
         $update->modified_at = date('Y-m-d H:i:s');
@@ -45,6 +46,9 @@ class FacilityController extends Controller {
         if (!$saved) {
             return '1';
         } else {
+            $audit = new AuditLogsController();
+            $audit->saveActivity('Deleted facility  ' . $name);
+
             return '0';
         }
     }
@@ -63,6 +67,9 @@ class FacilityController extends Controller {
         if (!$saved) {
             return '1';
         } else {
+            $audit = new AuditLogsController();
+            $audit->saveActivity('Updated facility  ' . $data['name']);
+
             return '0';
         }
     }
@@ -81,6 +88,9 @@ class FacilityController extends Controller {
         if (!$saved) {
             return '1';
         } else {
+            $audit = new AuditLogsController();
+            $audit->saveActivity('Added new facility  ' . $data['name'] . ' information');
+
             return '0';
         }
     }
@@ -102,7 +112,5 @@ class FacilityController extends Controller {
 
         ApartmentFacilities::insert($data); // Eloquent
     }
-
-   
 
 }

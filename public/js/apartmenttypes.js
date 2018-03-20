@@ -12,7 +12,7 @@
 $('#saveApartmentTypeForm').on('submit', function (e) {
     e.preventDefault();
     var formData = $(this).serialize();
-    $('#loaderModal').modal('show');
+    $('#loader').show();
 
     $('input:submit').attr("disabled", true);
     $.ajax({
@@ -22,7 +22,7 @@ $('#saveApartmentTypeForm').on('submit', function (e) {
         success: function (data) {
             console.log(data);
             $('#districtModal').modal('hide');
-            $('#loaderModal').modal('hide');
+            $('#loader').hide();
 
             document.getElementById("saveApartmentTypeForm").reset();
             if (data == 0) {

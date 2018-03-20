@@ -30,6 +30,7 @@ class ServiceController extends Controller {
 
 
         $update = Service::find($id);
+        $name = $update->name;
         $update->active = 1;
         $update->modified_by = Session::get('id');
         $update->modified_at = date('Y-m-d H:i:s');
@@ -38,6 +39,9 @@ class ServiceController extends Controller {
         if (!$saved) {
             return '1';
         } else {
+             $audit = new AuditLogsController();
+            $audit->saveActivity('Deleted service  ' . $name );
+
             return '0';
         }
     }
@@ -59,6 +63,9 @@ class ServiceController extends Controller {
         if (!$saved) {
             return '1';
         } else {
+             $audit = new AuditLogsController();
+            $audit->saveActivity('Updated service  ' . $data['name'] . ' information');
+
             return '0';
         }
     }
@@ -79,6 +86,9 @@ class ServiceController extends Controller {
         if (!$saved) {
             return '1';
         } else {
+                 $audit = new AuditLogsController();
+            $audit->saveActivity('Added new service  ' . $data['name'] );
+
             return '0';
         }
     }

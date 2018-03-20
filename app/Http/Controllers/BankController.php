@@ -51,6 +51,10 @@ class BankController extends Controller {
         try {
 
             $new->save();
+
+            $audit = new AuditLogsController();
+            $audit->saveActivity('Added new bank: ' . $data['bank_name'] . ' with account number ' . $data['account_number']);
+
             return '0';
         } catch (\Illuminate\Database\QueryException $e) {
             return 'Duplicate entry  for account number. ' . $data['account_number'] . ' already exist';
@@ -132,9 +136,9 @@ class BankController extends Controller {
 
             if ($saved) {
                 $payment_id = $new->id;
-                $this->savePaymentDetails($payment_id, $data);
+                $fedbck = $this->savePaymentDetails($payment_id, $data);
 
-                $dataresponse = array('success' => 0, 'message' => 'success');
+                $dataresponse = array('success' => 0, 'message' => 'success' . $fedbck);
 
                 $tenant = new TenantController();
                 $tenantInformation = $tenant->getTenantInformation($data['tenant']);
@@ -146,6 +150,10 @@ class BankController extends Controller {
                         . $data['mode'] . ' payments on ' . $request['payment_date'] . '.';
                 $notifications->sendemail($info[0]['email_address'], 'Payment Notification', $message);
                 //   $notifications->sendsms($info[0]['contactno'], $message);
+                $tenantname = \App\Tenant::where('id', $data['tenant'])->first()->name;
+
+                $audit = new AuditLogsController();
+                $audit->saveActivity('Added new payment of: ' . $data['currency'] . ' ' . $data['totalamount'] . ' as ' . $data['description'] . ' to ' . $tenantname);
 
                 return json_encode($dataresponse);
             } else {
@@ -184,7 +192,9 @@ class BankController extends Controller {
         }
 
         if ($balance > 0) {
-            $this->savePaymentSurplus($payment_id, $data);
+
+            DB::insert('insert into payments_surplus (payment_id,tenant_id,amount,currency)'
+                    . ' values (?,?,?,?)', ["$payment_id", "$tenant_id", "$balance", "$currency"]);
         }
     }
 
@@ -278,6 +288,8 @@ class BankController extends Controller {
         try {
 
             $new->save();
+            $audit = new AuditLogsController();
+            $audit->saveActivity('Update Bank ' . $data['bank_name'] . ' Information');
             return '0';
         } catch (\Illuminate\Database\QueryException $e) {
             return 'Duplicate entry  for account number. ' . $data['account_number'] . ' already exist';
@@ -306,7 +318,13 @@ class BankController extends Controller {
     }
 
     public function getPaymentInfo($id) {
-        return DB::table('payments_view')->where('id', $id)->get();
+        $payments_info = DB::table('payments_view')->where('id', $id)->get()->toArray();
+        $payments_details = DB::table('payments')->where('payment_id', $id)->get()->toArray();
+        $data = array(
+            'info' => $payments_info,
+            'details' => $payments_details
+        );
+        echo json_encode($data);
     }
 
     public function deletePaymentInfo($id) {

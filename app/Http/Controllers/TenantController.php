@@ -46,7 +46,7 @@ class TenantController extends Controller {
         $email = strip_tags($data['email']);
         $exist = $this->checkemailexistence($email);
         if ($exist == 1) {
-            $data = array('success' => 2, 'message' => "Email already exist");
+            $data = array('success' => 2, 'message' => "Email already exist" . $exist);
             return json_encode($data);
         } else {
             $new = new Tenant();
@@ -58,7 +58,7 @@ class TenantController extends Controller {
             }
 
             if ($request->hasFile('scanned_id')) {
-                $this->deleteFile(strip_tags($data['scanned_id']));
+                //$this->deleteFile(strip_tags($data['scanned_id']));
 
                 $scanned_id = $request->file('scanned_id');
                 $scanned_file = $scanned_id->store('scanneddocuments');
@@ -104,6 +104,9 @@ class TenantController extends Controller {
                 $saved = $new->save();
 
                 if ($saved) {
+                    $audit = new AuditLogsController();
+                    $audit->saveActivity('Added new  tenant  ' . $data['name'] . ' information');
+
                     $tenant_id = $new->id;
                     $this->saveTenantRent(strip_tags($data['apartment']), $tenant_id, strip_tags($data['rent_period']), strip_tags($data['currency']), strip_tags($data['amount']), strip_tags($data['start_date']), strip_tags($data['end_date']));
                     if ($request->hasFile('documents')) {
@@ -161,6 +164,17 @@ class TenantController extends Controller {
 
         DB::insert('insert into rent (apartment_id,tenant_id,period,currency, amount,start_date,end_date,created_by) values (?,?,?,?,?,?,?,?)', ["$apartment", "$tenant", "$period", "$currency", "$amount", "$startdate", "$enddate", $createdby]);
 
+        $this->setApartmentStatus($apartment);
+        //  return $rentid;
+    }
+
+    public function setApartmentStatus($apartment) {
+
+        $createdby = Session::get('id');
+
+
+
+        DB::insert('UPDATE apartments SET availability="booked",booked_by=' . $createdby . ',booked_date=now() WHERE id=' . $apartment . '');
         //  return $rentid;
     }
 
@@ -197,6 +211,11 @@ class TenantController extends Controller {
         $saved = $new->save();
 
         if ($saved) {
+
+            $tenant_name = Tenant::where('id', $data['tenant'])->first()->name;
+
+            $audit = new AuditLogsController();
+            $audit->saveActivity('Added   ' . $data['service_description'] . ' as service requested to tenant ' . $tenant_name);
 
             $service = new ServiceController();
             $serviceInformation = $service->getServiceDetail(strip_tags($data['service_type']));
@@ -277,6 +296,7 @@ class TenantController extends Controller {
     public function deleteTenantInformation($id) {
 
         $update = Tenant::find($id);
+        $name = $update->name;
         $update->active = 1;
         $update->modified_by = Session::get('id');
         $update->modified_at = date('Y-m-d H:i:s');
@@ -285,6 +305,9 @@ class TenantController extends Controller {
         if (!$saved) {
             return '1';
         } else {
+            $audit = new AuditLogsController();
+            $audit->saveActivity('Deleted tenant   ' . $name . ' information');
+
             return '0';
         }
     }
@@ -355,6 +378,8 @@ class TenantController extends Controller {
             if ($saved) {
                 //     $this->saveTenantRent(strip_tags($data['apartment']), $data['tenant_id'], strip_tags($data['rent_period']), strip_tags($data['currency']), strip_tags($data['amount']), strip_tags($data['start_date']), strip_tags($data['end_date']));
 
+                $audit = new AuditLogsController();
+                $audit->saveActivity('Updated tenant information' . $data['fullname'] . ' information');
 
                 $data = array('success' => 0, 'tenat_id' => '');
 
@@ -384,7 +409,6 @@ class TenantController extends Controller {
         if (file_exists($filepath)) {
             @unlink($filepath);
         }
-        parent::delete();
     }
 
     public function getTenantInformation($id) {
@@ -393,16 +417,13 @@ class TenantController extends Controller {
 
     function checkemailexistence($email) {
 
-        $result = DB::table('tenants_view')->where(array(
+        $result = DB::table('tenants')->where(array(
                     'email_address' => $email,
-                    'acive' => 0
-                ))->find_one();
+                    'active' => 0
+                ))->count();
 
 
-        if (empty($result)) {
-            return '0';
-        }
-        return '1';
+        return $result;
     }
 
     public function updateBillInformation(Request $request) {
@@ -464,7 +485,7 @@ class TenantController extends Controller {
         $var = explode('to', $data['daterange']);
         $startdate = date('Y-m-d', strtotime($var[0]));
         $enddate = date('Y-m-d', strtotime($var[1]));
-           $tenant = $data['tenant'];
+        $tenant = $data['tenant'];
 
         $results = DB::select('CALL tenantTotalBill(?,?,?)', array($tenant, $startdate, $enddate));
         return $results;

@@ -24,7 +24,7 @@
 
 
 
-          <div class="row">
+        <div class="row">
             <div class="col-lg-12">
 
                 <div class="card ">
@@ -50,7 +50,7 @@
                                     <div class="col-lg-8">
 
                                         <div class="form-group">
-                                            <label for="region" class="control-label">Service Date:</label>
+                                            <label for="region" class="control-label"> Date:</label>
                                             <div class="input-group">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-fw ti-calendar"></i>
@@ -97,6 +97,8 @@
                                     <div class="row">
 
                                         <div class="col-md-6 col-sm-12 col-12 col-lg-6 col-xl-6 invoice_bg">
+<!--                                            <h4><strong>#678956 </strong></h4>-->
+
                                             <h4><strong>Billing Details:</strong></h4>
                                             <address>
                                                 <span id='tenant_name'></span>
@@ -104,22 +106,23 @@
                                                 <br/> <strong>Apartment Type:</strong><span id='apartment_type'></span>
                                                 <br/> <strong>Phone:</strong><span id='contact'></span>
                                                 <br/> <strong>Mail Id:</strong> <span id='email'></span>
+                                                <br/> <strong>Date period:</strong> <span id='dateperiod'></span>
+
                                             </address>
                                         </div>
-                                        <div class="col-md-6 col-sm-12 col-12 col-lg-6 col-xl-6 invoice_bg ">
-                                            <div class="float-right">
-                                                <h4><strong>#678956 / 25 Sep 2016</strong></h4>
-                                                <h4><strong>Invoice Info:</strong></h4>
-                                                <address>
-                                                    Tom Percy
-                                                    <br/> 3946 Penn Street
-                                                    <br/> Ohio,USA
-                                                    <br/> <strong>Phone:</strong> 32-666-756
-                                                    <br/> <strong>Mail Id:</strong> Lucy_Maggio16@yahoo.com
-                                                </address>
-                                                <span></span>
-                                            </div>
-                                        </div>
+                                        <!--                                        <div class="col-md-6 col-sm-12 col-12 col-lg-6 col-xl-6 invoice_bg ">
+                                                                                    <div class="float-right">
+                                                                                        <h4><strong>Invoice Info:</strong></h4>
+                                                                                        <address>
+                                                                                            Tom Percy
+                                                                                            <br/> 3946 Penn Street
+                                                                                            <br/> Ohio,USA
+                                                                                            <br/> <strong>Phone:</strong> 32-666-756
+                                                                                            <br/> <strong>Mail Id:</strong> Lucy_Maggio16@yahoo.com
+                                                                                        </address>
+                                                                                        <span></span>
+                                                                                    </div>
+                                                                                </div>-->
                                     </div>
                                     <div class="col-md-12">
                                         <div class="table-responsive">
@@ -142,7 +145,7 @@
                                                 <tfoot>
 
                                                     <tr>
-                                                       
+
 
                                                         <td class=" text-right">
                                                             <strong>
@@ -176,6 +179,14 @@
                                                                                                 data-toggle="button">
                                                                                             <i class="fa fa-fw ti-money"></i> Pay Now
                                                                                         </button>-->
+<!--                                                <button type="button"
+                                                        class="btn btn-responsive button-alignment btn-warning mb-3"
+                                                        data-toggle="button">
+                                                    <span style="color:#fff;" onclick='sendemail();'>
+                                                        <i class="fa fa-fw ti-envelope"></i>
+                                                        Send Email
+                                                    </span>
+                                                </button>-->
                                                 <button type="button"
                                                         class="btn btn-responsive button-alignment btn-primary mb-3"
                                                         data-toggle="button">
@@ -193,18 +204,6 @@
                         </section>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="modal fade" id="loaderModal" data-keyboard="false" data-backdrop="static" role="dialog" >
-            <div class="modal-dialog" role="document">
-
-
-                <div  id="loader" style="margin-top:30% ">
-                    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-                    <span class="loader-text">Wait...</span>
-                </div>
-
-
             </div>
         </div>
 
@@ -250,7 +249,7 @@
             // var validator = $("#saveRegionForm").validate();
             var formData = $(this).serialize();
             $('#loaderModal').modal('show');
-
+            var dateperiod = $('#date-range0').val();
             $('input:submit').attr("disabled", true);
             $.ajax({
                 url: "{{url('retreivetenantbills')}}",
@@ -284,6 +283,8 @@
                             getTenantInfo($('#tenants').val());
                             $('#invoicediv').show();
                         });
+
+                        $('#dateperiod').html(dateperiod);
                     }
                 },
                 error: function (jXHR, textStatus, errorThrown) {

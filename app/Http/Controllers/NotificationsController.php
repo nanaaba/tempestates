@@ -28,14 +28,31 @@ class NotificationsController extends Controller {
     }
 
     public function sendsms($receiver, $message) {
-        $client = new Client();
+
 
         $url = "https://api.hubtel.com/v1/messages/send?From=Rotamac&To=" . $receiver . "&Content=" . $message . "&ClientId=bawxcvfk&ClientSecret=jlrjfvap&RegisteredDelivery=true";
 
-        $request = $client->get($url);
-        $response = $request->getBody();
 
-        $this->savesms($response, $receiver, $message);
+        $client = new Client([
+            'http_errors' => true
+        ]);
+
+
+
+        try {
+
+            $response = $client->request('GET', $url, ['verify' => false]);
+
+            $body = $response->getBody();
+            $data = json_decode($body, true);
+            $status = $data['Status'];
+            if ($status == 0) {
+                $this->savesms($body, $receiver, $message);
+            }
+        } catch (RequestException $e) {
+
+        } catch (Exception $e) {
+        }
     }
 
     public function testsms() {

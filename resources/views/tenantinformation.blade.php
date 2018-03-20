@@ -36,10 +36,7 @@
     <!-- Main content -->
     <section class="content">
 
-<?php
- print_r($info);
-    print_r($documents);
-?>
+
         <div class="row">
             <div class="col-lg-12">
 

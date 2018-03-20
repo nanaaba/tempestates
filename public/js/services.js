@@ -29,6 +29,9 @@ $('#saveServiceForm').on('submit', function (e) {
             if (data == 0) {
                 swal("Success!", "Service Added", "success");
                 getServices();
+                window.location.reload();
+
+
             } else if (data == 1) {
                 swal("Error!", "Couldnt add service", "error");
             } else {

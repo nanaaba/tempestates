@@ -40,6 +40,9 @@ class AccountController extends Controller {
         if (!$saved) {
             return '1';
         } else {
+            $audit = new AuditLogsController();
+            $audit->saveActivity('Update  ' . $data['name'] . ' information');
+
             return '0';
         }
     }
@@ -74,6 +77,8 @@ class AccountController extends Controller {
                 $notifications = new NotificationsController();
                 $notifications->sendemail($data['email'], 'User Created', $message);
                 $notifications->sendsms($data['contactno'], $message);
+                $audit = new AuditLogsController();
+                $audit->saveActivity('Added new user :  ' . $data['name']);
 
                 $response['success'] = 0;
                 $response['message'] = 'User Information Saved Successfully';
@@ -103,11 +108,15 @@ class AccountController extends Controller {
 
 
         $update = User::find($id);
+        $name = $update->name;
         $update->active = '1';
         $saved = $update->save();
         if (!$saved) {
             return '1';
         } else {
+              $audit = new AuditLogsController();
+            $audit->saveActivity('Deleted user: ' . $name);
+
             return '0';
         }
     }

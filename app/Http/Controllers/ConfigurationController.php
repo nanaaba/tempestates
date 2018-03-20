@@ -17,6 +17,7 @@ use App\RentPeriod;
 use App\Identicationcards;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
 
 class ConfigurationController extends Controller {
 
@@ -43,7 +44,7 @@ class ConfigurationController extends Controller {
     }
 
     public function getRentPeriods() {
-        return RentPeriod::all()->toJson();
+        return RentPeriod::orderBy('name', 'asc')->get();
     }
 
     public function getIdentificationCards() {
@@ -59,7 +60,12 @@ class ConfigurationController extends Controller {
         try {
             $new = new ApartmentTypes;
             $new->name = strip_tags($data['name']);
+            $new->added_by = Session::get('id');
+
             $new->save();
+             $audit = new AuditLogsController();
+            $audit->saveActivity('Added new apartment type  ' . $data['name'] );
+
             return '0';
         } catch (\Illuminate\Database\QueryException $e) {
             return '1';
@@ -80,7 +86,13 @@ class ConfigurationController extends Controller {
         try {
             $new = new RentPeriod;
             $new->name = strip_tags($data['name']);
+            $new->added_by = Session::get('id');
+
             $new->save();
+            
+             $audit = new AuditLogsController();
+            $audit->saveActivity('Added new rent period  ' . $data['name'] );
+
             return '0';
         } catch (\Illuminate\Database\QueryException $e) {
             return '1';
@@ -101,7 +113,12 @@ class ConfigurationController extends Controller {
         try {
             $new = new Identicationcards;
             $new->name = strip_tags($data['name']);
+            $new->added_by = Session::get('id');
+
             $new->save();
+             $audit = new AuditLogsController();
+            $audit->saveActivity('Added new identification card  ' . $data['name'] );
+
             return '0';
         } catch (\Illuminate\Database\QueryException $e) {
             return '1';
@@ -121,7 +138,5 @@ class ConfigurationController extends Controller {
         $newDate = date('Y-m-d', strtotime("+" . $month . "months", strtotime($date)));
         return $newDate;
     }
-
-
 
 }

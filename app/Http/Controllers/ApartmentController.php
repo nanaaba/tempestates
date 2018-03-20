@@ -22,7 +22,13 @@ class ApartmentController extends Controller {
         return view('apartments');
     }
 
-    public function getApartments() {
+    public function getAvailableApartments() {
+
+        return Apartment::where(array('active' => 0, 'availability' => 'available'))
+                        ->get();
+    }
+
+    public function getAllApartments() {
 
         return Apartment::where('active', 0)
                         ->get();
@@ -32,6 +38,7 @@ class ApartmentController extends Controller {
 
 
         $update = Apartment::find($id);
+        $name = $update->name;
         $update->active = 1;
         $update->modified_by = Session::get('id');
         $update->modified_at = date('Y-m-d H:i:s');
@@ -40,6 +47,9 @@ class ApartmentController extends Controller {
         if (!$saved) {
             return '1';
         } else {
+            $audit = new AuditLogsController();
+            $audit->saveActivity('Deleted apartment: ' . $name);
+
             return '0';
         }
     }
@@ -62,7 +72,10 @@ class ApartmentController extends Controller {
         if (!$saved) {
             return '1';
         } else {
-              $this->deleteApartmentFacilities($id);
+            $audit = new AuditLogsController();
+            $audit->saveActivity('Updated apartment: ' . strip_tags($data['name']));
+
+            $this->deleteApartmentFacilities($id);
             $this->saveApartmentFacilities($id, $data['facilities']);
             return '0';
         }
@@ -86,7 +99,10 @@ class ApartmentController extends Controller {
         if (!$saved) {
             return '1';
         } else {
-            $this->saveApartmentFacilities($apartment_id, $data['facilities']);
+            $audit = new AuditLogsController();
+            $audit->saveActivity('Added new apartment: ' . strip_tags($data['name']));
+
+            $this->saveApartmentFacilities($data['name'], $apartment_id, $data['facilities']);
             return '0';
         }
     }
@@ -104,13 +120,16 @@ class ApartmentController extends Controller {
                         ->get();
     }
 
-    public function saveApartmentFacilities($apartmentid, $facilties) {
+    public function saveApartmentFacilities($apartname, $apartmentid, $facilties) {
 
         $dataArray = [];
         foreach ($facilties as $item) { //$intersts array contains input data
             $data = new ApartmentFacilities();
             $data->apartment_id = $apartmentid;
             $data->facility = $item;
+            $audit = new AuditLogsController();
+            $audit->saveActivity('Added new faciltiy: ' . $item . ' to ' . $apartname);
+
             $dataArray[] = $data->attributesToArray();
         }
         ApartmentFacilities::insert($dataArray);
@@ -118,8 +137,7 @@ class ApartmentController extends Controller {
 
     public function deleteApartmentFacilities($apartmentid) {
 
-          DB::table('apartments_facilities')->where('apartment_id', $apartmentid)->delete(); 
-
+        DB::table('apartments_facilities')->where('apartment_id', $apartmentid)->delete();
     }
 
     private function generateuniqueCode($length = 10) {

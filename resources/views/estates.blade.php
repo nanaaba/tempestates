@@ -36,7 +36,7 @@
                 <div class="card ">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <i class="ti-layout-grid3"></i> Apartments 
+                            <i class="ti-layout-grid3"></i> Estates 
                         </h3>
 
                     </div>

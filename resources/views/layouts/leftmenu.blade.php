@@ -227,8 +227,8 @@
                         </li>-->
         </ul>
     </li>
-    <li   class="{{ Request::is('account/users') ? 'active' : '' }}">
-        <a href="{{ url('account/users') }}">
+    <li   class="{{ Request::is('auditlogs') ? 'active' : '' }}">
+        <a href="{{ url('auditlogs') }}">
             <i class="menu-icon ti-pencil-alt"></i>
             <span class="mm-text ">Audit Logs </span>
         </a>

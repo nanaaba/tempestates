@@ -186,7 +186,6 @@
 
     $('#searchbtn').click(function () {
         var payment_type = $('#payment_type').val();
-        alert(payment_type);
 
         if (payment_type == "bill") {
             getBills();

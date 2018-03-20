@@ -30,9 +30,9 @@
 
         <link rel="stylesheet" type="text/css" href="{{asset('css/custom_css/datatables_custom.css')}}">
         <!--end of page level css-->
-<!--        <link rel="stylesheet" type="text/css" href="{{asset('vendors/sweetalert2/css/sweetalert2.min.css')}}"/>
-        <link rel="stylesheet" type="text/css" href="{{asset('css/custom_css/sweet_alert2.css')}}">
-      -->
+        <!--        <link rel="stylesheet" type="text/css" href="{{asset('vendors/sweetalert2/css/sweetalert2.min.css')}}"/>
+                <link rel="stylesheet" type="text/css" href="{{asset('css/custom_css/sweet_alert2.css')}}">
+        -->
         <!--        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css')}}">-->
 
         <link rel="stylesheet" type="text/css" href="{{asset('css/form_layouts.css')}}">
@@ -57,7 +57,7 @@
 
 
         <link href="{{ asset('vendors/airdatepicker/css/datepicker.min.css')}}" rel="stylesheet"/>
-       
+
         <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/dataTables.bootstrap4.css')}}"/>
         <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/buttons.bootstrap.css')}}"/>
         <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/colReorder.bootstrap.css')}}"/>
@@ -75,8 +75,8 @@
         <!--clock face css-->
         <link rel="stylesheet" type="text/css" href="{{asset('vendors/clockpicker/css/bootstrap-clockpicker.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('css/datepicker.css')}}">
-        
-        
+
+
     </head>
     <body class="skin-default">
         <div class="preloader">
@@ -101,22 +101,23 @@
 
         </div>
 
-        <div class="modal fade" id="loaderModal" data-keyboard="false" data-backdrop="static" role="dialog" >
+        <div class="modal" id="loaderModal" data-keyboard="false" data-backdrop="static" role="dialog" >
             <div class="modal-dialog" role="document">
 
 
                 <div  id="loader" style="margin-top:30% ">
-                    <img src="{{ asset('img/load.gif')}}">
-
-                    <span class="loader-text">Filtering Results...</span>
+                    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+                    <span class="loader-text">Wait...</span>
                 </div>
 
 
             </div>
+
         </div>
+       
 
 
-        <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal " id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <form method="post" id="deleteForm">

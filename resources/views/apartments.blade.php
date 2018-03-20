@@ -55,6 +55,9 @@
                                         <th>
                                             Monthly Charge
                                         </th>
+ <th>
+                                            Availability 
+                                        </th>
 
                                         <th>Action</th>
                                     </tr>
@@ -332,7 +335,7 @@ function getApartments()
 {
 
     $.ajax({
-        url: "{{url('apartment/all')}}",
+        url: "{{url('apartments/getall')}}",
         type: "GET",
         dataType: "json",
         success: function (data) {
@@ -353,6 +356,7 @@ function getApartments()
                     r[++j] = '<td class="subject">' + value.name + '</td>';
                     r[++j] = '<td class="subject">' + value.type + '</td>';
                     r[++j] = '<td class="subject">' + value.currency + ' ' + value.monthly_charge + '</td>';
+                    r[++j] = '<td class="subject">' + value.availability + '</td>';
 
                     r[++j] = '<td><button onclick="editType(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-info btn-sm editBtn" type="button">Edit</button>\n\
                               <button onclick="deleteType(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-danger btn-sm deleteBtn" type="button">Delete</button></td>';

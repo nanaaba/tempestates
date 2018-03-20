@@ -311,9 +311,143 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade " id="editModal"role="dialog" >
+            <div class="modal-dialog" role="document">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title"> <span id="aprtname"></span> Payment  Information</h4>
+                    </div>
+                    <form id="" role="form">
+                        <input type="hidden" class="form-control form-control-lg input-lg" id="token" name="_token" value="<?php echo csrf_token() ?>" />
+
+                        <div class="modal-body">
+
+                            <input type="hidden" id="code" name="code"/>
+
+                            <div class="form-group row col-md-12 ">
+                                <label  class=" control-label">Tenant Name</label>
+
+                                <input type="text" class="form-control" name="name" readonly id="uptenant_name" >
+
+                            </div>
+
+                            <div class="form-group row col-md-12 ">
+                                <label  class=" control-label">Payment Date</label>
+
+                                <input type="text" class="form-control" name="name" readonly id="uppayment_date" >
+
+                            </div>  
+                            <div class="form-group row col-md-12 ">
+                                <label  class=" control-label">Total Amount Paid</label>
+
+                                <input type="text" class="form-control" name="name" readonly id="upamount_paid" >
+
+                            </div>       
+                            <div class="form-group row col-md-12 ">
+                                <label  class=" control-label">Description</label>
+
+                                <input type="text" class="form-control" name="name" readonly id="updescription" >
+
+                            </div>       
+                            <div class="form-group row col-md-12 ">
+                                <label  class=" control-label">Payment Mode</label>
+
+                                <input type="text" class="form-control" name="name" readonly id="uppayment_mode" >
+
+                            </div>    
+                            <div id="updeposit" style="display: none">
+                                <div class="form-group row col-md-12 ">
+                                    <label  class=" control-label">Bank Name</label>
+
+                                    <input type="text" class="form-control" name="name" readonly id="upbank" >
+
+                                </div>
+                                <div class="form-group row col-md-12 ">
+                                    <label  class=" control-label">Bank Account</label>
+
+                                    <input type="text" class="form-control" name="name" readonly id="upaccountno" >
+
+                                </div>
+
+                                <div class="form-group row col-md-12 ">
+                                    <label  class=" control-label">Scanned Deposit Slip</label>
+
+                                    <span id="updepositurl"></span>
+                                </div>
+
+                            </div>
+                            <div id="upcheque" style="display: none">
+                                <div class="form-group row col-md-12 ">
+                                    <label  class=" control-label">Scanned Cheque SLip</label>
+
+                                    <span id="upchequeurl"></span>
+                                </div>   
+                            </div>
+                            <div class="form-group row col-md-12 ">
+                                <label  class=" control-label">Cleared Code</label>
+
+                                <input type="text" class="form-control" name="name" readonly id="clearedcode" >
+
+                            </div>                    
+                            <div class="form-group row col-md-12 ">
+                                <label  class=" control-label">Created By</label>
+
+                                <input type="text" class="form-control" name="name" readonly id="createdBy" >
+
+                            </div>                       
+                            <div class="form-group row col-md-12 ">
+                                <label  class=" control-label">Created At</label>
+
+                                <input type="text" class="form-control" name="name" readonly id="createdAt" >
+
+                            </div>
 
 
-        <div class="modal fade" id="loaderModal" data-keyboard="false" data-backdrop="static" role="dialog" >
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover" id="paymentshistTbl">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Payment Type
+                                            </th>
+                                            <th>
+                                                Amount
+                                            </th>
+                                            <th>
+                                                Start Date
+                                            </th>
+                                            <th>
+                                                End Date
+                                            </th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+
+
+
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal " id="loaderModal" data-keyboard="false" data-backdrop="static" role="dialog" >
             <div class="modal-dialog" role="document">
 
 
@@ -341,8 +475,8 @@
 <script src="{{ asset('vendors/toastr/js/toastr.min.js')}}"></script>
 <script type="text/javascript">
 
-
-
+//paymentshistTbl
+                                                    var paymentsTbl = $('#paymentshistTbl').DataTable();
                                                     var datatable = $('#paymentsTbl').DataTable({
                                                         responsive: true,
                                                         language: {
@@ -554,7 +688,7 @@
                                                                         r[++j] = '<td class="subject">' + value.amount + '</td>';
                                                                         r[++j] = '<td class="subject">' + value.mode + '</td>';
                                                                         r[++j] = '<td class="subject">' + value.payment_date + '</td>';
-                                                                        r[++j] = '<td><button onclick="editType(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-info btn-sm editBtn" type="button">Edit</button>\n\
+                                                                        r[++j] = '<td><button onclick="editType(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-info btn-sm editBtn" type="button">View</button>\n\
                               <button onclick="deleteType(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-danger btn-sm deleteBtn" type="button">Delete</button></td>';
                                                                         rowNode = datatable.row.add(r);
                                                                     });
@@ -703,21 +837,71 @@
 
                                                     function getPaymentInfo(id) {
 
+                                                                    $('#updeposit').hide();
+                                                                    $('#upcheque').hide();
 
                                                         $.ajax({
                                                             url: '../banking/payments/' + id,
                                                             type: "GET",
                                                             dataType: "json",
                                                             success: function (data) {
-                                                                console.log(data[0].name);
-                                                                $('#uptenant_name').val(data[0].name);
-                                                                $('#upamount').val(data[0].amount);
-                                                                $('#updescription').val(data[0].description);
-                                                                $('#upmode').val(data[0].mode).change();
-                                                                $('#uppayment_date').val(data[0].payment_date);
-                                                                $('#chqurl').html('<a target="_blank" href ="http://localhost/tempestates/storage/app/' + data[0].cheque_url + '" type="button" class="btn btn-info ">View Cheque </a>');
+                                                                var payments = data['details'];
+                                                                var mode = data['info'][0].mode;
+                                                                console.log(data['info'][0].name);
+                                                                $('#uptenant_name').val(data['info'][0].name);
+                                                                $('#upamount_paid').val(data['info'][0].currency+' '+data['info'][0].amount);
+                                                                $('#updescription').val(data['info'][0].description);
+                                                                $('#uppayment_mode').val(data['info'][0].mode);
+                                                                $('#uppayment_date').val(data['info'][0].payment_date);
+                                                                if (mode == "deposit") {
+                                                                    $('#updeposit').show();
+
+                                                                    $('#upbank').val(data['info'][0].bank_name);
+                                                                    $('#upaccountno').val(data['info'][0].accountno);
+                                                                    $('#clearedcode').val(data['info'][0].cleared_code);
+                                                                    $('#updepositurl').html('<a target="_blank" href ="http://localhost/tempestates/storage/app/' + data['info'][0].deposit_url + '" type="button" class="btn btn-info ">View Deposit </a>');
+                                                                }
+                                                                if (mode == "cheque") {
+                                                                    $('#upcheque').show();
+                                                                    $('#upchequeurl').html('<a target="_blank" href ="http://localhost/tempestates/storage/app/' + data['info'][0].cheque_url + '" type="button" class="btn btn-info ">View Cheque </a>');
+                                                                }
+                                                                $('#createdBy').val(data['info'][0].created_by);
+                                                                $('#createdAt').val(data['info'][0].created_at);
+
                                                                 $('#code').val(id);
-                                                                $('#depurl').html('<a target="_blank" href ="http://localhost/tempestates/storage/app/' + data[0].deposit_url + '" type="button" class="btn btn-info ">View Deposit </a>');
+
+                                                                console.log(data);
+                                                                paymentsTbl.clear().draw();
+                                                                if (payments.length == 0) {
+                                                                    console.log("NO DATA!");
+                                                                } else {
+                                                                    $.each(payments, function (key, value) {
+
+                                                                        var url;
+                                                                        if (value.payment_type == "rent") {
+                                                                            end_date = value.rent_end_date;
+                                                                            start_date = value.rent_start_date;
+                                                                            amount = value.rent_amount;
+                                                                        } else if (value.payment_type == "bill") {
+                                                                            end_date = value.bill_end_date;
+                                                                            start_date = value.bill_start_date;
+                                                                            amount = value.bill_amount;
+
+                                                                        }
+
+                                                                        var j = -1;
+                                                                        var r = new Array();
+                                                                        // represent columns as array
+                                                                        r[++j] = '<td class="subject">' + value.payment_type + '</td>';
+                                                                        r[++j] = '<td class="subject">' + amount + '</td>';
+
+                                                                        r[++j] = '<td class="subject">' + end_date + '</td>';
+                                                                        r[++j] = '<td class="subject">' + start_date + '</td>';
+                                                                        rowNode = paymentsTbl.row.add(r);
+
+                                                                    });
+                                                                    rowNode.draw().node();
+                                                                }
                                                             },
                                                             error: function (jXHR, textStatus, errorThrown) {
                                                                 console.log(errorThrown);

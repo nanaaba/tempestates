@@ -56,7 +56,7 @@ var datatable = $('#periodsTbl').DataTable({
         search: "_INPUT_",
         searchPlaceholder: "Search…"
     },
-    order: [[0, "asc"]]
+  "ordering": false
 });
 
 getRentPeriods();

@@ -30,6 +30,7 @@ class EstatesController extends Controller {
 
 
         $update = Estate::find($id);
+        $name = $update->name;
         $update->active = 1;
         $update->modified_by = Session::get('id');
         $update->modified_at = date('Y-m-d H:i:s');
@@ -37,6 +38,9 @@ class EstatesController extends Controller {
         if (!$saved) {
             return '1';
         } else {
+            $audit = new AuditLogsController();
+            $audit->saveActivity('Deleted estate  ' . $name);
+
             return '0';
         }
     }
@@ -57,6 +61,10 @@ class EstatesController extends Controller {
         if (!$saved) {
             return '1';
         } else {
+            
+            $audit = new AuditLogsController();
+            $audit->saveActivity('Updated estate  ' . $data['name'] .' information');
+
             return '0';
         }
     }
@@ -80,13 +88,14 @@ class EstatesController extends Controller {
             if (!$saved) {
                 return '1';
             } else {
+                  $audit = new AuditLogsController();
+            $audit->saveActivity('Added new estate  ' . $data['name'] );
+
                 return '0';
             }
         } catch (\Illuminate\Database\QueryException $ex) {
             return " Duplicate entry for " . $data['name'];
         }
     }
-
-  
 
 }

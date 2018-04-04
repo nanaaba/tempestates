@@ -27,15 +27,15 @@ class DashboardController extends Controller {
         $tenants = $this->totalTenants();
         $apartments = $this->totalAvailableApartments();
         $expiring_rent = $this->expiringRentCount();
-        $owingtenants = $reports->getRentOwingTenants();
-        $expiring_rent_data = $this->expiringRents();
+       // $owingtenants = $reports->getRentOwingTenants();
+        //$expiring_rent_data = $this->expiringRents();
 
         return view('dashboard')
                         ->with('totaltenants', $tenants)
                         ->with('totalapartments', $apartments)
-                        ->with('totalexpiringrent', $expiring_rent)
-                        ->with('owingtenants', $owingtenants)
-                        ->with('expiringrents', $expiring_rent_data);
+                        ->with('totalexpiringrent', $expiring_rent);
+                       
+                
     }
 
     public function totalTenants() {

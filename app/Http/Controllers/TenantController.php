@@ -105,7 +105,7 @@ class TenantController extends Controller {
 
                 if ($saved) {
                     $audit = new AuditLogsController();
-                    $audit->saveActivity('Added new  tenant  ' . $data['name'] . ' information');
+                    $audit->saveActivity('Added new  tenant  ' . $data['fullname'] . ' information');
 
                     $tenant_id = $new->id;
                     $this->saveTenantRent(strip_tags($data['apartment']), $tenant_id, strip_tags($data['rent_period']), strip_tags($data['currency']), strip_tags($data['amount']), strip_tags($data['start_date']), strip_tags($data['end_date']));
@@ -119,7 +119,7 @@ class TenantController extends Controller {
 
 
                     $message = "Hello," . strip_tags($data['title']) . ' ' . strip_tags($data['fullname']) .
-                            '.You have rented our ' . $apartinfo[0]['name'] . 'for the period of ' . strip_tags($data['rent_period']) . 'months.'
+                            '.You have rented our ' . $apartinfo[0]['name'] . ' apartment for the period of ' . strip_tags($data['rent_period']) . 'months.'
                             . ' Please kindly take notice of your tenant code : ' . $tenantcode . '. '
                             . 'Thank you for choosing Rotamac Real Estates.Enjoy your stay in your new apartment';
 
@@ -163,9 +163,7 @@ class TenantController extends Controller {
         $enddate = date('Y-m-d', strtotime($enddate));
 
         DB::insert('insert into rent (apartment_id,tenant_id,period,currency, amount,start_date,end_date,created_by) values (?,?,?,?,?,?,?,?)', ["$apartment", "$tenant", "$period", "$currency", "$amount", "$startdate", "$enddate", $createdby]);
-
         $this->setApartmentStatus($apartment);
-        //  return $rentid;
     }
 
     public function setApartmentStatus($apartment) {
@@ -180,12 +178,20 @@ class TenantController extends Controller {
 
     public function updateTenantRent($apartment, $tenant, $period, $currency, $amount, $startdate, $enddate) {
 
-        //$createdby = Session::get('id');
+        $createdby = Session::get('id');
+        $startdate = date('Y-m-d', strtotime($startdate));
+        $enddate = date('Y-m-d', strtotime($enddate));
 
-        $createdby = 1;
-        DB::insert("update rent set apartment_id='$apartment' ,period='$period',currency='$currency', amount='$amount',start_date='$startdate',end_date='$enddate',modified_by='$createdby' where tenant_id=$tenant");
+        $result = DB::table('rent')->where(array(
+                    'tenant_id' => $tenant
+                ))->count();
+        if ($result == 0) {
+            DB::insert('insert into rent (apartment_id,tenant_id,period,currency, amount,start_date,end_date,created_by) values (?,?,?,?,?,?,?,?)', ["$apartment", "$tenant", "$period", "$currency", "$amount", "$startdate", "$enddate", $createdby]);
+        } else {
+            DB::insert("update rent set apartment_id='$apartment' ,period='$period',currency='$currency', amount='$amount',start_date='$startdate',end_date='$enddate',modified_by='$createdby' where tenant_id=$tenant");
+        }
+                $this->setApartmentStatus($apartment);
 
-        //  return $rentid;
     }
 
     public function savetenantPayment($rent, $amount, $paymentdate, $description, $mode, $url = null) {
@@ -376,7 +382,7 @@ class TenantController extends Controller {
             $saved = $new->save();
 
             if ($saved) {
-                //     $this->saveTenantRent(strip_tags($data['apartment']), $data['tenant_id'], strip_tags($data['rent_period']), strip_tags($data['currency']), strip_tags($data['amount']), strip_tags($data['start_date']), strip_tags($data['end_date']));
+                 $this->updateTenantRent(strip_tags($data['apartment']), $data['tenant_id'], strip_tags($data['rent_period']), strip_tags($data['currency']), strip_tags($data['amount']), strip_tags($data['start_date']), strip_tags($data['end_date']));
 
                 $audit = new AuditLogsController();
                 $audit->saveActivity('Updated tenant information' . $data['fullname'] . ' information');

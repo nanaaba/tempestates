@@ -7,14 +7,13 @@
 <aside class="right-side">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        
-          <?php
-    $info = json_decode($information, true);
-    $documents = json_decode($documents, true);
-    $profilepic = $info[0]['profile_pic'];
-    $scanned_id = $info[0]['scanned_id'];
-   
-    ?>
+
+        <?php
+        $info = json_decode($information, true);
+        $documents = json_decode($documents, true);
+        $profilepic = $info[0]['profile_pic'];
+        $scanned_id = $info[0]['scanned_id'];
+        ?>
         <h1>
             {{$info[0]['title'].' '.$info[0]['name']}} Information
         </h1>
@@ -28,11 +27,11 @@
                 <a href="#"> Tenants</a>
             </li>
             <li class="active">
-               {{$info[0]['title'].' '.$info[0]['name']}} Information
+                {{$info[0]['title'].' '.$info[0]['name']}} Information
             </li>
         </ol>
     </section>
-  
+
     <!-- Main content -->
     <section class="content">
 
@@ -40,15 +39,15 @@
         <div class="row">
             <div class="col-lg-12">
 
-                <div class="panel ">
-                    <div class="panel-heading">
+                <div class="card ">
+                    <div class="card-header">
                         <h3 class="panel-title">
                             <i class="ti-layout-tab"></i> 
-               {{$info[0]['title'].' '.$info[0]['name']}} Information
+                            {{$info[0]['title'].' '.$info[0]['name']}} Information
                         </h3>
 
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
 
                         <!-- CSRF Token -->
 
@@ -145,6 +144,48 @@
                                             </div>
                                         </div>
 
+                                        <div class="row form-group">   
+                                            <div class="col-sm-3">
+
+                                                <label for="my-element">
+                                                    Start Date:
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-6">
+
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-fw ti-calendar"></i>
+                                                    </div>
+                                                    <input type="text" class="form-control float-right datepick"  data-date-format="yyyy-mm-dd" value="{{$info[0]['start_date']}}"  name="start_date"   data-language="en" id="start_date">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <button type="button" class="btn btn-info " onclick="computeEndDate()">
+                                                    Compute End Date
+                                                </button>
+                                            </div>
+                                            <!-- /.input group -->
+                                        </div>
+
+                                        <div class="row form-group">   
+                                            <div class="col-sm-3">
+
+                                                <label for="my-element">
+                                                    End Date:
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-9">
+
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-fw ti-calendar"></i>
+                                                    </div>
+                                                    <input type="text" class="form-control float-right "  value="{{$info[0]['end_date']}}"   name="end_date" readonly  data-language="en" id="end_date">
+                                                </div>
+                                            </div>
+                                            <!-- /.input group -->
+                                        </div>
 
 
                                     </div>
@@ -610,162 +651,184 @@
 <script type="text/javascript" src="{{ asset('vendors/sweetalert2/js/sweetalert2.min.js')}}"></script>
 
 <script type="text/javascript">
+                                                    $('.datepick').datepicker({
+                                                        format: 'dd-mm-yyyy'
+                                                    });
+                                                    PNotify.prototype.options.styling = "bootstrap3";
+                                                    PNotify.prototype.options.styling = "jqueryui";
+                                                    PNotify.prototype.options.styling = "fontawesome";
 
-PNotify.prototype.options.styling = "bootstrap3";
-PNotify.prototype.options.styling = "jqueryui";
-PNotify.prototype.options.styling = "fontawesome";
+                                                    $('#rootwizard').bootstrapWizard({onTabShow: function (tab, navigation, index) {
+                                                            var $total = navigation.find('li').length;
+                                                            var $current = index + 1;
+                                                            var $percent = ($current / $total) * 100;
+                                                            $('#rootwizard').find('.bar').css({width: $percent + '%'});
+                                                        }});
+                                                    $('#rootwizard .finish').click(function () {
+                                                        //var formData = $("#tenantForm").serialize();
+                                                        var formData = new FormData($("#tenantForm")[0]);
 
-$('#rootwizard').bootstrapWizard({onTabShow: function (tab, navigation, index) {
-        var $total = navigation.find('li').length;
-        var $current = index + 1;
-        var $percent = ($current / $total) * 100;
-        $('#rootwizard').find('.bar').css({width: $percent + '%'});
-    }});
-$('#rootwizard .finish').click(function () {
-    //var formData = $("#tenantForm").serialize();
-    var formData = new FormData($("#tenantForm")[0]);
+                                                        $('#loaderModal').modal('show');
 
-    $('#loaderModal').modal('show');
-
-    console.log('data :' + formData);
-    $.ajax({
-        url: "{{url('tenants/update')}}",
-        type: "POST",
-        data: formData,
-        cache: false,
-        contentType: false,
-        processData: false,
-        dataType: 'json',
-        success: function (data) {
-            console.log('server data :' + data);
-            if (data.success == 0) {
-                $('#tenantForm select').val('').trigger('change');
-                $('#loaderModal').modal('hide');
+                                                        console.log('data :' + formData);
+                                                        $.ajax({
+                                                            url: "{{url('tenants/update')}}",
+                                                            type: "POST",
+                                                            data: formData,
+                                                            cache: false,
+                                                            contentType: false,
+                                                            processData: false,
+                                                            dataType: 'json',
+                                                            success: function (data) {
+                                                                console.log('server data :' + data);
+                                                                if (data.success == 0) {
+                                                                    $('#loaderModal').modal('hide');
 
 //                document.getElementById("tenantForm").reset();
-                new PNotify({
-                    title: 'Success',
-                    text: "Tenant Information updated successfully.",
-                    type: 'success'
-                });
-                // swal("Success", "Information saved successfully.Tenant Code is"+data.tenat_id, 'success');
-            } else if (data.success == 1) {
-                new PNotify({
-                    title: 'Error',
-                    text: "Error in Saving Tenant Information",
-                    type: 'error'
-                });
-                //swal("Error", "Error in Saving Tenant Information", 'error');
+                                                                    new PNotify({
+                                                                        title: 'Success',
+                                                                        text: "Tenant Information updated successfully.",
+                                                                        type: 'success'
+                                                                    });
+                                                                    // swal("Success", "Information saved successfully.Tenant Code is"+data.tenat_id, 'success');
+                                                                } else if (data.success == 1) {
+                                                                    new PNotify({
+                                                                        title: 'Error',
+                                                                        text: "Error in Saving Tenant Information",
+                                                                        type: 'error'
+                                                                    });
+                                                                    //swal("Error", "Error in Saving Tenant Information", 'error');
 
-            } else {
-                // swal("Error", data.message, 'error');
-                new PNotify({
-                    title: 'Error',
-                    text: data.message,
-                    type: 'error'
-                });
+                                                                } else {
+                                                                    // swal("Error", data.message, 'error');
+                                                                    new PNotify({
+                                                                        title: 'Error',
+                                                                        text: data.message,
+                                                                        type: 'error'
+                                                                    });
 
-            }
-
-
-        }
-
-    });
-    // alert('Finished!, Starting over!');
-
-    //$('#rootwizard').find("a[href*='tab1']").trigger('click');
-});
-$('.select2').select2();
-
-getApartments();
+                                                                }
 
 
-function getApartments() {
+                                                            }
+
+                                                        });
+                                                        // alert('Finished!, Starting over!');
+
+                                                        //$('#rootwizard').find("a[href*='tab1']").trigger('click');
+                                                    });
+                                                    $('.select2').select2();
+
+                                                    getApartments();
 
 
-    $.ajax({
-        url: "{{url('apartment/all')}}",
-        type: "GET",
-        dataType: 'json',
-        success: function (data) {
-
-            $.each(data, function (i, item) {
-
-                $('#apartments').append($('<option>', {
-                    value: item.id,
-                    text: item.name
-                }));
-            });
-        }
-
-    });
-}
-
-$('#apartments').change(function () {
-    var id = $(this).val();
-    getApartmentInfo(id);
-});
-
-function getApartmentInfo(id) {
+                                                    function getApartments() {
 
 
-    $.ajax({
-        url: "../../apartment/" + id,
-        type: "GET",
-        dataType: 'json',
-        success: function (data) {
-            $('#apartment_type').val(data[0].type);
-            $('#monthly_charge').val(data[0].monthly_charge);
-            $('#currency').val(data[0].currency);
+                                                        $.ajax({
+                                                            url: "{{url('apartment/all')}}",
+                                                            type: "GET",
+                                                            dataType: 'json',
+                                                            success: function (data) {
 
-            //currency
-        }
+                                                                $.each(data, function (i, item) {
+
+                                                                    $('#apartments').append($('<option>', {
+                                                                        value: item.id,
+                                                                        text: item.name
+                                                                    }));
+                                                                });
+                                                            }
+
+                                                        });
+                                                    }
+
+                                                    $('#apartments').change(function () {
+                                                        var id = $(this).val();
+                                                        getApartmentInfo(id);
+                                                    });
+
+                                                    function getApartmentInfo(id) {
+
+
+                                                        $.ajax({
+                                                            url: "../../apartment/" + id,
+                                                            type: "GET",
+                                                            dataType: 'json',
+                                                            success: function (data) {
+                                                                $('#apartment_type').val(data[0].type);
+                                                                $('#monthly_charge').val(data[0].monthly_charge);
+                                                                $('#currency').val(data[0].currency);
+
+                                                                //currency
+                                                            }
 //up_facilities
-    });
-}
-getRentPeriods();
-function getRentPeriods() {
+                                                        });
+                                                    }
+                                                    getRentPeriods();
+                                                    function getRentPeriods() {
 
 
-    $.ajax({
-        url: "{{url('configuration/getrentperiods')}}",
-        type: "GET",
-        dataType: 'json',
-        success: function (data) {
+                                                        $.ajax({
+                                                            url: "{{url('configuration/getrentperiods')}}",
+                                                            type: "GET",
+                                                            dataType: 'json',
+                                                            success: function (data) {
 
-            $.each(data, function (i, item) {
+                                                                $.each(data, function (i, item) {
 
-                $('#rent_periods').append($('<option>', {
-                    value: item.name,
-                    text: item.name + " months"
-                }));
-            });
-        }
+                                                                    $('#rent_periods').append($('<option>', {
+                                                                        value: item.name,
+                                                                        text: item.name + " months"
+                                                                    }));
+                                                                });
+                                                            }
 
-    });
-}
+                                                        });
+                                                    }
 
-getIds();
-function getIds() {
+                                                    getIds();
+                                                    function getIds() {
 
 
-    $.ajax({
-        url: "{{url('configuration/getidentificationcards')}}",
-        type: "GET",
-        dataType: 'json',
-        success: function (data) {
+                                                        $.ajax({
+                                                            url: "{{url('configuration/getidentificationcards')}}",
+                                                            type: "GET",
+                                                            dataType: 'json',
+                                                            success: function (data) {
 
-            $.each(data, function (i, item) {
+                                                                $.each(data, function (i, item) {
 
-                $('#id_number').append($('<option>', {
-                    value: item.name,
-                    text: item.name
-                }));
-            });
-        }
+                                                                    $('#id_number').append($('<option>', {
+                                                                        value: item.name,
+                                                                        text: item.name
+                                                                    }));
+                                                                });
+                                                            }
 
-    });
-}
+                                                        });
+                                                    }
+
+                                                    function computeEndDate() {
+                                                        var rent = $('#rent_periods').val();
+                                                        var startdate = $('#start_date').val();
+                                                        if (rent == " " || startdate == " ") {
+                                                            alert(' rent period and startdate shouldnt be empty ');
+                                                        } else {
+                                                            $.ajax({
+                                                                url: "../../computedate/" + rent + "/" + startdate,
+                                                                type: "GET",
+                                                                success: function (data) {
+                                                                    console.log('dj' + data);
+                                                                    $('#end_date').val(data);
+                                                                }
+                                                            });
+                                                        }
+
+
+
+
+                                                    }
 
 </script>
 @endsection

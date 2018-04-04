@@ -10,7 +10,9 @@
   | contains the "web" middleware group. Now create something great!
   |
  */
-
+Route::get('/encrypt', function () {
+    return md5('123456');
+});
 Route::get('blank', function () {
     return view('chartjs_charts');
 });

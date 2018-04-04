@@ -20,118 +20,165 @@
         </div>
     </section>
     <section class="content">
+
+
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-xl-3">
+                <div class="flip">
+                    <div class="widget-bg-color-icon card-box front">
+                        <div class="bg-icon float-left">
+                            <i class="ti-user text-warning"></i>
+                        </div>
+                        <div class="text-right">
+                            <h3 class="text-dark"><b>{{$totaltenants}}</b></h3>
+                            <p>Tenants</p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-xl-3">
+                <div class="flip">
+                    <div class="widget-bg-color-icon card-box front">
+                        <div class="bg-icon float-left">
+                            <i class="ti-home text-success"></i>
+                        </div>
+                        <div class="text-right">
+                            <h3><b id="widget_count3">{{$totalapartments}}</b></h3>
+                            <p>Available Apartments</p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-6 col-xl-3">
+                <div class="flip">
+                    <div class="widget-bg-color-icon card-box front">
+                        <div class="bg-icon float-left">
+                            <i class="ti-alarm-clock text-danger"></i>
+                        </div>
+                        <div class="text-right">
+                            <h3 class="text-dark"><b>0</b></h3>
+                            <p>Today Birthdays</p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-xl-3">
+                <div class="flip">
+                    <div class="widget-bg-color-icon card-box front">
+                        <div class="bg-icon float-left">
+                            <i class="ti-receipt text-info"></i>
+                        </div>
+                        <div class="text-right">
+                            <h3 class="text-dark"><b>{{$totalexpiringrent}}</b></h3>
+                            <p>Expiring Rent</p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="ti-layout-grid3"></i> Rent Expiring 3 months from now 
+                        </h3>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTable" id="reportTbl">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Tenant Name
+                                        </th>
+
+                                        <th>
+                                            Apartment Name
+                                        </th>
+                                        <th>
+                                            Apartment Type
+                                        </th>
+                                        <th>
+                                            Monthly Amount
+                                        </th>
+                                        <th>Rent Period</th>
+                                        <th>Start Date</th>
+                                        <th>Expiring Date</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
         
         
          <div class="row">
-        <div class="col-sm-6 col-md-6 col-xl-3">
-            <div class="flip">
-                <div class="widget-bg-color-icon card-box front">
-                    <div class="bg-icon float-left">
-                        <i class="ti-user text-warning"></i>
+            <div class="col-lg-12">
+
+                <div class="card ">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="ti-layout-grid3"></i> Bill Owing Tenants 
+                        </h3>
+
                     </div>
-                    <div class="text-right">
-                        <h3 class="text-dark"><b>13</b></h3>
-                        <p>Tenants</p>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTable" id="billTbl">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Tenant Name
+                                        </th>
+
+                                        <th>
+                                            Apartment
+                                        </th>
+                                        <th>
+                                            Contact No
+                                        </th>
+                                        <th>Total Amount</th>
+                                        <th>Amount Paid</th>
+                                        <th>Amount Owing</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
                     </div>
-                    <div class="clearfix"></div>
                 </div>
-               
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-6 col-xl-3">
-            <div class="flip">
-                <div class="widget-bg-color-icon card-box front">
-                    <div class="bg-icon float-left">
-                        <i class="ti-home text-success"></i>
-                    </div>
-                    <div class="text-right">
-                        <h3><b id="widget_count3">5</b></h3>
-                        <p>Available Apartments</p>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-             
             </div>
         </div>
 
-        <div class="col-sm-6 col-md-6 col-xl-3">
-            <div class="flip">
-                <div class="widget-bg-color-icon card-box front">
-                    <div class="bg-icon float-left">
-                        <i class="ti-alarm-clock text-danger"></i>
-                    </div>
-                    <div class="text-right">
-                        <h3 class="text-dark"><b>0</b></h3>
-                        <p>Today Birthdays</p>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-6 col-xl-3">
-            <div class="flip">
-                <div class="widget-bg-color-icon card-box front">
-                    <div class="bg-icon float-left">
-                        <i class="ti-receipt text-info"></i>
-                    </div>
-                    <div class="text-right">
-                        <h3 class="text-dark"><b>3</b></h3>
-                        <p>Expiring Rent</p>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-        
-        <div class="row">
-            <div class="col-lg-12">
-                <!-- Basic charts strats here-->
-                <div class="card ">
-                    <div class="card-header">
-                        <h4 class="card-title">
-                            <i class="ti-bar-chart-alt"></i> Tenants Payments Overview This Year Chart
-                        </h4>
-                        <span class="float-right">
-                            <i class="fa fa-fw ti-angle-up clickable"></i>
-                            <i class="fa fa-fw ti-close removecard "></i>
-                        </span>
-                    </div>
-                    <div class="card-body">
-                        <div>
-                            <canvas id="line-chart" width="800" height="300"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-      
-        </div>
-
-        
-               <div class="row">
-            <div class="col-lg-12">
-                <!-- Basic charts strats here-->
-                <div class="card ">
-                    <div class="card-header">
-                        <h4 class="card-title">
-                            <i class="ti-bar-chart-alt"></i> Tenants Bills Overview This Year Chart
-                        </h4>
-                        <span class="float-right">
-                            <i class="fa fa-fw ti-angle-up clickable"></i>
-                            <i class="fa fa-fw ti-close removecard "></i>
-                        </span>
-                    </div>
-                    <div class="card-body">
-                        <div>
-                            <canvas id="line2-chart" width="800" height="300"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-      
-        </div>
 
         <div class="background-overlay"></div>
     </section>
@@ -144,265 +191,115 @@
 
 <script type="text/javascript">
 
+var datatable = $('#reportTbl').DataTable({
+    lengthChange: false,
+    buttons: ['copy', 'excel', 'pdf', 'print']
+});
 
-function getPayments() {
+var billdatatable = $('#billTbl').DataTable({
+    lengthChange: false,
+    buttons: ['copy', 'excel', 'pdf', 'print']
+});
+
+datatable.buttons().container()
+        .appendTo('#reportTbl_wrapper .col-md-6:eq(0)');
 
 
 
-    return    $.ajax({
-        url: "{{url('reports/paymentstrend')}}",
+billdatatable.buttons().container()
+        .appendTo('#billTbl_wrapper .col-md-6:eq(0)');
+
+
+getRents();
+
+function getRents()
+{
+
+    $.ajax({
+        url: "{{url('getexpiringrents')}}",
         type: "GET",
-        dataType: 'json'
+        dataType: "json",
+        success: function (data) {
 
-    });
-}
-
-function getNonPerformingCashiers() {
-
+            console.log(data);
+            datatable.clear().draw();
 
 
-    return    $.ajax({
-        url: "{{url('reports/nonperformingcashiers')}}",
-        type: "GET",
-        dataType: 'json'
-
-    });
-}
+            if (data.length == 0) {
+                console.log("NO DATA!");
+            } else {
+                $.each(data, function (key, value) {
 
 
-$.when(getPayments()).done(function (response) {
-    console.log(response);
-    // the code here will be executed when all four ajax requests resolve.
-    // a1, a2, a3 and a4 are lists of length 3 containing the response text,
-    // status, and jqXHR object for each of the four ajax calls respectively.
-    var dataSet = response.data;
-    var cashiers = [];
-    var figures = [];
-    console.log('data her: ' + response);
-    $.each(dataSet, function (i, item) {
+                    var j = -1;
+                    var r = new Array();
+                    // represent columns as array
+                    r[++j] = '<td class="subject">' + value.tenant_name + '</td>';
+                    r[++j] = '<td class="subject">' + value.apartment_name + '</td>';
+                    r[++j] = '<td class="subject">' + value.apartment_type + '</td>';
+                    r[++j] = '<td class="subject">' + value.currency + ' ' + value.amount + '</td>';
+                    r[++j] = '<td class="subject">' + value.period + ' months </td>';
+                    r[++j] = '<td class="subject">' + value.start_date + ' </td>';
+                    r[++j] = '<td class="subject"><span class="badge badge-danger">' + value.end_date + '</span> </td>';
 
-        cashiers.push(item.name);
-        figures.push(item.volume);
-    });
-    figures = figures.map(Number);
-    console.log('figures: ' + figures);
-    console.log('regions:' + cashiers);
-    var ctx = document.getElementById("cashiersPerformance");
 
-    new Chart(ctx, {
-        type: 'horizontalBar',
-        data: {
-            labels: cashiers,
-            datasets: [{
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    "borderWidth": 1,
-                    "pointRadius": 1,
-                    "label": "Performig Cashiers",
-                    "data": figures
+                    rowNode = datatable.row.add(r);
+                });
 
-                }]
+                rowNode.draw().node();
+            }
 
         },
-        options: {
-            scales: {
-                yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+        error: function (jXHR, textStatus, errorThrown) {
+            alert(errorThrown);
+        }
+    });
+}
+getBills();
+
+    function getBills()
+    {
+
+        $.ajax({
+            url: "{{url('reports/billowingtenant')}}",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+
+                console.log(data);
+                billdatatable.clear().draw();
+
+
+                if (data.length == 0) {
+                    console.log("NO DATA!");
+                } else {
+                    $.each(data, function (key, value) {
+                    
+                    var amount_owing =  value.total_amount - value.amount_paid ;
+
+                        var j = -1;
+                        var r = new Array();
+                        // represent columns as array
+                        r[++j] = '<td class="subject">' + value.tenant_name + '</td>';
+                        r[++j] = '<td class="subject">' + value.apartment_name + '</td>';
+                        r[++j] = '<td class="subject">' + value.contactno + '</td>';
+                        r[++j] = '<td class="subject">' + value.total_amount + '</td>';
+                        r[++j] = '<td class="subject">' + value.amount_paid + '</td>';
+                        r[++j] = '<td class="subject">' +amount_owing+ '</td>';
+
+                        
+                        rowNode = billdatatable.row.add(r);
+                    });
+
+                    rowNode.draw().node();
+                }
+
+            },
+            error: function (jXHR, textStatus, errorThrown) {
+                alert(errorThrown);
             }
-        }
-    });
-});
-
-
-
-$.when(getNonPerformingCashiers()).done(function (response) {
-    console.log(response);
-    // the code here will be executed when all four ajax requests resolve.
-    // a1, a2, a3 and a4 are lists of length 3 containing the response text,
-    // status, and jqXHR object for each of the four ajax calls respectively.
-    var dataSet = response.data;
-    var cashiers = [];
-    var figures = [];
-    console.log('data her: ' + response);
-    $.each(dataSet, function (i, item) {
-
-        cashiers.push(item.cashier_name);
-        figures.push(item.volume);
-    });
-    figures = figures.map(Number);
-    console.log('figures: ' + figures);
-    console.log('regions:' + cashiers);
-    var ctx = document.getElementById("cashiersNonPerformance");
-
-    new Chart(ctx, {
-        type: 'horizontalBar',
-        data: {
-            labels: cashiers,
-            datasets: [{
-                    "backgroundColor": 'rgba(54, 162, 235, 0.2)',
-                    "borderColor": 'rgba(54, 162, 235, 1)',
-                    "borderWidth": 1,
-                    "pointRadius": 1,
-                    "label": "Non-Performig Cashiers",
-                    "data": figures
-
-                }]
-
-        }
-    });
-});
-
-$.when(getRegionPerformance()).done(function (response) {
-    console.log(response);
-    // the code here will be executed when all four ajax requests resolve.
-    // a1, a2, a3 and a4 are lists of length 3 containing the response text,
-    // status, and jqXHR object for each of the four ajax calls respectively.
-    var dataSet = response.data;
-    var regions = [];
-    var figures = [];
-    console.log('data her: ' + response);
-    $.each(dataSet, function (i, item) {
-
-        regions.push(item.region_name);
-        figures.push(item.volume);
-    });
-    figures = figures.map(Number);
-    console.log('figures: ' + figures);
-    console.log('regions:' + regions);
-    var ctx = document.getElementById("regions").getContext('2d');
-    ;
-
-    new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: regions,
-            datasets: [{
-                    backgroundColor: [
-                        "#2ecc71",
-                        "#3498db",
-                        "#95a5a6",
-                        "#9b59b6",
-                        "#f1c40f",
-                        "#e74c3c",
-                        "#34495e"
-                    ],
-                    data: figures
-                }]
-
-        }
-    });
-});
-
-
-$.when(getShiftPerformance()).done(function (response) {
-    console.log(response);
-    // the code here will be executed when all four ajax requests resolve.
-    // a1, a2, a3 and a4 are lists of length 3 containing the response text,
-    // status, and jqXHR object for each of the four ajax calls respectively.
-    var dataSet = response.data;
-    var shifts = [];
-    var figures = [];
-    console.log('data her: ' + response);
-    $.each(dataSet, function (i, item) {
-
-        shifts.push(item.shift);
-        figures.push(item.volume);
-    });
-    figures = figures.map(Number);
-    console.log('figures: ' + figures);
-    console.log('shifts:' + shifts);
-    var ctx = document.getElementById("shift").getContext('2d');
-    ;
-
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: shifts,
-            datasets: [{
-                    backgroundColor: [
-                        "#9b59b6",
-                        "#f1c40f",
-                        "#e74c3c",
-                        "#34495e"
-                    ],
-                    data: figures
-                }]
-
-        }
-    });
-});
-
-
-
-$.when(getNonPerformingTolls()).done(function (response) {
-    console.log(response);
-    // the code here will be executed when all four ajax requests resolve.
-    // a1, a2, a3 and a4 are lists of length 3 containing the response text,
-    // status, and jqXHR object for each of the four ajax calls respectively.
-    var dataSet = response.data;
-    var cashiers = [];
-    var figures = [];
-    console.log('data her: ' + response);
-    $.each(dataSet, function (i, item) {
-
-        cashiers.push(item.area);
-        figures.push(item.volume);
-    });
-    figures = figures.map(Number);
-    console.log('tollfigures: ' + figures);
-    console.log('toll regions:' + cashiers);
-    var ctx = document.getElementById("nonperformingtolls");
-
-    new Chart(ctx, {
-        type: 'horizontalBar',
-        data: {
-            labels: cashiers,
-            datasets: [{
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    "borderWidth": 1,
-                    "pointRadius": 1,
-                    "label": "Non Performig TollPoints",
-                    "data": figures
-
-                }]
-
-        }
-    });
-});
-
-
+        });
+    }
 
 </script>
 @endsection

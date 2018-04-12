@@ -115,8 +115,10 @@ Route::group(['middleware' => 'check-userauth'], function () {
     Route::delete('account/deleteuser/{id}', 'AccountController@deleteUser');
     Route::put('account/user', 'AccountController@updateUserInfo');
     Route::post('account/saveuser', 'AccountController@saveUserInfo');
-    Route::post('login/updatepassword', 'LoginController@updatePassword');
+    Route::post('updatepassword', 'LoginController@updatePassword');
+    Route::get('account/changepassword', 'AccountController@showpassword');
 
+    //changepassword
 //tenant information savetenant
     Route::post('tenants/savetenant', 'TenantController@saveTenantInformation');
     Route::post('tenants/service', 'TenantController@saveTenantService');

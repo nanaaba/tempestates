@@ -26,6 +26,10 @@ class AccountController extends Controller {
                         ->get();
     }
 
+    public function showpassword() {
+                return view('changepassword');
+
+    }
     public function updateUserInfo(Request $request) {
 
         $data = $request->all();

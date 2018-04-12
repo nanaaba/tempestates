@@ -164,6 +164,7 @@
 
         });
 
+    }
 
         $('#billsForm').on('submit', function (e) {
             e.preventDefault();
@@ -223,7 +224,7 @@
 
         });
 
-    }
+    
 
 
 

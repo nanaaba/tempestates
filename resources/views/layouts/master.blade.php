@@ -7,7 +7,7 @@
 
 
 
-        <title>Rotamach</title>
+        <title>ROTAMAC</title>
         <link type="text/css" rel="stylesheet" href="{{ asset('css/app.css')}}"/>
         <link type="text/css" rel="stylesheet" href="{{ asset('vendors/iCheck/css/all.css')}}"/>
         <!-- end of global css -->

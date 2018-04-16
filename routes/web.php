@@ -133,6 +133,8 @@ Route::group(['middleware' => 'check-userauth'], function () {
     Route::delete('tenants/deletebill/{id}', 'TenantController@deleteBillInformation');
     Route::get('getallrents', 'TenantController@getRents');
     Route::get('getexpiringrents', 'TenantController@getExpiringRents');
+        Route::get('getexpiredrents', 'TenantController@getExpiredRents');
+
     Route::get('tenant/rent/{id}', 'TenantController@getTenantRentInformation');
     Route::post('tenantaccumulatedbill', 'TenantController@getTenantTotalBill');
 

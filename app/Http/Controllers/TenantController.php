@@ -476,8 +476,13 @@ class TenantController extends Controller {
     }
 
     public function getExpiringRents() {
-        return DB::table('expiring_rent')->where('tenant_active', 0)->get();
+        return DB::table('rent_expiring')->where('tenant_active', 0)->get();
     }
+     public function getExpiredRents() {
+        return DB::table('expired_rents')->where('tenant_active', 0)->get();
+    }
+    
+    //
 
     public function getTenantRentInformation($id) {
 

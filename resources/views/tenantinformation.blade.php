@@ -246,8 +246,12 @@
                                                 <label for="dob" class="form-control-label">Date of Birth</label>
                                             </div>
                                             <div class="col-sm-9">
-                                                <input id="dob"   value="{{$info[0]['dateofbirth']}}" name="dob" type="text" class="form-control"
-                                                       placeholder="dd/mm/yyyy"/>
+
+                                                <input type="text"  id="dob" value="{{$info[0]['dateofbirth']}}" name="dob"
+                                                       class="form-control float-right datepick"  data-date-format="yyyy-mm-dd" 
+                                                      data-language="en">
+
+                                               
                                             </div>
                                         </div>
 

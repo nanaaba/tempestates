@@ -7,7 +7,7 @@
 
 
 
-        <title>Rotamach</title>
+        <title>ROTAMAC</title>
         <link type="text/css" href="{{ asset('css/app.css')}}" rel="stylesheet"/>
         <!-- end of global css -->
         <!--page level css-->

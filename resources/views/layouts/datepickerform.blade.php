@@ -19,12 +19,14 @@
         <link href="{{ asset('vendors/datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet"/>
         <link rel="stylesheet" type="text/css" href="{{ asset('vendors/datedropper/datedropper.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('vendors/timedropper/css/timedropper.css')}}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('vendors/jquerydaterangepicker/css/daterangepicker.min.css')}}">
-        <!--clock face css-->
-        <link rel="stylesheet" type="text/css" href="{{ asset('vendors/clockpicker/css/bootstrap-clockpicker.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('vendors/jquerydaterangepicker/css/daterangepicker.min.css')}}"><!--
+        clock face css-->
+    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+
+<!--        <link rel="stylesheet" type="text/css" href="{{ asset('vendors/clockpicker/css/bootstrap-clockpicker.min.css')}}">-->
         <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css')}}">
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/datepicker.css')}}">
+<!--        <link rel="stylesheet" type="text/css" href="{{ asset('css/datepicker.css')}}">-->
         <link rel="stylesheet" type="text/css" href="{{asset('css/custom_css/invoice.css')}}">
         <link href="{{asset('vendors/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('vendors/select2/css/select2-bootstrap.css')}}" rel="stylesheet" type="text/css">
@@ -35,7 +37,10 @@
         <link href="{{ asset('vendors/pnotify/css/pnotify.mobile.css')}}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('vendors/pnotify/css/pnotify.history.css')}}" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="{{ asset('css/custom_css/toastr_notificatons.css')}}">
-
+ <link rel="stylesheet" href="{{ asset('bootstrap-daterangepicker/daterangepicker.css')}}">
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="{{ asset('bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+   
 
         <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/dataTables.bootstrap4.css')}}"/>
         <link rel="stylesheet" type="text/css" href="{{asset('vendors/datatables/css/buttons.bootstrap.css')}}"/>
@@ -91,14 +96,19 @@
         <script src="{{ asset('vendors/inputmask/inputmask/inputmask.date.extensions.js')}}" type="text/javascript"></script>
         <script src="{{ asset('vendors/inputmask/inputmask/inputmask.extensions.js')}}" type="text/javascript"></script>
         <!-- date-range-picker -->
-        <script src="{{ asset('vendors/daterangepicker/js/daterangepicker.js')}}" type="text/javascript"></script>
-        <!-- bootstrap time picker -->
+        <script src="{{ asset('bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+<!-- bootstrap datepicker -->
+<script src="{{ asset('bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+
+<!--        <script src="{{ asset('vendors/daterangepicker/js/daterangepicker.js')}}" type="text/javascript"></script>-->
+<!--         bootstrap time picker -->
         <script src="{{ asset('vendors/datetimepicker/js/bootstrap-datetimepicker.min.js')}}" type="text/javascript"></script>
         <script src="{{ asset('vendors/clockpicker/js/bootstrap-clockpicker.min.js')}}" type="text/javascript"></script>
         <script src="{{ asset('vendors/datedropper/datedropper.js')}}" type="text/javascript"></script>
         <script src="{{ asset('vendors/timedropper/js/timedropper.js')}}" type="text/javascript"></script>
         <script src="{{ asset('vendors/datetime/js/jquery.datetimepicker.full.min.js')}}" type="text/javascript"></script>
         <script src="{{ asset('js/custom_js/datepickers.js')}}" type="text/javascript"></script>
+       
         <script src="{{asset('vendors/bootstrap-multiselect/js/bootstrap-multiselect.js')}}" type="text/javascript"></script>
         <script src="{{asset('vendors/select2/js/select2.js')}}" type="text/javascript"></script>
         <script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.js')}}"></script>
@@ -110,7 +120,7 @@
         <script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.desktop.js')}}"></script>
         <script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.history.js')}}"></script>
         <script type="text/javascript" src="{{asset('vendors/pnotify/js/pnotify.callbacks.js')}}"></script>
-        <script src="{{asset('js/custom_js/notifications.js')}}"></script>
+<!--        <script src="{{asset('js/custom_js/notifications.js')}}"></script>-->
         <script src="{{asset('js/jquery.printElement.min.js')}}"></script>
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" type="text/javascript"></script>
         <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>

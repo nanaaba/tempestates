@@ -77,7 +77,7 @@
                         </div>
                         <div class="text-right">
                             <h3 class="text-dark"><b>{{$totalexpiringrent}}</b></h3>
-                            <p>Expiring Rent</p>
+                            <p>Expired Rents</p>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -92,7 +92,7 @@
                 <div class="card ">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <i class="ti-layout-grid3"></i> Rent Expiring 3 months from now 
+                            <i class="ti-layout-grid3"></i> Rent Expiring within 3 months  
                         </h3>
 
                     </div>

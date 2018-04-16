@@ -180,7 +180,7 @@
                         <li   class="{{ Request::is('reports/expiringrent') ? 'active' : '' }}">
                             <a href="{{ url('reports/expiringrent') }}">
                                 <i class="menu-icon ti-layout-list-large-image"></i>
-                                <span class="mm-text ">Rent Expiring </span>
+                                <span class="mm-text ">Expired Rents  </span>
                             </a>
                         </li>
                         

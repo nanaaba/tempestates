@@ -28,7 +28,7 @@
                 <div class="card ">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <i class="ti-layout-grid3"></i> Rent Expiring 3 months from now 
+                            <i class="ti-layout-grid3"></i> Expired Rents 
                         </h3>
 
                     </div>
@@ -52,7 +52,7 @@
                                                         </th>
                                                         <th>Rent Period</th>
                                                         <th>Start Date</th>
-                                                        <th>Expiring Date</th>
+                                                        <th>Expired Date</th>
 
 
                                                     </tr>
@@ -110,7 +110,7 @@
     {
 
         $.ajax({
-            url: "{{url('getexpiringrents')}}",
+            url: "{{url('getexpiredrents')}}",
             type: "GET",
             dataType: "json",
             success: function (data) {

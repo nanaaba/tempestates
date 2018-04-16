@@ -26,7 +26,7 @@ class DashboardController extends Controller {
         $reports = new ReportController();
         $tenants = $this->totalTenants();
         $apartments = $this->totalAvailableApartments();
-        $expiring_rent = $this->expiringRentCount();
+        $expiring_rent = $this->expiredRentCount();
        // $owingtenants = $reports->getRentOwingTenants();
         //$expiring_rent_data = $this->expiringRents();
 
@@ -54,9 +54,9 @@ class DashboardController extends Controller {
         return $total;
     }
 
-    public function expiringRentCount() {
+    public function expiredRentCount() {
 
-        $total = DB::table('expiring_rent')->count();
+        $total = DB::table('expired_rents')->count();
         return $total;
     }
 

@@ -610,190 +610,193 @@
 <script type="text/javascript" src="{{ asset('vendors/sweetalert2/js/sweetalert2.min.js')}}"></script>
 
 <script type="text/javascript">
-                                                    $('.datepick').datepicker({
-                                                        format: 'dd-mm-yyyy'
-                                                    });
-                                                    PNotify.prototype.options.styling = "bootstrap3";
-                                                    PNotify.prototype.options.styling = "jqueryui";
-                                                    PNotify.prototype.options.styling = "fontawesome";
+$('.datepick').datepicker({
+    format: 'dd-mm-yyyy'
+});
+PNotify.prototype.options.styling = "bootstrap3";
+PNotify.prototype.options.styling = "jqueryui";
+PNotify.prototype.options.styling = "fontawesome";
 
-                                                    $('#rootwizard').bootstrapWizard({onTabShow: function (tab, navigation, index) {
-                                                            var $total = navigation.find('li').length;
-                                                            var $current = index + 1;
-                                                            var $percent = ($current / $total) * 100;
-                                                            $('#rootwizard').find('.bar').css({width: $percent + '%'});
-                                                        }});
-                                                    $('#rootwizard .finish').click(function () {
-                                                        // var formData = $("#tenantForm").serialize();
-                                                        var formData = new FormData($("#tenantForm")[0]);
-                                                        var email = $('#email').val();
-                                                        if (email == "") {
-                                                            alert('Email cant be empty');
-                                                        } else {
-                                                            $('#loaderModal').modal('show');
+$('#rootwizard').bootstrapWizard({onTabShow: function (tab, navigation, index) {
+        var $total = navigation.find('li').length;
+        var $current = index + 1;
+        var $percent = ($current / $total) * 100;
+        $('#rootwizard').find('.bar').css({width: $percent + '%'});
+    }});
+$('#rootwizard .finish').click(function () {
+    // var formData = $("#tenantForm").serialize();
+    var formData = new FormData($("#tenantForm")[0]);
+    var email = $('#email').val();
+    if (email == "") {
+        alert('Email cant be empty');
+    } else {
+        $('#loaderModal').modal('show');
+        console.log('data :' + formData);
+        $.ajax({
+            url: "savetenant",
+            type: "POST",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function (data) {
+                $('#loaderModal').modal('hide');
+                console.log('server data :' + data);
+                if (data.success == 0) {
+                    $('#tenantForm select').val('').trigger('change');
+                    document.getElementById("tenantForm").reset();
+                    new PNotify({
+                        title: 'Success',
+                        text: "Information saved successfully.Tenant Code is" + data.tenat_id,
+                        type: 'success'
+                    });
+                    // swal("Success", "Information saved successfully.Tenant Code is"+data.tenat_id, 'success');
+                } else if (data.success == 1) {
+                    new PNotify({
+                        title: 'Error',
+                        text: "Error in Saving Tenant Information",
+                        type: 'error'
+                    });
+                    //swal("Error", "Error in Saving Tenant Information", 'error');
 
-                                                            console.log('data :' + formData);
-                                                            $.ajax({
-                                                                url: "savetenant",
-                                                                type: "POST",
-                                                                data: formData,
-                                                                cache: false,
-                                                                contentType: false,
-                                                                processData: false,
-                                                                dataType: 'json',
-                                                                success: function (data) {
-                                                                    $('#loaderModal').modal('hide');
-
-                                                                    console.log('server data :' + data);
-                                                                    if (data.success == 0) {
-                                                                        $('#tenantForm select').val('').trigger('change');
-
-                                                                        document.getElementById("tenantForm").reset();
-                                                                        new PNotify({
-                                                                            title: 'Success',
-                                                                            text: "Information saved successfully.Tenant Code is" + data.tenat_id,
-                                                                            type: 'success'
-                                                                        });
-                                                                        // swal("Success", "Information saved successfully.Tenant Code is"+data.tenat_id, 'success');
-                                                                    } else if (data.success == 1) {
-                                                                        new PNotify({
-                                                                            title: 'Error',
-                                                                            text: "Error in Saving Tenant Information",
-                                                                            type: 'error'
-                                                                        });
-                                                                        //swal("Error", "Error in Saving Tenant Information", 'error');
-
-                                                                    } else {
-                                                                        // swal("Error", data.message, 'error');
-                                                                        new PNotify({
-                                                                            title: 'Error',
-                                                                            text: data.message,
-                                                                            type: 'error'
-                                                                        });
-
-                                                                    }
+                } else {
+                    // swal("Error", data.message, 'error');
+                    new PNotify({
+                        title: 'Error',
+                        text: data.message,
+                        type: 'error'
+                    });
+                }
 
 
-                                                                }
+            },
+            error: function (jqXHR, error, errorThrown) {
+                if (jqXHR.status && jqXHR.status == 400) {
+                    alert(jqXHR.responseText);
+                } else {
+                    alert("Something went wrong:Contact Administrator");
+                }
+            }
 
-                                                            });
-                                                            // alert('Finished!, Starting over!');
+        });
+        // alert('Finished!, Starting over!');
 
-                                                            //$('#rootwizard').find("a[href*='tab1']").trigger('click');
-                                                        }
-                                                    });
-                                                    $('.select2').select2();
+        //$('#rootwizard').find("a[href*='tab1']").trigger('click');
+    }
+}
+);
+$('.select2').select2();
 
-                                                    getApartments();
-
-
-                                                    function getApartments() {
-
-
-                                                        $.ajax({
-                                                            url: "{{url('apartment/all')}}",
-                                                            type: "GET",
-                                                            dataType: 'json',
-                                                            success: function (data) {
-
-                                                                $.each(data, function (i, item) {
-
-                                                                    $('#apartments').append($('<option>', {
-                                                                        value: item.id,
-                                                                        text: item.name
-                                                                    }));
-                                                                });
-                                                            }
-
-                                                        });
-                                                    }
-
-                                                    $('#apartments').change(function () {
-                                                        var id = $(this).val();
-                                                        getApartmentInfo(id);
-                                                    });
-
-                                                    function getApartmentInfo(id) {
+getApartments();
 
 
-                                                        $.ajax({
-                                                            url: "../apartment/" + id,
-                                                            type: "GET",
-                                                            dataType: 'json',
-                                                            success: function (data) {
-                                                                $('#apartment_type').val(data[0].type);
-                                                                $('#monthly_charge').val(data[0].monthly_charge);
-                                                                $('#currency').val(data[0].currency);
+function getApartments() {
 
-                                                                //currency
-                                                            }
+
+    $.ajax({
+        url: "{{url('apartment/all')}}",
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
+
+            $.each(data, function (i, item) {
+
+                $('#apartments').append($('<option>', {
+                    value: item.id,
+                    text: item.name
+                }));
+            });
+        }
+
+    });
+}
+
+$('#apartments').change(function () {
+    var id = $(this).val();
+    getApartmentInfo(id);
+});
+
+function getApartmentInfo(id) {
+
+
+    $.ajax({
+        url: "../apartment/" + id,
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
+            $('#apartment_type').val(data[0].type);
+            $('#monthly_charge').val(data[0].monthly_charge);
+            $('#currency').val(data[0].currency);
+            //currency
+        }
 //up_facilities
-                                                        });
-                                                    }
-                                                    getRentPeriods();
-                                                    function getRentPeriods() {
+    });
+}
+getRentPeriods();
+function getRentPeriods() {
 
 
-                                                        $.ajax({
-                                                            url: "{{url('configuration/getrentperiods')}}",
-                                                            type: "GET",
-                                                            dataType: 'json',
-                                                            success: function (data) {
+    $.ajax({
+        url: "{{url('configuration/getrentperiods')}}",
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
 
-                                                                $.each(data, function (i, item) {
+            $.each(data, function (i, item) {
 
-                                                                    $('#rent_periods').append($('<option>', {
-                                                                        value: item.name,
-                                                                        text: item.name + " months"
-                                                                    }));
-                                                                });
-                                                            }
+                $('#rent_periods').append($('<option>', {
+                    value: item.name,
+                    text: item.name + " months"
+                }));
+            });
+        }
 
-                                                        });
-                                                    }
+    });
+}
 
-                                                    getIds();
-                                                    function getIds() {
-
-
-                                                        $.ajax({
-                                                            url: "{{url('configuration/getidentificationcards')}}",
-                                                            type: "GET",
-                                                            dataType: 'json',
-                                                            success: function (data) {
-
-                                                                $.each(data, function (i, item) {
-
-                                                                    $('#id_number').append($('<option>', {
-                                                                        value: item.name,
-                                                                        text: item.name
-                                                                    }));
-                                                                });
-                                                            }
-
-                                                        });
-                                                    }
-
-                                                    function computeEndDate() {
-                                                        var rent = $('#rent_periods').val();
-                                                        var startdate = $('#start_date').val();
-                                                        if (rent == " " || startdate == " ") {
-                                                            alert(' rent period and startdate shouldnt be empty ');
-                                                        } else {
-                                                            $.ajax({
-                                                                url: "../computedate/" + rent + "/" + startdate,
-                                                                type: "GET",
-                                                                success: function (data) {
-                                                                    console.log('dj' + data);
-                                                                    $('#end_date').val(data);
-                                                                }
-                                                            });
-                                                        }
+getIds();
+function getIds() {
 
 
+    $.ajax({
+        url: "{{url('configuration/getidentificationcards')}}",
+        type: "GET",
+        dataType: 'json',
+        success: function (data) {
+
+            $.each(data, function (i, item) {
+
+                $('#id_number').append($('<option>', {
+                    value: item.name,
+                    text: item.name
+                }));
+            });
+        }
+
+    });
+}
+
+function computeEndDate() {
+    var rent = $('#rent_periods').val();
+    var startdate = $('#start_date').val();
+    if (rent == " " || startdate == " ") {
+        alert(' rent period and startdate shouldnt be empty ');
+    } else {
+        $.ajax({
+            url: "../computedate/" + rent + "/" + startdate,
+            type: "GET",
+            success: function (data) {
+                console.log('dj' + data);
+                $('#end_date').val(data);
+            }
+        });
+    }
 
 
-                                                    }
+
+
+}
 
 </script>
 @endsection

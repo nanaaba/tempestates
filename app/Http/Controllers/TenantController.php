@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\NotificationsController;
 use Illuminate\Http\Request;
@@ -134,6 +135,22 @@ class TenantController extends Controller {
                     return json_encode($data);
                 }
             } catch (\Illuminate\Database\QueryException $e) {
+                Log::emergency("Unable to save Tenant Information:" . $e->getMessage());
+                Log::info($request->all());
+
+                $data = array('success' => 2, 'message' => $e->getMessage());
+                return json_encode($data);
+            } catch (\App\Exceptions $e) {
+                Log::emergency("Unable to save Tenant Information:" . $e->getMessage());
+                Log::info($request->all());
+
+                $data = array('success' => 2, 'message' => $e->getMessage());
+                return json_encode($data);
+            } catch (Exception $e) {
+
+                Log::emergency("Unable to save Tenant Information:" . $e->getMessage());
+                Log::info($request->all());
+
                 $data = array('success' => 2, 'message' => $e->getMessage());
                 return json_encode($data);
             }
@@ -190,8 +207,7 @@ class TenantController extends Controller {
         } else {
             DB::insert("update rent set apartment_id='$apartment' ,period='$period',currency='$currency', amount='$amount',start_date='$startdate',end_date='$enddate',modified_by='$createdby' where tenant_id=$tenant");
         }
-                $this->setApartmentStatus($apartment);
-
+        $this->setApartmentStatus($apartment);
     }
 
     public function savetenantPayment($rent, $amount, $paymentdate, $description, $mode, $url = null) {
@@ -382,7 +398,7 @@ class TenantController extends Controller {
             $saved = $new->save();
 
             if ($saved) {
-                 $this->updateTenantRent(strip_tags($data['apartment']), $data['tenant_id'], strip_tags($data['rent_period']), strip_tags($data['currency']), strip_tags($data['amount']), strip_tags($data['start_date']), strip_tags($data['end_date']));
+                $this->updateTenantRent(strip_tags($data['apartment']), $data['tenant_id'], strip_tags($data['rent_period']), strip_tags($data['currency']), strip_tags($data['amount']), strip_tags($data['start_date']), strip_tags($data['end_date']));
 
                 $audit = new AuditLogsController();
                 $audit->saveActivity('Updated tenant information' . $data['fullname'] . ' information');
@@ -478,10 +494,11 @@ class TenantController extends Controller {
     public function getExpiringRents() {
         return DB::table('rent_expiring')->where('tenant_active', 0)->get();
     }
-     public function getExpiredRents() {
+
+    public function getExpiredRents() {
         return DB::table('expired_rents')->where('tenant_active', 0)->get();
     }
-    
+
     //
 
     public function getTenantRentInformation($id) {

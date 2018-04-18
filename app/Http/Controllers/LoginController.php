@@ -8,6 +8,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
+
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -21,7 +23,6 @@ class LoginController extends Controller {
         $data = $request->all();
         $email = $data['email'];
         $password = md5($data['password']);
-
 
 
         $users = User::where([ ['email', '=', $email], ['password', '=', $password]])->get();

@@ -8,7 +8,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\NotificationsController;
 use Illuminate\Http\Request;
@@ -19,6 +18,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ApartmentController;
+use Illuminate\Support\Facades\Log;
 
 class TenantController extends Controller {
 

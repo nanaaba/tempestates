@@ -8,13 +8,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Log;
-
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
-use Illuminate\Database\Eloquent;
+
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller {
 
@@ -25,12 +23,15 @@ class LoginController extends Controller {
         $password = md5($data['password']);
 
 
-        $users = User::where([ ['email', '=', $email], ['password', '=', $password]])->get();
+        $users = User::where([['email', '=', $email], ['password', '=', $password]])->get();
         $request->session()->regenerate();
 
 
         if (!$users) {
+             Log::info('User tried logging in: '.$email);
+
             return '1';
+            
         } else {
             $email = $users[0]['email'];
             $name = $users[0]['name'];
@@ -43,13 +44,15 @@ class LoginController extends Controller {
             $request->session()->put('first_login', $first_login);
             $request->session()->put('role', $role);
             $request->session()->put('id', $id);
-            
+
             $this->setLastLogin($id);
+            
+            
+            Log::info('User logged in: '.$email);
+
             return $users;
         }
     }
-
-   
 
     public function updatePassword(Request $request) {
 
@@ -64,6 +67,7 @@ class LoginController extends Controller {
         if (!$save) {
             return '1';
         } else {
+            
             return '0';
         }
     }
@@ -73,7 +77,7 @@ class LoginController extends Controller {
 
         $update = User::find($id);
         $update->last_login = date('Y-m-d H:i:s');
-         $update->save();
-        
+        $update->save();
     }
+
 }

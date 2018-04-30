@@ -9,6 +9,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
+            'name' => 'channel-name',
             'channels' => ['syslog', 'slack'],
         ],
         'syslog' => [
@@ -18,10 +19,9 @@ return [
         'slack' => [
             'driver' => 'slack',
             'url' => env('LOG_SLACK_WEBHOOK_URL'),
-            'username' => 'Rotamac Log',
+            'username' => 'rotamac',
             'emoji' => ':boom:',
             'level' => 'critical',
         ],
-        
     ],
 ];

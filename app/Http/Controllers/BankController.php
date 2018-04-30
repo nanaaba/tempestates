@@ -14,6 +14,7 @@ use App\Bank;
 use App\RentPayments;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\TenantController;
+use Illuminate\Support\Facades\Log;
 
 class BankController extends Controller {
 
@@ -56,10 +57,13 @@ class BankController extends Controller {
             $audit->saveActivity('Added new bank: ' . $data['bank_name'] . ' with account number ' . $data['account_number']);
 
             return '0';
-        } catch (\Illuminate\Database\QueryException $e) {
+        } catch (\Illuminate\Database\QueryException $ex) {
+            Log::error('Error in saving bank : ' . $ex->getMessage());
+
             return 'Duplicate entry  for account number. ' . $data['account_number'] . ' already exist';
-        } catch (PDOException $e) {
-            return $e->getMessage();
+        } catch (Exception $e) {
+            Log::error('Error in saving bank : ' . $ex->getMessage());
+            return 'Technical Error.Contact System Administrator';
         }
     }
 
@@ -132,36 +136,40 @@ class BankController extends Controller {
         $new->created_at = date('Y-m-d H:i:s');
 
         try {
-            $saved = $new->save();
+            $new->save();
 
-            if ($saved) {
-                $payment_id = $new->id;
-                $fedbck = $this->savePaymentDetails($payment_id, $data);
 
-                $dataresponse = array('success' => 0, 'message' => 'success' . $fedbck);
+            $payment_id = $new->id;
+            $fedbck = $this->savePaymentDetails($payment_id, $data);
 
-                $tenant = new TenantController();
-                $tenantInformation = $tenant->getTenantInformation($data['tenant']);
-                $info = json_decode($tenantInformation, true);
+            $dataresponse = array('success' => 0, 'message' => 'success' . $fedbck);
 
-                $notifications = new NotificationsController();
-                $message = 'Hi ' . $info[0]['title'] . ' ' . $info[0]['name'] . ','
-                        . 'Please an amount of GHS ' . $data['totalamount'] . ' payments have been received through '
-                        . $data['mode'] . ' payments on ' . $request['payment_date'] . '.';
-                $notifications->sendemail($info[0]['email_address'], 'Payment Notification', $message);
-                //   $notifications->sendsms($info[0]['contactno'], $message);
-                $tenantname = \App\Tenant::where('id', $data['tenant'])->first()->name;
+            $tenant = new TenantController();
+            $tenantInformation = $tenant->getTenantInformation($data['tenant']);
+            $info = json_decode($tenantInformation, true);
 
-                $audit = new AuditLogsController();
-                $audit->saveActivity('Added new payment of: ' . $data['currency'] . ' ' . $data['totalamount'] . ' as ' . $data['description'] . ' to ' . $tenantname);
+            $notifications = new NotificationsController();
+            $message = 'Hi ' . $info[0]['title'] . ' ' . $info[0]['name'] . ','
+                    . 'Please an amount of GHS ' . $data['totalamount'] . ' payments have been received through '
+                    . $data['mode'] . ' payments on ' . $request['payment_date'] . '.';
+            $notifications->sendemail($info[0]['email_address'], 'Payment Notification', $message);
+            //   $notifications->sendsms($info[0]['contactno'], $message);
+            $tenantname = \App\Tenant::where('id', $data['tenant'])->first()->name;
 
-                return json_encode($dataresponse);
-            } else {
-                $data = array('success' => 1, 'message' => 'error');
-                return json_encode($data);
-            }
+            $audit = new AuditLogsController();
+            $audit->saveActivity('Added new payment of: ' . $data['currency'] . ' ' . $data['totalamount'] . ' as ' . $data['description'] . ' to ' . $tenantname);
+
+            return json_encode($dataresponse);
+            /////
         } catch (\Illuminate\Database\QueryException $e) {
-            $data = array('success' => 2, 'message' => $e->getMessage());
+            Log::error('Error in saving rent payment,Query Exception : ' . $e->getMessage());
+
+            $data = array('success' => 2, 'message' => "Contact Administrator");
+            return json_encode($data);
+        } catch (\Exception $e) {
+            Log::error('Error in saving rent payment,General Exception : ' . $e->getMessage());
+
+            $data = array('success' => 2, 'message' => "Contact Administrator");
             return json_encode($data);
         }
     }
@@ -180,21 +188,36 @@ class BankController extends Controller {
         $balance = $data['remaining_amount'];
 
         if (in_array('rent', $payment_type)) {
-            DB::insert('insert into payments (payment_id,tenant_id,currency,payment_type, rent_amount,rent_period,rent_start_date,rent_end_date)'
-                    . ' values (?, ?,?,?,?,?,?,?)', ["$payment_id", "$tenant_id", "$currency", "rent", "$rent_amount", "$rent_period", "$rent_start_date", $rent_end_date]);
+            try {
+                DB::insert('insert into payments (payment_id,tenant_id,currency,payment_type, rent_amount,rent_period,rent_start_date,rent_end_date)'
+                        . ' values (?, ?,?,?,?,?,?,?)', ["$payment_id", "$tenant_id", "$currency", "rent", "$rent_amount", "$rent_period", "$rent_start_date", $rent_end_date]);
+            } catch (Exception $e) {
+                Log::error('Error in saving rent payment details,General Exception : ' . $e->getMessage());
+            }
         }
         if (in_array('bill', $payment_type)) {
             $bill_date = explode('to', strip_tags($data['bill_date']));
             $bill_end_date = date('Y-m-d', strtotime($bill_date[1]));
             $bill_start_date = date('Y-m-d', strtotime($bill_date[0]));
-            DB::insert('insert into payments (payment_id,tenant_id,currency,payment_type,bill_start_date,bill_end_date,bill_amount)'
-                    . ' values (?,?,?,?,?,?,?)', ["$payment_id", "$tenant_id", "$currency", "bill", "$bill_start_date", "$bill_end_date", "$bill_amount"]);
+
+            try {
+                DB::insert('insert into payments (payment_id,tenant_id,currency,payment_type,bill_start_date,bill_end_date,bill_amount)'
+                        . ' values (?,?,?,?,?,?,?)', ["$payment_id", "$tenant_id", "$currency", "bill", "$bill_start_date", "$bill_end_date", "$bill_amount"]);
+            } catch (Exception $e) {
+                Log::error('Error in saving bill payment details,General Exception : ' . $e->getMessage());
+            }
         }
 
         if ($balance > 0) {
 
-            DB::insert('insert into payments_surplus (payment_id,tenant_id,amount,currency)'
-                    . ' values (?,?,?,?)', ["$payment_id", "$tenant_id", "$balance", "$currency"]);
+
+            try {
+
+                DB::insert('insert into payments_surplus (payment_id,tenant_id,amount,currency)'
+                        . ' values (?,?,?,?)', ["$payment_id", "$tenant_id", "$balance", "$currency"]);
+            } catch (Exception $e) {
+                Log::error('Error in saving  payment surplus,General Exception : ' . $e->getMessage());
+            }
         }
     }
 
@@ -203,8 +226,13 @@ class BankController extends Controller {
         $currency = $data['currency'];
         $tenant_id = $data['tenant'];
 
-        DB::insert('insert into payments_surplus (payment_id,tenant_id,amount,currency)'
-                . ' values (?,?,?,?)', ["$paymentid", "$tenant_id", "$balance", "$currency"]);
+
+        try {
+            DB::insert('insert into payments_surplus (payment_id,tenant_id,amount,currency)'
+                    . ' values (?,?,?,?)', ["$paymentid", "$tenant_id", "$balance", "$currency"]);
+        } catch (Exception $e) {
+            Log::error('Error in saving  payment surplus,General Exception : ' . $e->getMessage());
+        }
     }
 
     public function getRentpayments() {
@@ -239,14 +267,22 @@ class BankController extends Controller {
 
 
 
-        DB::insert('insert into cleared_payments (bank_code,bank_name,total_amount, deposited_by,payment_date,scanned_url,created_by) values (?, ?,?,?,?,?,?)', ["$bank_code", "$bank_name", "$total_amount", "$deposited_by", "$payment_date", "$scanned_url", $createdby]);
-
+        try {
+            DB::insert('insert into cleared_payments (bank_code,bank_name,total_amount, deposited_by,payment_date,scanned_url,created_by) values (?, ?,?,?,?,?,?)', ["$bank_code", "$bank_name", "$total_amount", "$deposited_by", "$payment_date", "$scanned_url", $createdby]);
+        } catch (Exception $e) {
+            Log::error('Error in clearing  payment ,General Exception : ' . $e->getMessage());
+        }
         return $bank_code;
     }
 
     public function updatepaymentsascleared($bank_code, $paymentsids) {
 
-        DB::statement('update rent_payments set cleared_code= "' . $bank_code . '" where id in(' . $paymentsids . ')');
+
+        try {
+            DB::statement('update rent_payments set cleared_code= "' . $bank_code . '" where id in(' . $paymentsids . ')');
+        } catch (Exception $e) {
+            Log::error('Error in updating  payment as cleared with bank code::' . $bank_code . ' ,General Exception : ' . $e->getMessage());
+        }
     }
 
     public function deletebank($id) {
@@ -332,12 +368,13 @@ class BankController extends Controller {
         $update->active = 1;
         $update->modified_by = Session::get('id');
         $update->modified_at = date('Y-m-d H:i:s');
-        $saved = $update->save();
 
-        if (!$saved) {
-            return '1';
-        } else {
+        try {
+            $update->save();
             return '0';
+        } catch (Exception $e) {
+            Log::error('Error in deleting  payment info with payment id ::' . $id . ' ,General Exception : ' . $e->getMessage());
+            return '1';
         }
     }
 
@@ -380,19 +417,21 @@ class BankController extends Controller {
         $new->modified_at = date('Y-m-d H:i:s');
 
         try {
-            $saved = $new->save();
+            $new->save();
 
-            if ($saved) {
 
-                $dataresponse = array('success' => 0, 'message' => 'update information successfully');
+            $dataresponse = array('success' => 0, 'message' => 'update information successfully');
 
-                return json_encode($dataresponse);
-            } else {
-                $data = array('success' => 1, 'message' => 'error');
-                return json_encode($data);
-            }
+            return json_encode($dataresponse);
         } catch (\Illuminate\Database\QueryException $e) {
-            $data = array('success' => 2, 'message' => $e->getMessage());
+
+            Log::error('Error in updating  rent payment info with rent id ::' . $data['code'] . ' ,Query Exception : ' . $e->getMessage());
+
+            $data = array('success' => 1, 'message' => "Error in updating rent payment info.Contact Administrator");
+            return json_encode($data);
+        } catch (Exception $e) {
+            Log::error('Error in updating  rent payment info with rent id ::' . $data['code'] . ' ,General Exception : ' . $e->getMessage());
+            $data = array('success' => 1, 'message' => "Error in updating rent info.Contact Administrator");
             return json_encode($data);
         }
     }

@@ -14,6 +14,7 @@ use App\Apartment;
 use App\ApartmentFacilities;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ApartmentController extends Controller {
 
@@ -42,15 +43,18 @@ class ApartmentController extends Controller {
         $update->active = 1;
         $update->modified_by = Session::get('id');
         $update->modified_at = date('Y-m-d H:i:s');
-        $saved = $update->save();
 
-        if (!$saved) {
-            return '1';
-        } else {
+
+        try {
+            $update->save();
             $audit = new AuditLogsController();
             $audit->saveActivity('Deleted apartment: ' . $name);
 
             return '0';
+        } catch (Exception $ex) {
+
+            Log::error('Error in deleting apartment : ' . $ex->getMessage());
+            return '1';
         }
     }
 
@@ -68,16 +72,18 @@ class ApartmentController extends Controller {
         $update->modified_at = date('Y-m-d H:i:s');
         $update->type = $data['type'];
 
-        $saved = $update->save();
-        if (!$saved) {
-            return '1';
-        } else {
+
+        try {
+            $update->save();
             $audit = new AuditLogsController();
             $audit->saveActivity('Updated apartment: ' . strip_tags($data['name']));
 
             $this->deleteApartmentFacilities($id);
-            $this->saveApartmentFacilities($id, $data['facilities']);
+            $this->saveApartmentFacilities($data['name'], $id, $data['facilities']);
             return '0';
+        } catch (Exception $ex) {
+            Log::error('Error in updating apartment : ' . $ex->getMessage());
+            return '1';
         }
     }
 
@@ -94,16 +100,23 @@ class ApartmentController extends Controller {
         $new->created_by = Session::get('id');
         $new->created_at = date('Y-m-d H:i:s');
 
-        $saved = $new->save();
-        $apartment_id = $new->id;
-        if (!$saved) {
-            return '1';
-        } else {
+
+
+
+
+
+        try {
+            $new->save();
+            $apartment_id = $new->id;
             $audit = new AuditLogsController();
             $audit->saveActivity('Added new apartment: ' . strip_tags($data['name']));
 
             $this->saveApartmentFacilities($data['name'], $apartment_id, $data['facilities']);
+
             return '0';
+        } catch (Exception $ex) {
+            Log::error('Error in saving apartment : ' . $ex->getMessage());
+            return '1';
         }
     }
 
@@ -132,12 +145,21 @@ class ApartmentController extends Controller {
 
             $dataArray[] = $data->attributesToArray();
         }
-        ApartmentFacilities::insert($dataArray);
+        try {
+            ApartmentFacilities::insert($dataArray);
+        } catch (Exception $ex) {
+            Log::error('Error in saving bulk apartment facilities for ' . $apartname . ' : ' . $ex->getMessage());
+        }
     }
 
     public function deleteApartmentFacilities($apartmentid) {
 
-        DB::table('apartments_facilities')->where('apartment_id', $apartmentid)->delete();
+
+        try {
+            DB::table('apartments_facilities')->where('apartment_id', $apartmentid)->delete();
+        } catch (Exception $ex) {
+            Log::error('Error deleting apartment facilities ' . $ex->getMessage());
+        }
     }
 
     private function generateuniqueCode($length = 10) {

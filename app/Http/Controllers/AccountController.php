@@ -13,6 +13,7 @@ use App\Http\Controllers\NotificationsController;
 use App\Permissions;
 use App\User;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
 
 class AccountController extends Controller {
 
@@ -27,9 +28,9 @@ class AccountController extends Controller {
     }
 
     public function showpassword() {
-                return view('changepassword');
-
+        return view('changepassword');
     }
+
     public function updateUserInfo(Request $request) {
 
         $data = $request->all();
@@ -40,14 +41,18 @@ class AccountController extends Controller {
         $update->email = $data['email'];
         $update->contactno = $data['contactno'];
 
-        $saved = $update->save();
-        if (!$saved) {
-            return '1';
-        } else {
+        try {
+
+            $update->save();
+
             $audit = new AuditLogsController();
             $audit->saveActivity('Update  ' . $data['name'] . ' information');
 
             return '0';
+        } catch (Exception $ex) {
+            
+            Log::error('Error in updating user profile : ' . $ex->getMessage());
+            return '1';
         }
     }
 
@@ -70,12 +75,12 @@ class AccountController extends Controller {
             $new->password = md5($newpassword);
             $new->contactno = $data['contactno'];
 
-            $saved = $new->save();
-            if (!$saved) {
-                $response['success'] = 1;
-                $response['message'] = 'Could not save';
-                return $response;
-            } else {
+
+
+
+            try {
+
+                $new->save();
 
                 $message = 'Hi,' . $data['name'] . ', have been created as a/an ' . $data['role'] . ' in Rotamac Application.Password generated is ' . $newpassword . '. Kindly visit this link 50.62.56.65/Rotamac to change password.';
                 $notifications = new NotificationsController();
@@ -86,6 +91,12 @@ class AccountController extends Controller {
 
                 $response['success'] = 0;
                 $response['message'] = 'User Information Saved Successfully';
+                return $response;
+            } catch (Exception $ex) {
+                
+                Log::error('Error in updating user profile : ' . $ex->getMessage());
+                $response['success'] = 1;
+                $response['message'] = 'Technical Error.Contact Administrator.';
                 return $response;
             }
         }
@@ -118,7 +129,7 @@ class AccountController extends Controller {
         if (!$saved) {
             return '1';
         } else {
-              $audit = new AuditLogsController();
+            $audit = new AuditLogsController();
             $audit->saveActivity('Deleted user: ' . $name);
 
             return '0';

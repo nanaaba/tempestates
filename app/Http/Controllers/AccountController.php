@@ -74,6 +74,7 @@ class AccountController extends Controller {
             $new->role = $data['role'];
             $new->password = md5($newpassword);
             $new->contactno = $data['contactno'];
+            $new->first_login = "NO";
 
 
 
@@ -85,7 +86,7 @@ class AccountController extends Controller {
                 $message = 'Hi,' . $data['name'] . ', have been created as a/an ' . $data['role'] . ' in Rotamac Application.Password generated is ' . $newpassword . '. Kindly visit this link 50.62.56.65/Rotamac to change password.';
                 $notifications = new NotificationsController();
                 $notifications->sendemail($data['email'], 'User Created', $message);
-                $notifications->sendsms($data['contactno'], $message);
+               // $notifications->sendsms($data['contactno'], $message);
                 $audit = new AuditLogsController();
                 $audit->saveActivity('Added new user :  ' . $data['name']);
 

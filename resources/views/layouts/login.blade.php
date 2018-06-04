@@ -53,7 +53,7 @@
         <!-- page level js -->
         <script type="text/javascript" src="{{asset('vendors/iCheck/js/icheck.js')}}"></script>
         <script src="{{asset('vendors/bootstrapvalidator/js/bootstrapValidator.min.js')}}" type="text/javascript"></script>
-        <script type="text/javascript" src="{{asset('js/custom_js/login.js')}}"></script>
+<!--        <script type="text/javascript" src="{{asset('js/custom_js/login.js')}}"></script>-->
         <script type="text/javascript" src="{{ asset('vendors/sweetalert2/js/sweetalert2.min.js')}}"></script>
         @yield('loginjs')
 

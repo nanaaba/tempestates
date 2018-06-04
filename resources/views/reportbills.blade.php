@@ -45,27 +45,16 @@
                                             </select>
                                         </div>
                                     </div>
-                                     <div class="form-group col-md-6">
-                                <label>Date range:</label>
+                                    <div class="form-group col-md-6">
+                                        <label>Date range:</label>
 
-                                <div class="input-group input-daterange" data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy">
-                                    <input class="form-control"  type="text">
-                                    <span class="input-group-addon">to</span>
-                                    <input class="form-control"  type="text">
-                                </div>
-                                <!-- /.input group -->
-                            </div>
-                                    <div class="col-lg-8">
+                                        <div class="input-group input-daterange" data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy">
+                                            <input class="form-control float-right datepick"  data-date-format="dd-mm-yyyy"  name="start_date"   data-language="en" id="start_date"  type="text">
 
-                                        <div class="form-group">
-                                            <label for="region" class="control-label">Service Date:</label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-fw ti-calendar"></i>
-                                                </div>
-                                                <input type="text" class="form-control float-right" id="date-range0" name="daterange" required placeholder="YYYY-MM-DD to YYYY-MM-DD">
-                                            </div>
+                                            <span class="input-group-addon">to</span>
+                                            <input class="form-control float-right datepick"  data-date-format="dd-mm-yyyy"  name="end_date"   data-language="en" id="end_date"  type="text">
                                         </div>
+                                        <!-- /.input group -->
                                     </div>
 
 
@@ -139,6 +128,9 @@
 @section('userjs')
 
 <script type="text/javascript">
+    $('.datepick').datepicker({
+        format: 'dd-mm-yyyy'
+    });
 
     var datatable = $('#reportTbl').DataTable({
         lengthChange: false,
@@ -176,65 +168,65 @@
 
     }
 
-        $('#billsForm').on('submit', function (e) {
-            e.preventDefault();
-            // var validator = $("#saveRegionForm").validate();
-            var formData = $(this).serialize();
-            $('#loaderModal').modal('show');
+    $('#billsForm').on('submit', function (e) {
+        e.preventDefault();
+        // var validator = $("#saveRegionForm").validate();
+        var formData = $(this).serialize();
+        $('#loaderModal').modal('show');
 
-            $('input:submit').attr("disabled", true);
-            $.ajax({
-                url: "{{url('retreivetenantbills')}}",
-                type: "POST",
-                data: formData,
-                success: function (data) {
-                    $('#loaderModal').modal('hide');
+        $('input:submit').attr("disabled", true);
+        $.ajax({
+            url: "{{url('retreivetenantbills')}}",
+            type: "POST",
+            data: formData,
+            success: function (data) {
+                $('#loaderModal').modal('hide');
+
+                console.log(data);
+                var total = 0;
+                if (data.length == 0) {
+                    console.log("NO DATA!");
+                    new PNotify({
+                        title: 'No Data',
+                        text: "No bills for tenant within date range",
+                        type: 'info'
+                    });
 
                     console.log(data);
-                    var total = 0;
-                    if (data.length == 0) {
-                        console.log("NO DATA!");
-                        new PNotify({
-                            title: 'No Data',
-                            text: "No bills for tenant within date range",
-                            type: 'info'
-                        });
+                    datatable.clear().draw();
 
-                        console.log(data);
-                        datatable.clear().draw();
+                } else {
 
-                    } else {
+                    $.each(data, function (key, value) {
 
-                        $.each(data, function (key, value) {
-
-                            var j = -1;
-                            var r = new Array();
-                            // represent columns as array
-                            r[++j] = '<td class="subject">' + value.serviced_date + '</td>';
-                            r[++j] = '<td class="subject">' + value.service_name + '</td>';
-                            r[++j] = '<td class="subject">' + value.description + '</td>';
-                            r[++j] = '<td class="subject">' + value.amount + '</td>';
+                        var j = -1;
+                        var r = new Array();
+                        // represent columns as array
+                        r[++j] = '<td class="subject">' + value.serviced_date + '</td>';
+                        r[++j] = '<td class="subject">' + value.service_name + '</td>';
+                        r[++j] = '<td class="subject">' + value.description + '</td>';
+                        r[++j] = '<td class="subject">' + value.amount + '</td>';
 
 
-                            rowNode = datatable.row.add(r);
-                        });
+                        rowNode = datatable.row.add(r);
+                    });
 
-                        rowNode.draw().node();
-                    }
-
-                },
-                error: function (jXHR, textStatus, errorThrown) {
-                    $('input:submit').removeAttr("disabled");
-                    swal("Error!", "Contact System Administrator ", "error");
+                    rowNode.draw().node();
                 }
-            });
 
-
-
-
+            },
+            error: function (jXHR, textStatus, errorThrown) {
+                $('input:submit').removeAttr("disabled");
+                swal("Error!", "Contact System Administrator ", "error");
+            }
         });
 
-    
+
+
+
+    });
+
+
 
 
 

@@ -56,11 +56,11 @@ class ReportController extends Controller {
     }
 
     public function getRentOwingTenants() {
-        return DB::table('rentowingtenants')->get();
+        return DB::table('rentowingtenants')->where('amount_owing', '>', 0)->get();
     }
     
      public function getBillOwingTenants() {
-        return DB::table('billowingtenant')->get();
+        return DB::table('billowingtenant')->where('amount_owing', '>', 0)->get();
     }
 
 }

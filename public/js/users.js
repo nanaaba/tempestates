@@ -18,6 +18,7 @@ $('#saveUserForm').on('submit', function (e) {
     var formData = $(this).serialize();
     console.log(formData);
     $('input:submit').attr("disabled", true);
+      $("#userModal").modal('hide');
 
     $("#loaderModal").modal('show');
     $.ajax({
@@ -40,7 +41,7 @@ $('#saveUserForm').on('submit', function (e) {
 
         },
         error: function (jXHR, textStatus, errorThrown) {
-            $("#loaderModal").modal('hide')
+            $("#loaderModal").modal('hide');
             swal("Error!", "Contact Systen Administrator", "error");
         }
     });

@@ -275,7 +275,6 @@ getBills();
                 } else {
                     $.each(data, function (key, value) {
                     
-                    var amount_owing =  value.total_amount - value.amount_paid ;
 
                         var j = -1;
                         var r = new Array();
@@ -285,7 +284,7 @@ getBills();
                         r[++j] = '<td class="subject">' + value.contactno + '</td>';
                         r[++j] = '<td class="subject">' + value.total_amount + '</td>';
                         r[++j] = '<td class="subject">' + value.amount_paid + '</td>';
-                        r[++j] = '<td class="subject">' +amount_owing+ '</td>';
+                        r[++j] = '<td class="subject">' +value.amount_owing+ '</td>';
 
                         
                         rowNode = billdatatable.row.add(r);

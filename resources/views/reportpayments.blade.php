@@ -1,5 +1,5 @@
 
-@extends('layouts.datepickerform')
+@extends('layouts.master')
 
 @section('content')
 
@@ -39,7 +39,7 @@
 
 
                                 <div class="row col-lg-12">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="form-group ">
                                             <label for="region" class="control-label">Tenant Name:</label>
                                             <select class="form-control select2" name="tenant" id="tenants"  required style="width: 100%">
@@ -48,17 +48,20 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-6">
 
-                                        <div class="form-group">
-                                            <label for="region" class="control-label">Payment Date:</label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-fw ti-calendar"></i>
-                                                </div>
-                                                <input type="text" class="form-control float-right" id="date-range0" name="daterange" required placeholder="YYYY-MM-DD to YYYY-MM-DD">
-                                            </div>
+                                       <div class="form-group ">
+                                        <label>Date range:</label>
+
+                                        <div class="input-group input-daterange" data-provide="datepicker" data-date-autoclose="true" data-date-format="dd-mm-yyyy">
+                                            <input class="form-control float-right datepick"  data-date-format="dd-mm-yyyy"  name="start_date"   data-language="en" id="start_date"  type="text">
+
+                                            <span class="input-group-addon">to</span>
+                                            <input class="form-control float-right datepick"  data-date-format="dd-mm-yyyy"  name="end_date"   data-language="en" id="end_date"  type="text">
                                         </div>
+                                        <!-- /.input group -->
+                                    </div>
+
                                     </div>
 
 
@@ -137,7 +140,9 @@
 @section('userjs')
 
 <script type="text/javascript">
-
+  $('.datepick').datepicker({
+        format: 'dd-mm-yyyy'
+    });
     var datatable = $('#reportTbl').DataTable({
         lengthChange: false,
         buttons: ['copy', 'excel', 'pdf', 'print']

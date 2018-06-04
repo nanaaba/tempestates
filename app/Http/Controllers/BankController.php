@@ -440,9 +440,10 @@ class BankController extends Controller {
 
         $data = $request->all();
 
-        $daterange = explode("to", strip_tags($data['daterange']));
-        $start_date = $daterange[0];
-        $end_date = $daterange[1];
+        //  $daterange = explode("to", strip_tags($data['daterange']));
+        $start_date = date("Y-m-d", strtotime($data['start_date']));
+
+        $end_date = date("Y-m-d", strtotime($data['end_date']));
         $tenant = strip_tags($data['tenant']);
 
 

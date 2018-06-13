@@ -1,2 +1,4 @@
 *
 !.gitignore
+!/previoustenants.js
+!/currenttenants.js

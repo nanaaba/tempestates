@@ -33,6 +33,12 @@ class BankController extends Controller {
         //return $banks;
     }
 
+    
+    
+     public function showpayments() {
+        return view('payments');
+    }
+
     public function saveBank(Request $request) {
 
         $data = $request->all();
@@ -364,11 +370,12 @@ class BankController extends Controller {
     }
 
     public function deletePaymentInfo($id) {
-        $update = RentPayments::find($id);
-        $update->active = 1;
-        $update->modified_by = Session::get('id');
-        $update->modified_at = date('Y-m-d H:i:s');
-
+//        $update = RentPayments::find($id);
+//        $update->active = 1;
+//        $update->modified_by = Session::get('id');
+//        $update->modified_at = date('Y-m-d H:i:s');
+        $new = RentPayments::find($id);
+        $new->delete();
         try {
             $update->save();
             return '0';

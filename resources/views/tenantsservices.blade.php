@@ -104,54 +104,7 @@
 
         
         
-        <div class="row">
-            <div class="col-lg-12">
-
-                <div class="card ">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <i class="ti-layout-grid3"></i> Tenants Bill 
-                        </h3>
-
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                              <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover" id="servicesTbl">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            Tenant Name
-                                        </th>
-                                        <th>
-                                            Service Type
-                                        </th> 
-                                        <th>
-                                            Amount
-                                        </th>
-                                        <th>
-                                            Service Date
-                                        </th>
-
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                        </div>
-          
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
+  
 
 
         <div class="modal fade" id="loaderModal" data-keyboard="false" data-backdrop="static" role="dialog" >

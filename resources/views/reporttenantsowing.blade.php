@@ -100,6 +100,7 @@
                                         <th>Total Amount</th>
                                         <th>Amount Paid</th>
                                         <th>Amount Owing</th>
+                                        <th>Action</th>
 
 
                                     </tr>
@@ -211,7 +212,7 @@
                     console.log("NO DATA!");
                 } else {
                     $.each(data, function (key, value) {
-                   
+
                         var j = -1;
                         var r = new Array();
                         // represent columns as array
@@ -220,9 +221,10 @@
                         r[++j] = '<td class="subject">' + value.contactno + '</td>';
                         r[++j] = '<td class="subject">' + value.total_amount + '</td>';
                         r[++j] = '<td class="subject">' + value.amount_paid + '</td>';
-                        r[++j] = '<td class="subject">' + value.amount_owing+ '</td>';
+                        r[++j] = '<td class="subject">' + value.amount_owing + '</td>';
+                        r[++j] = '<td class="subject">No action</td>';
 
-                        
+
                         rowNode = datatable.row.add(r);
                     });
 
@@ -254,17 +256,18 @@
                 } else {
                     $.each(data, function (key, value) {
 //                    var amount_owing =  value.total_amount - value.amount_paid ;
-var currency = value.currency;
+                        var currency = value.currency;
 
                         var j = -1;
                         var r = new Array();
                         // represent columns as array
-                         r[++j] = '<td class="subject">' + value.tenant_name + '</td>';
+                        r[++j] = '<td class="subject">' + value.tenant_name + '</td>';
                         r[++j] = '<td class="subject">' + value.apartment_name + '</td>';
                         r[++j] = '<td class="subject">' + value.contactno + '</td>';
-                        r[++j] = '<td class="subject">'+currency+' ' + value.total_amount + '</td>';
-                        r[++j] = '<td class="subject">'+currency+' '  + value.amount_paid + '</td>';
-                        r[++j] = '<td class="subject">'+currency+' '  + value.amount_owing + '</td>';
+                        r[++j] = '<td class="subject">' + currency + ' ' + value.total_amount + '</td>';
+                        r[++j] = '<td class="subject">' + currency + ' ' + value.amount_paid + '</td>';
+                        r[++j] = '<td class="subject">' + currency + ' ' + value.amount_owing + '</td>';
+                        r[++j] = '<td class="subject"><a href="tenants/info/'+value.tenant_id+'" class="btn btn-info">Details</a></td>';
 
                         rowNode = datatable.row.add(r);
                     });

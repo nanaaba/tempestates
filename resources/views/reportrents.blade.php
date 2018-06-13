@@ -27,7 +27,7 @@
                 <div class="card ">
                     <div class="card-header">
                         <h3 class="card-title">
-                            <i class="ti-layout-grid3"></i> Rent Report  
+                            <i class="ti-layout-grid3"></i>All Rent Report  
                         </h3>
 
                     </div>

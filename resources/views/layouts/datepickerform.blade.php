@@ -8,7 +8,7 @@
 
         <meta name="_token" content="{{ csrf_token() }}">
 
-        <title>Rotamach</title>
+        <title>Rotamac</title>
         <link type="text/css" href="{{ asset('css/app.css')}}" rel="stylesheet"/>
         <!-- end of global css -->
         <!--page level css-->

@@ -43,6 +43,12 @@ Route::group(['middleware' => 'check-userauth'], function () {
     Route::get('facilities', 'FacilityController@showfacility');
     Route::get('tenants/new', 'TenantController@showtenants');
     Route::get('tenants/showall', 'TenantController@showalltenants');
+    Route::get('tenants/current', 'TenantController@showcurrenttenants');
+    Route::get('tenants/previous', 'TenantController@showprevioustenants');
+    Route::get('tenants/makepayments', 'BankController@showrentpayments');
+    Route::get('tenants/payments', 'BankController@showpayments');
+
+    
     Route::get('tenants/information/{id}', 'TenantController@showtenantinformation');
     Route::get('tenants/services', 'TenantController@showtenantsservices');
     Route::get('tenants/bill', 'TenantController@showtenantsbill');
@@ -51,7 +57,6 @@ Route::group(['middleware' => 'check-userauth'], function () {
     Route::get('configuration/identification', 'ConfigurationController@showidentification');
     Route::get('account', 'AccountController@showbanks');
     Route::get('banking/banks', 'BankController@showbanks');
-    Route::get('banking/rentpayments', 'BankController@showrentpayments');
     Route::get('banking/clearpayments', 'BankController@showclearpayments');
     Route::get('banking/clearedpayments', 'BankController@showclearedpayments');
     Route::get('account/users', 'AccountController@showusers');
@@ -63,6 +68,7 @@ Route::group(['middleware' => 'check-userauth'], function () {
     Route::get('reports/availableapartments', 'ReportController@showavailableapartments');
     Route::get('reports/clearedpayments', 'ReportController@showclearedpayments');
     Route::get('reports/tenantsowing', 'ReportController@showtenantsowing');
+    Route::get('reports/tenants/info/{id}', 'ReportController@showtenantinfo');
 
 
 
@@ -123,6 +129,9 @@ Route::group(['middleware' => 'check-userauth'], function () {
     Route::post('tenants/savetenant', 'TenantController@saveTenantInformation');
     Route::post('tenants/service', 'TenantController@saveTenantService');
     Route::get('tenants/all', 'TenantController@getTenants');
+    Route::get('tenants/getcurrents', 'TenantController@getCurrentTenants');
+    Route::get('tenants/getprevious', 'TenantController@getPreviousTenants');
+
     Route::post('retreivetenantbills', 'TenantController@retreiveTenantBill');
     Route::delete('tenants/{id}', 'TenantController@deleteTenantInformation');
     Route::get('tenant/{id}', 'TenantController@getTenantDetail');

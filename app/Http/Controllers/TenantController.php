@@ -30,6 +30,15 @@ class TenantController extends Controller {
     public function showalltenants() {
         return view('alltenants');
     }
+    public function showcurrenttenants() {
+        return view('currenttenants');
+    }
+    
+    public function showprevioustenants() {
+        return view('previoustenants');
+    }
+    
+    //
 
     public function showtenantsservices() {
         return view('tenantsservices');
@@ -287,6 +296,14 @@ class TenantController extends Controller {
 
     public function getTenants() {
         return DB::table('tenants_view')->get();
+    }
+    
+    public function getCurrentTenants() {
+        return DB::table('tenants_view')->where('end_date','>=', date('Y-m-d'))->get();
+    }
+    
+    public function getPreviousTenants() {
+        return DB::table('tenants_view')->where('end_date','<', date('Y-m-d'))->get();
     }
 
     public function showtenantinformation($id) {

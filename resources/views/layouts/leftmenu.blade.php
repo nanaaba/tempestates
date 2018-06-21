@@ -108,6 +108,12 @@
                     <span class="mm-text "> New Tenant</span>
                 </a>
             </li>
+             <li   class="{{ Request::is('tenants/showall') ? 'active' : '' }}">
+                <a href="{{ url('tenants/showall') }}">
+                    <i class="menu-icon ti-layout-list-large-image"></i>
+                    <span class="mm-text "> All Tenants</span>
+                </a>
+            </li>
             <li   class="{{ Request::is('tenants/current') ? 'active' : '' }}">
                 <a href="{{ url('tenants/current') }}">
                     <i class="menu-icon ti-layout-list-large-image"></i>

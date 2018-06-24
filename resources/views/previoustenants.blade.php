@@ -71,30 +71,7 @@
 
 
 
-        <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form method="post" id="deleteFacilityForm">
-                        <div class="modal-body">
-                            <div>
-                                <p>
-                                    Are you sure you want to delete this facility?.<span class="holder" id="districtholder"></span> 
-                                </p>
-                            </div>
-                            <input type="hidden" class="form-control form-control-lg input-lg" id="token" name="_token" value="<?php echo csrf_token() ?>" />
-
-                            <input type="hidden" id="facilitycode" name="facilitycode"/>
-
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-                            <button type="submit"  class="btn btn-primary">YES</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+   
         <div class="modal fade" id="loaderModal" data-keyboard="false" data-backdrop="static" role="dialog" >
             <div class="modal-dialog" role="document">
 

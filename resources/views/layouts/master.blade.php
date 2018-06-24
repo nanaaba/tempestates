@@ -120,7 +120,7 @@
         <div class="modal " id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <form method="post" id="deleteForm">
+                    <form  id="deleteForm">
                         <div class="modal-body">
                             <div>
                                 <p>

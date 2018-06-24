@@ -71,43 +71,8 @@
 
 
 
-        <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form method="post" id="deleteFacilityForm">
-                        <div class="modal-body">
-                            <div>
-                                <p>
-                                    Are you sure you want to delete this facility?.<span class="holder" id="districtholder"></span> 
-                                </p>
-                            </div>
-                            <input type="hidden" class="form-control form-control-lg input-lg" id="token" name="_token" value="<?php echo csrf_token() ?>" />
-
-                            <input type="hidden" id="facilitycode" name="facilitycode"/>
-
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-                            <button type="submit"  class="btn btn-primary">YES</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="loaderModal" data-keyboard="false" data-backdrop="static" role="dialog" >
-            <div class="modal-dialog" role="document">
-
-
-                <div  id="loader" style="margin-top:30% ">
-                    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-                    <span class="loader-text">Wait...</span>
-                </div>
-
-
-            </div>
-        </div>
-
+    
+    
         <div class="background-overlay"></div>
     </section>
     <!-- /.content -->
@@ -118,7 +83,115 @@
 
 @section('userjs')
 <script src="{{ asset('vendors/toastr/js/toastr.min.js')}}"></script>
-<script src="{{ asset('js/tenant.js')}}"></script>
 
+<script type="text/javascript">
+
+var datatable = $('#tenantTbl').DataTable({
+    responsive: true,
+    language: {
+        paginate:
+                {previous: "&laquo;", next: "&raquo;"},
+        search: "_INPUT_",
+        searchPlaceholder: "Search…"
+    },
+    order: [[0, "asc"]]
+});
+
+
+getTenants();
+
+function getTenants()
+{
+
+    $.ajax({
+        url: 'all',
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+
+            console.log(data);
+            datatable.clear().draw();
+
+
+            if (data.length == 0) {
+                console.log("NO DATA!");
+            } else {
+                $.each(data, function (key, value) {
+
+
+                    var j = -1;
+                    var r = new Array();
+                    // represent columns as array
+                    r[++j] = '<td class="subject">' + value.name + '</td>';
+                    r[++j] = '<td class="subject">' + value.period + ' months </td>';
+                    r[++j] = '<td class="subject">' + value.apartment_name + '</td>';
+                    r[++j] = '<td class="subject">' + value.apartment_type + '</td>';
+                    r[++j] = '<td class="subject">' + value.currency + ' ' + value.amount + '</td>';
+
+                    r[++j] = '<td><button onclick="editTenant(\'' + value.tenant_code + '\')"  class="btn btn-outline-info btn-sm editBtn" type="button">Edit</button>\n\
+                              <button onclick="deleteTenant(\'' + value.id + '\',\'' + value.name + '\')"  class="btn btn-outline-danger btn-sm deleteBtn" type="button">Delete</button></td>';
+
+                    rowNode = datatable.row.add(r);
+                });
+
+                rowNode.draw().node();
+            }
+
+        },
+        error: function (jXHR, textStatus, errorThrown) {
+            alert(errorThrown);
+        }
+    });
+}
+function editTenant(code) {
+    window.location = "information/" + code;
+}
+
+
+function deleteTenant(code, title) {
+    console.log(code + title);
+    $('#code').val(code);
+    $('#holdername').html(title);
+    $('#confirmModal').modal('show');
+}
+
+$('#deleteForm').on('submit', function (e) {
+
+    e.preventDefault();
+    $('input:submit').attr("disabled", true);
+    var code = $('#code').val();
+    var token = $('#token').val();
+    $('#confirmModal').modal('hide');
+    $('#loaderModal').modal('show');
+//
+    $.ajax({
+        url: code,
+        type: "DELETE",
+        data: {_token: token},
+        success: function (data) {
+            console.log(data);
+            // $("#loader").hide();
+            $('input:submit').attr("disabled", false);
+            $('#loaderModal').modal('hide');
+
+            document.getElementById("deleteForm").reset();
+            if (data == 0) {
+                swal("Success!", "Deleted Successfully", "success");
+                getTenants();
+            } else {
+                swal("Error!", "Couldnt delete", "error");
+            }
+        },
+        error: function (jXHR, textStatus, errorThrown) {
+            $('#loaderModal').modal('hide');
+
+            alert(errorThrown);
+        }
+    });
+
+});
+//
+
+</script>
 
 @endsection

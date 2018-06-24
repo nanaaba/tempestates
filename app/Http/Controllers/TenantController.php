@@ -295,15 +295,23 @@ class TenantController extends Controller {
     }
 
     public function getTenants() {
-        return DB::table('tenants_view')->get();
+        return DB::table('tenants_view')->where('active', 0)->get();
     }
     
     public function getCurrentTenants() {
-        return DB::table('tenants_view')->where('end_date','>=', date('Y-m-d'))->get();
+        return DB::table('tenants_view')->where(
+                array(
+                    'end_date','>=', date('Y-m-d'),
+                    'active'=>0)
+                )->get();
     }
     
     public function getPreviousTenants() {
-        return DB::table('tenants_view')->where('end_date','<', date('Y-m-d'))->get();
+        return DB::table('tenants_view')->where(
+                array(
+                    'end_date','<', date('Y-m-d'),
+                    'active'=>0)
+                )->get();
     }
 
     public function showtenantinformation($id) {

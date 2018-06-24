@@ -97,7 +97,7 @@ $('#deleteForm').on('submit', function (e) {
             document.getElementById("deleteForm").reset();
             if (data == 0) {
                 swal("Success!", "Deleted Successfully", "success");
-                getServices();
+                getTenants();
             } else {
                 swal("Error!", "Couldnt delete", "error");
             }

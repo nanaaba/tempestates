@@ -25,7 +25,7 @@ class LoginController extends Controller {
 
         $users = User::where([['email', '=', $email], ['password', '=', $password]])->get();
         $request->session()->regenerate();
-
+         $usersInfo = json_decode($users,true);
 
         if (!$users) {
              Log::info('User tried logging in: '.$email);
@@ -33,11 +33,11 @@ class LoginController extends Controller {
             return '1';
             
         } else {
-            $email = $users[0]['email'];
-            $name = $users[0]['name'];
-            $role = $users[0]['role'];
-            $first_login = $users[0]['first_login'];
-            $id = $users[0]['id'];
+            $email = $usersInfo[0]['email'];
+            $name = $usersInfo[0]['name'];
+            $role = $usersInfo[0]['role'];
+            $first_login = $usersInfo[0]['first_login'];
+            $id = $usersInfo[0]['id'];
 
             $request->session()->put('name', $name);
             $request->session()->put('email', $email);
